@@ -1,0 +1,45 @@
+$breakline-color: #465a6d;
+
+// breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 768px,
+  md: 1025px,
+  lg: 1200px,
+  xl: 1400px,
+  xxl: 1920px,
+);
+
+$container-max-widths: (
+  xs: 90%,
+  sm: 100%,
+  md: 100%,
+  lg: 1728px,
+);
+
+$container-padding-x: 0;
+// font
+
+$font-family-base:
+  'Barlow',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  'Noto Sans',
+  'Liberation Sans',
+  Arial,
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji';
+
+$font-size-base: 1rem;
+
+$grid-columns: 10;
+
+.container {
+  max-width: 100%;
+}

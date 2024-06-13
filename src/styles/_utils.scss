@@ -1,0 +1,12 @@
+.char {
+  will-change: transform, opacity;
+}
+
+.js-fade {
+  opacity: 0;
+  will-change: opacity;
+}
+
+.is-loading {
+  opacity: 0;
+}

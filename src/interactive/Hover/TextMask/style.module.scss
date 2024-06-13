@@ -1,0 +1,23 @@
+.textMask {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-top: 1px;
+
+  &_el {
+    &__clone {
+      top: 0;
+      left: 0;
+      position: absolute;
+
+      p {
+        color: var(--white, #fff);
+      }
+    }
+    &__imutable {
+      p {
+        color: var(--white);
+      }
+    }
+  }
+}

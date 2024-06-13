@@ -1,0 +1,38 @@
+.line {
+  display: block;
+  --size: 1px;
+  &__bottom {
+    border-bottom: var(--size) solid;
+    width: 100%;
+    height: var(--size);
+    transform-origin: left center;
+  }
+  &__top {
+    border-top: var(--size) solid;
+    height: var(--size);
+    width: 100%;
+    transform-origin: left center;
+  }
+  &__left {
+    position: absolute;
+    height: 100%;
+    width: var(--size);
+    border-left: var(--size) solid;
+    left: 0;
+    transform-origin: top center;
+  }
+
+  &__right {
+    height: 100%;
+    width: var(--size);
+    border-right: var(--size) solid;
+    transform-origin: top center;
+  }
+
+  &__white {
+    border-color: var(--white);
+  }
+  &__silver {
+    border-color: transparentize($white, 0.8);
+  }
+}

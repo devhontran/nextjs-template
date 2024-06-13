@@ -1,0 +1,28 @@
+:root {
+  --gap-x: #{rem(38px)};
+  --padding-container: #{rem(20px)};
+  --padding-container-md: #{rem(160px)};
+  --padding-container-sm: #{rem(32px)};
+  @include min-tabletWide {
+    --padding-container-sm: #{rem(96px)};
+  }
+
+  --white: #ffffff;
+  --black: #000000;
+  --blue: #1aacc0;
+  --grey-blue: #b8ccda;
+  --light-grey: #819aab;
+  --medium-grey: #151823;
+  --dark-grey: #0c0f16;
+
+  --typography-white: var(--white);
+  --typography-black: var(--black);
+  --typography-blue: var(--blue);
+  --typography-blue: var(--grey-blue);
+  --typography-lightGrey: var(--light-grey);
+  --typography-mediumGrey: var(--medium-grey);
+  --typography-darkGrey: var(--dark-grey);
+
+  --easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
+}

@@ -1,0 +1,88 @@
+.container {
+  position: relative;
+  width: rem(320px);
+
+  &.disabled {
+    .input {
+      border-color: var(--black);
+      background-color: var(--light-grey);
+    }
+  }
+}
+
+.label {
+  color: var(--white);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-clip: padding-box;
+  transition:
+    border-color 0.15s var(--easeOutQuart),
+    box-shadow 0.15s var(--easeOutQuart);
+  // font-family: $font-family-base;
+  color: var(--white);
+  // border-bottom: 1px solid transparentize($white, 0.8);
+  padding: 0;
+  background: none;
+  margin-top: rem(15px);
+  padding-bottom: rem(15px);
+  outline: none;
+
+  font-size: rem(16px);
+  line-height: 1.2;
+  letter-spacing: rem(-0.14px);
+  line-height: rem(22px);
+  font-weight: 400;
+
+  @include min-tablet {
+    font-weight: 500;
+    font-size: rem(14px);
+    letter-spacing: rem(-0.42px);
+  }
+
+  @include pcSmall {
+    font-size: rem(18px);
+    letter-spacing: rem(-0.54px);
+  }
+  &::placeholder {
+    font-family: inherit;
+    color: #b8ccda;
+    opacity: 0.5;
+
+    font-size: rem(16px);
+    line-height: 1.2;
+    letter-spacing: rem(-0.14px);
+    line-height: rem(22px);
+    font-weight: 400;
+
+    @include min-tablet {
+      font-weight: 500;
+      font-size: rem(14px);
+      letter-spacing: rem(-0.42px);
+    }
+
+    @include pcSmall {
+      font-size: rem(18px);
+      letter-spacing: rem(-0.54px);
+    }
+  }
+
+  &:not(:disabled):focus {
+    border-color: transparentize($white, 0.8);
+    // background-color: $gray;
+    // padding: 0;
+  }
+
+  &:read-only:focus {
+    border-color: var(--medium-grey);
+    background-color: $black;
+    padding: 0;
+  }
+}
+
+// @include make-input-size;

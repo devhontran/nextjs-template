@@ -1,0 +1,39 @@
+.title_wrapper {
+  width: calc(100% + #{rem(5px)});
+
+  strong {
+    color: var(--blue);
+    display: inline !important;
+    font-weight: initial !important;
+  }
+
+  .title {
+    text-transform: uppercase;
+  }
+
+  .pd {
+    &__15 {
+      margin-bottom: vh(25px);
+
+      @include pcSmall {
+        margin-bottom: vh(10px);
+      }
+    }
+
+    &__25 {
+      margin-bottom: vh(20px);
+    }
+
+    &__40 {
+      margin-bottom: vh(25px);
+
+      @include pcSmall {
+        margin-bottom: vh(35px);
+      }
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}
