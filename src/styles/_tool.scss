@@ -1,5 +1,4 @@
 @use 'sass:math' as math;
-@import 'bootstrap/share';
 
 @function rem($px, $base: 10px) {
   @if unitless($px) {
@@ -17,15 +16,15 @@
   @return math.div($px, $base) * 1em;
 }
 
-@function vh($px, $base: 800px) {
+@function vh($px, $base: 1080px) {
   @return math.div($px, $base) * 100vh;
 }
 
-@function dvh($px, $base: 800px) {
+@function dvh($px, $base: 1080px) {
   @return math.div($px, $base) * 100dvh;
 }
 
-@function vw($px, $base: 1728px) {
+@function vw($px, $base: 1920px) {
   @return math.div($px, $base) * 100vw;
 }
 
@@ -33,54 +32,47 @@
   @return $val * 1px;
 }
 
-@function cclamp($min, $mid, $max) {
+@function cClamp($min, $mid, $max) {
   @return clamp(#{rem($min)}, #{vw($mid)}, #{rem($max)});
 }
 
-@mixin fclamp($min, $mid, $max) {
+@mixin fClamp($min, $mid, $max) {
   font-size: clamp(#{rem($min)}, #{vw($mid)}, #{rem($max)});
 }
 
-@function fcLineHeight($line, $font_size) {
-  @return $line/$font_size;
-}
-
-@mixin lineHeight($line, $font_size) {
-  line-height: fcLineHeight($line, $font_size);
-}
-
 @mixin onlyMobile {
-  @media (max-width: 767px) {
+  @media (min-width: theme('screens.sm')) {
     @content;
   }
 }
 
 @mixin fromTablet {
-  @media (max-width: 1199px) {
+  @media (max-width: theme('screens.lg')) {
     @content;
   }
 }
 
 @mixin min-tablet {
-  @include media-breakpoint-up(sm) {
+  @media (min-width: theme('screens.sm')) {
     @content;
   }
 }
 
-@mixin isTalbet() {
-  @media (max-width: 1199px) and (min-width: 768px) {
+@mixin isTablet() {
+  @media (max-width: theme('screens.lg')) and (min-width: theme('screens.sm')) {
     @content;
   }
+
 }
 
 @mixin min-tabletWide {
-  @include media-breakpoint-up(md) {
+  @media (min-width: theme('screens.md')) {
     @content;
   }
 }
 
 @mixin pcSmall {
-  @include media-breakpoint-up(lg) {
+  @media (min-width: theme('screens.lg')) {
     @content;
   }
 }
@@ -226,32 +218,6 @@
       @media screen and (min-width: $max-vw) {
         font-size: $max-font-size;
       }
-    }
-  }
-}
-
-@mixin make-typography($sizes: $h1) {
-  @if map-has-key($sizes, 'fs') {
-    font-size: rem(map-get($sizes, 'fs'));
-  }
-
-  @if map-has-key($sizes, 'lh') {
-    line-height: rem(map-get($sizes, 'lh'));
-  }
-
-  @if map-has-key($sizes, 'fw') {
-    font-weight: map-get($sizes, 'fw');
-  }
-
-  @if map-has-key($sizes, 'ls') {
-    letter-spacing: rem(map-get($sizes, 'ls'));
-  }
-}
-
-@mixin make-typography-color() {
-  @each $key, $color in $typography-colors {
-    .#{$key} {
-      color: $color;
     }
   }
 }

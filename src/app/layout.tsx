@@ -1,8 +1,8 @@
 import '../styles/app.scss';
 
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE_TEMPLATE, DOMAIN_URL } from '@Constants/common';
-import { barlow } from '@Constants/font';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { manrope } from '@Constants/font';
+// import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
 import React from 'react';
 
@@ -66,6 +66,9 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
   },
 };
+export const viewport: Viewport = {
+  themeColor: '#000',
+};
 
 export default function RootLayout({
   children,
@@ -74,14 +77,10 @@ export default function RootLayout({
 }): React.ReactElement {
   return (
     <html lang="en">
-      <body className={barlow.className}>
+      <body>
         <MainLayout>{children}</MainLayout>
       </body>
-      <GoogleAnalytics gaId="G-GY2QYKME39" />
+      {/*<GoogleAnalytics gaId="G-GY2QYKME39" />*/}
     </html>
   );
 }
-
-export const viewport: Viewport = {
-  themeColor: '#000',
-};

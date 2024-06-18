@@ -12,19 +12,20 @@ const config: Config = {
   theme: {
     extend: {},
     fontFamily: {
-      nimbusSanl: ['var(--nimbus-sanl)'],
-      nimbusSans: ['var(--nimbus-sans)'],
+      manrope: ['var(--manrope-sanl)'],
     },
     screens: {
       xs: '0px',
       sm: '768px',
       md: '1024px',
       lg: '1200px',
-      xl: '1600px',
+      xl: '1920px',
     },
     colors: {
       black: '#000000',
       white: '#ffffff',
+      secondary: '#949494',
+      'secondary-60': 'rgba(#949494, 0.6)',
     },
   },
   plugins: [],

@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
-import s from './styles.module.scss';
 import { useGSAP } from '@gsap/react';
+import React from 'react';
+
+import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {
-
   useGSAP(() => {
     const onScroll = (): void => {};
     window.addEventListener('scroll', onScroll);
@@ -15,7 +15,7 @@ export default function Header(): React.ReactElement {
   });
   return (
     <header className={s.header}>
-      <h1>Header</h1>
+      <div className={s.header_inner}></div>
     </header>
   );
 }

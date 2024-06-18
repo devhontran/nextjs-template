@@ -1,19 +1,7 @@
-import localFont from '@next/font/local';
-import { Barlow } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 
-export const edingu = localFont({
-  src: [
-    {
-      path: '../../public/fonts/EdinguDemo.otf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  variable: '--edingu',
-});
-
-export const barlow = Barlow({
-  weight: ['400', '500'],
+export const manrope = Manrope({
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
 });

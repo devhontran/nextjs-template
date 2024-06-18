@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import useAnimationSignal, { isPlayState } from '@Layouts/Animation/animationSignal';
 import { loadedSate, proxyLoader } from '@Layouts/Animation/loadManageSignal';
+import useProcessingR3f from '@Layouts/PageLoader/useProcessingR3f';
 import { signal } from '@preact/signals-core';
 import { useSignalEffect } from '@preact/signals-react';
 import { MathMap } from '@Utils/mathUtils';
@@ -13,7 +14,6 @@ import { proxy } from 'valtio';
 import { TypographyBody, TypographyLabel } from '@/components/Typography';
 
 import s from './styles.module.scss';
-import useProcessingR3f from '@Layouts/PageLoader/useProcessingR3f';
 
 export const PageLoaderProxy = proxy<{
   isAssetsLoaded: boolean;
@@ -112,7 +112,7 @@ export default function PageLoader(): React.ReactElement {
     });
   });
 
-  const animationOut = contextSafe(()=>{
+  const animationOut = contextSafe(() => {
     gsap.to(wrapperRef.current, {
       opacity: 0,
       ease: 'power3.inOut',
@@ -122,7 +122,7 @@ export default function PageLoader(): React.ReactElement {
         setPlayed();
       },
     });
-  })
+  });
 
   useSignalEffect(() => {
     if (isPlayState.value && wrapperRef.current) {
@@ -140,7 +140,7 @@ export default function PageLoader(): React.ReactElement {
       <div className={s.pageLoader} ref={refContent}>
         <div className={s.homeLoader}>
           <TypographyLabel color="greyBlue" className={`${s.fade} js-fade js-outing`}>
-            Deepsee
+            hontran.dev
           </TypographyLabel>
           <div className={`${s.homeLoader_logo} js-fade js-homeLoader_logo`}>
             <Image src={'/preloader.gif'} width={240} height={240} alt={'gif'} />

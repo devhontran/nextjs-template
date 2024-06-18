@@ -12,8 +12,16 @@ export default function MobileDisabledRotation(): JSX.Element {
 
   useEffect(() => {
     const handleOrientationChange = (): void => {
-      const angle = screen.orientation.angle;
-      const isVertical = angle === 90 || angle === 270;
+      let angle;
+      if (
+        typeof screen.orientation !== 'undefined' &&
+        typeof screen.orientation.angle !== 'undefined'
+      ) {
+        angle = screen.orientation.angle;
+      } else {
+        angle = window.orientation;
+      }
+      const isVertical = angle === 90 || angle === 270 || angle === -90;
 
       if (!isVertical || window.innerWidth >= 1024) {
         window.lenis?.lenis?.start();

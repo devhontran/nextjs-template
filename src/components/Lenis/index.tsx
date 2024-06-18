@@ -17,7 +17,6 @@ export default function LenisScroller({ children }: ISmoothScroller): React.Reac
     lenis?: Lenis;
   }>({});
 
-
   useSignalEffect(() => {
     function update(time: number): void {
       lenisRef.current?.lenis?.raf(time * 1000);

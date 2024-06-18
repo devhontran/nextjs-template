@@ -7,7 +7,7 @@ const needPrefix =
 
 const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
-  disable: process.env.NEXT_PUBLIC_APP_ENV === 'develop'
+  disable: process.env.NEXT_PUBLIC_APP_ENV === 'develop',
 });
 
 /** @type {import("next").NextConfig} */
@@ -17,7 +17,6 @@ const nextConfig = {
   sassOptions: {
     additionalData: `
           @import "@Styles/_tool.scss";
-          @import "@Styles/_variable.scss";
       `,
   },
   images: {
