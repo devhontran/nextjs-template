@@ -14,19 +14,16 @@ import useWindowResize from '@/hooks/useWindowResize';
 interface IProp extends PropsWithChildren {}
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
   history.scrollRestoration = 'manual';
-
-  ScrollTrigger.config({
-    ignoreMobileResize: true,
-  });
 }
 
 export default function Animate({ children }: IProp): ReactElement {
   const { scrollHeight } = useWindowResize();
   const mainRef = useRef<HTMLElement>(null);
 
-  const { contextSafe } = useGSAP({ scope: mainRef });
+  const { contextSafe } = useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+  });
   const onRefresh = contextSafe(() => {
     mainRef.current && ScrollTrigger.refresh();
   });
@@ -36,10 +33,17 @@ export default function Animate({ children }: IProp): ReactElement {
   });
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
+    history.scrollRestoration = 'manual';
+
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+    });
+
     const removeSpaceDown = (e: KeyboardEvent): void => {
       if (
-        (e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 40) &&
-        e.target === document.body
+          (e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 40) &&
+          e.target === document.body
       ) {
         e.preventDefault();
       }
@@ -52,9 +56,9 @@ export default function Animate({ children }: IProp): ReactElement {
   }, []);
 
   return (
-    <main ref={mainRef}>
-      <PageLoader />
-      {children}
-    </main>
+      <main ref={mainRef}>
+        <PageLoader />
+        {children}
+      </main>
   );
 }
