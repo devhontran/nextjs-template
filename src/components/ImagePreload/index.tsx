@@ -1,45 +1,26 @@
 'use client';
 
-import s from '@Components/ImagePlaceHolder/style.module.scss';
-import useLoadManageSignal from '@Layouts/Animation/loadManageSignal';
-import { getTransitionThumbnail, handleConvertSize } from '@Utils/uiHelper';
+import useImagePreloader from '@Layouts/Animation/useImagePreloader';
 import Image, { ImageProps } from 'next/image';
-import React, { forwardRef, useEffect } from 'react';
+import React, { ReactElement, useRef } from 'react';
 
-import { IImageGenerative } from '@/types/image';
+import s from './style.module.scss';
 
-const ImagePreload = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-  const { registerLoad } = useLoadManageSignal();
-
-  const { w, h } = handleConvertSize({
-    width: props.width as number,
-    height: props.height as number,
-  });
-
-  useEffect(() => {
-    const { src } = getTransitionThumbnail({
-      ...props,
-      width: w || undefined,
-      height: h || undefined,
-      quality: 100,
-    } as IImageGenerative);
-    src && registerLoad(src as string);
-  }, [w, h]);
-
+const ImagePreload = (props: ImageProps): ReactElement => {
+  const refImg = useRef<HTMLImageElement>(null);
+  const onLoaded = useImagePreloader(refImg);
+  const { className, alt } = props;
   return (
     <Image
-      ref={ref}
-      className={`${props.className} ${s.imagePreload_origin}`}
+      ref={refImg}
+      className={`${className} ${s.imagePreload_origin}`}
       sizes="100vw"
-      width={props.width ? w : undefined}
-      height={props.height ? h : undefined}
       quality={100}
+      onLoad={onLoaded}
       {...props}
-      loading="eager"
-      alt={props.alt}
+      alt={alt}
     />
   );
-});
+};
 
-ImagePreload.displayName = 'ImagePreload';
 export default ImagePreload;

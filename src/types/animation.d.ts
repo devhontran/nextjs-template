@@ -1,21 +1,25 @@
+import { Signal } from '@preact/signals-react';
+
 export interface IAnimationHook {
   delayEnter?: number;
   delayTrigger?: number;
   duration?: number;
   ease?: string;
-  horizontal?: boolean;
 }
 
 export interface IAnimationProps extends IAnimationHook {
-  threshold?: number;
   start?: string;
+  threshold?: number;
   isObserver?: boolean;
-  playAnimationTrigger?: boolean;
   markers?: boolean;
-  isInPopup?: boolean;
 }
 
 export interface IValueHookAnimation {
-  initAnimation: () => void;
-  playAnimation: (d?: number) => void;
+  animationRevert: () => void;
+  animationIn: (d?: number) => void;
+  needUpdate?: Signal<number>;
+}
+
+interface IAnimationHookReturn extends IValueHookAnimation {
+  animationOut?: (d?: number) => void;
 }

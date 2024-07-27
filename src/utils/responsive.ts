@@ -34,3 +34,34 @@ export const isMobileAndTablet = function (): boolean {
 export const isScreenDesktop = (): boolean => {
   return window.innerWidth >= 1200;
 };
+
+export function pcSmall(): boolean {
+  return typeof window !== 'undefined' && window.innerWidth >= 1200;
+}
+
+export function minTablet(): boolean {
+  return typeof window !== 'undefined' && window.innerWidth >= 768;
+}
+
+export function isTabletScreen(): boolean {
+  return typeof window !== 'undefined' && window.innerWidth < 1200 && window.innerWidth >= 768;
+}
+
+export function mobile(): boolean {
+  return !minTablet();
+}
+
+export const isTouch = (): boolean => {
+  return typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+};
+
+export const isSafari = (): boolean => {
+  const ua = (typeof window !== 'undefined' && navigator.userAgent.toLowerCase()) || '';
+  return (
+    ua.includes('safari') &&
+    !ua.includes('chrome') &&
+    !ua.includes('firefox') &&
+    !ua.includes('edge') &&
+    navigator.vendor === 'Apple Computer, Inc.'
+  );
+};

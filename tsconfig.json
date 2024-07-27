@@ -13,7 +13,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["node", "gsap"],
     "plugins": [
       {
         "name": "next"
@@ -32,11 +31,11 @@
       "@Images/*": ["./public/images/*"],
       "@Public/*": ["./public/*"],
       "@Utils/*": ["./src/utils/*"],
-      "@Interactive/*": ["./src/interactive/*"],
-      "@Icons/*": ["./src/icons/*"],
+      "@Motions/*": ["./src/motions/*"],
       "@Store/*": ["./src/store/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "files": ["node_modules/gsap/types/index.d.ts"],
   "exclude": ["node_modules"]
 }

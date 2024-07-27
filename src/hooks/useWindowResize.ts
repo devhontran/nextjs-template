@@ -1,10 +1,9 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import { useIsomorphicLayoutEffect } from '@Hooks/useIsomorphicLayoutEffect';
 import { Signal, useComputed, useSignal, useSignalEffect } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface IDimension {
   width: Signal<number>;
@@ -19,6 +18,7 @@ const useWindowResize = (): IDimension => {
   const width = useSignal(0);
   const height = useSignal(0);
   const scrollHeight = useSignal(0);
+
   const listener = (): void => {
     width.value = window.innerWidth || document.body.clientWidth || 0;
     height.value = window.innerHeight || document.body.clientHeight || 0;
@@ -38,7 +38,7 @@ const useWindowResize = (): IDimension => {
   });
 
   const deBounceListener = debounce(listener, 150);
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     deBounceListener();
     window?.addEventListener?.('resize', deBounceListener);
     return () => {

@@ -1,6 +1,5 @@
-import { useIsomorphicLayoutEffect } from '@Hooks/useIsomorphicLayoutEffect';
 import { debounce } from '@Utils/uiHelper';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export default function useObHeightChange(): { scrollHeight: number } {
   const [scrollHeight, setScrollHeight] = useState<number>(0);
@@ -20,7 +19,7 @@ export default function useObHeightChange(): { scrollHeight: number } {
     if (typeof window !== 'undefined') return new ResizeObserver(debouncedResize);
   }, [debouncedResize]);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     refCurrentHeight.current = document?.body.scrollHeight;
     resizeObserver?.observe(document.body);
 

@@ -7,6 +7,13 @@
 .yarn/install-state.gz
 .idea
 
+/public/sw.js
+/public/sw.js.map
+/public/sw.workbox-*.js
+/public/sw.workbox-*.js.map
+/public/workbox-*.js.map
+/public/workbox-*.js
+
 # testing
 /coverage
 
@@ -35,10 +42,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-public/workbox-*.js
-public/workbox-*.js.map
-public/sw.js
-public/sw.js.map
-
-*.sw
+yarn.lock
+package-lock.json

@@ -15,13 +15,22 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "simple-import-sort"],
+  "plugins": ["@typescript-eslint", "react", "simple-import-sort", "unused-imports"],
   "rules": {
     "prettier/prettier": "error",
     "import/no-unresolved": "error",
     "import/first": "error",
     "react/jsx-props-no-spreading": "off",
-    "unused-imports/no-unused-imports": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/function-component-definition": "off",
     "react/destructuring-assignment": "error",
     "react/require-default-props": "off",
@@ -44,7 +53,7 @@
     "simple-import-sort/exports": "error",
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "no-console": "warn",
+    "no-console": "error",
     "no-promise-executor-return": "error",
     "@typescript-eslint/ban-ts-comment": [
       "error",

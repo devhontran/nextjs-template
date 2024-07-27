@@ -221,3 +221,19 @@
     }
   }
 }
+
+@mixin masking() {
+  vertical-align: bottom;
+  overflow: hidden;
+}
+
+@mixin with-will-change() {
+  backface-visibility: hidden;
+  inset: 0;
+}
+
+@mixin starting-style() {
+  opacity: 0;
+  will-change: opacity;
+}
+

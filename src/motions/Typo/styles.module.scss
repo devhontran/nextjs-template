@@ -1,0 +1,42 @@
+.lineMask, .lineFade {
+  &:not(.animated){
+    :global{
+      .line__mask{
+        @include masking;
+      }
+
+      .line{
+        will-change: transform;
+        @include with-will-change;
+      }
+    }
+  }
+}
+
+.words{
+  &:not(.animated){
+    :global{
+      .line{
+        @include masking;
+      }
+      .word{
+        will-change: transform;
+        @include with-will-change;
+      }
+    }
+  }
+}
+
+.chars{
+  &:not(.animated){
+    :global{
+      .line{
+        @include masking;
+      }
+      .char{
+        will-change: transform;
+        @include with-will-change;
+      }
+    }
+  }
+}

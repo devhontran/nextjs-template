@@ -191,6 +191,42 @@ export const randBoolSeed = (seed: number): boolean => {
   return Boolean(seed > 0.5);
 };
 
+export const easingScrolling = (x: number): number => {
+  return 1 - Math.pow(1 - x, 4);
+};
+
+export const easingPining = (x: number): number => {
+  return 1 - Math.pow(1 - x, 4);
+};
+
+export const easeInOutSine = (x: number): number => {
+  return -(Math.cos(Math.PI * x) - 1) / 2;
+};
+
+export const easeOutCubic = (x: number): number => {
+  return 1 - Math.pow(1 - x, 3);
+};
+
+export const easeInOutQuad = (x: number): number => {
+  return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+};
+
+export function easeInQuart(x: number): number {
+  return x * x * x * x;
+}
+
+export function easeOutQuad(x: number): number {
+  return 1 - (1 - x) * (1 - x);
+}
+
+export function easeOutQuint(x: number): number {
+  return 1 - Math.pow(1 - x, 5);
+}
+
+export function easeLenis(t: number): number {
+  return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+}
+
 export {
   Distance,
   GetOffsetThreeJs,

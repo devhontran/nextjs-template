@@ -1,10 +1,10 @@
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function useRouterEffect(): {
   routerEffect: ({ url }: { url: string }) => void;
 } {
   const router = useRouter();
-  const pathName = usePathname();
+  // const pathName = usePathname();
 
   const routerEffect = ({ url }: { url: string }): void => {
     if (url === pathName) return;

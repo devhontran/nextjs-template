@@ -1,6 +1,6 @@
 'use client';
 
-import { isPlayState } from '@Layouts/Animation/animationSignal';
+import { PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
 import { useSignalEffect } from '@preact/signals-react';
 import { easingScrolling } from '@Utils/uiHelper';
 import { gsap } from 'gsap';
@@ -22,7 +22,7 @@ export default function LenisScroller({ children }: ISmoothScroller): React.Reac
       lenisRef.current?.lenis?.raf(time * 1000);
     }
 
-    if (isPlayState.value) {
+    if (pageStatus.value === PageStatus.PAGE_ENTER) {
       lenisRef.current?.lenis?.start();
       gsap.ticker.add(update);
     } else {

@@ -1,58 +1,51 @@
 'use client';
 
-import useLoadManageSignal from '@Layouts/Animation/loadManageSignal';
-import { getTransitionThumbnail } from '@Utils/uiHelper';
+import useImagePreloader from '@Layouts/Animation/useImagePreloader';
+import { useSignal, useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 
 import s from './style.module.scss';
 
-const ImagePlaceHolder = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const imageLoadedRef = useRef<HTMLImageElement>(null);
-  const { registerLoad } = useLoadManageSignal();
+const ImagePlaceHolder = (props: ImageProps): ReactElement => {
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const isLoaded = useSignal<boolean>(false);
+  const refPlaceImg = useRef<HTMLImageElement>(null);
+  const onLoaded = useImagePreloader(refPlaceImg);
+  const { className, width, alt, src } = props;
 
-  //for loader manager
-  useEffect(() => {
-    const rect = imageLoadedRef.current?.getBoundingClientRect();
-    if (!rect || rect.top > window.innerHeight) return;
-
-    const { src } = getTransitionThumbnail({
-      url: props.src as string,
-      height: 100,
-      width: 100,
-      quality: 50,
-    });
-
-    src && registerLoad(src as string, 'IMAGE PLACE');
-  }, []);
+  useSignalEffect(() => {
+    isLoaded.value && refPlaceImg.current?.classList.add(s.isLoaded);
+  });
 
   return (
-    <div ref={ref} className={`${s.imagePreload} ${isLoaded && s.isLoaded} imagePreload`}>
+    <div className={`${s.imagePreload} imagePreload`}>
+      {isReady && (
+        <Image
+          className={`${className} ${s.imagePreload_origin}`}
+          onLoad={(): void => {
+            isLoaded.value = true;
+          }}
+          quality={100}
+          sizes={`${width ? `(max-width: ${width}px) 100vw, ${width}px` : '100vw'}`}
+          {...props}
+          alt={alt}
+        />
+      )}
       <Image
-        className={`${props.className} ${s.imagePreload_origin}`}
-        onLoad={(): void => {
-          setIsLoaded(true);
+        ref={refPlaceImg}
+        className={`${className} ${s.imagePreload_placeholder}`}
+        src={src}
+        onLoad={() => {
+          onLoaded();
+          setIsReady(true);
         }}
-        quality={100}
-        sizes={`${props.width ? `(max-width: ${props.width}px) 100vw, ${props.width}px` : '100vw'}`}
-        {...props}
-        alt={props.alt}
-      />
-      <Image
-        ref={imageLoadedRef}
-        className={`${props.className} ${s.imagePreload_placeholder}`}
-        src={props.src}
-        width={100}
-        height={100}
-        sizes={'15vw'}
-        quality={50}
-        loading="eager"
-        alt="eager"
+        width={50}
+        height={50}
+        alt={`${alt}-placeholder`}
       />
     </div>
   );
-});
+};
 
-ImagePlaceHolder.displayName = 'ImagePlaceHolder';
 export default ImagePlaceHolder;

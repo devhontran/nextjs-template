@@ -1,0 +1,15 @@
+@include marketing{
+  .transition {
+    position: fixed;
+    z-index: 99999999;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: var(--white-gray);
+    will-change: opacity;
+  }
+
+}

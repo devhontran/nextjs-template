@@ -1,7 +1,8 @@
+import { TIME_WAIT_LOADED_TRIGGER } from '@Constants/animation';
 import { useGSAP } from '@gsap/react';
-import { isPlayForPopupState, isPlayState } from '@Layouts/Animation/animationSignal';
-import { useComputed, useSignalEffect } from '@preact/signals-react';
+import { usePageEnter, usePageForeEnter } from '@Layouts/Animation/usePageStatus';
 import { MathMap } from '@Utils/mathUtils';
+import { pageScrollTop } from '@Utils/uiHelper';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { MutableRefObject, useRef } from 'react';
 
@@ -14,22 +15,28 @@ interface IProps extends IValueHookAnimation, IAnimationProps {
 
 export default function useAnimation({
   trigger,
-  initAnimation,
-  playAnimation,
+  animationIn,
+                                       animationRevert,
+                                       needUpdate,
   isObserver,
   threshold,
   start,
-  horizontal,
   markers,
+  delayEnter,
+  delayTrigger,
 }: IProps): void {
   const refObserver = useRef<IntersectionObserver | null>(null);
   const refGsapTl = useRef<ScrollTrigger | null>(null);
-  const isPlayTrigger = useComputed(() => {
-    return isPlayForPopupState.value || isPlayState.value;
-  });
-  const { contextSafe } = useGSAP(() => {
-    initAnimation();
-  });
+
+  const getDelay = (): number => {
+    if (!trigger.current) return 0;
+    if (pageScrollTop() > 10) {
+      return delayTrigger || 0;
+    }
+    return (delayEnter || 0) + TIME_WAIT_LOADED_TRIGGER;
+  };
+
+  const { contextSafe } = useGSAP(() => {});
 
   const addTriggerScroller = contextSafe(() => {
     let calcTheshold = threshold || 0;
@@ -41,39 +48,35 @@ export default function useAnimation({
       }
     }
 
-    if (!isObserver) {
-      refGsapTl.current = ScrollTrigger.create({
+    const delay = getDelay();
+
+    console.log('____trigger.current', trigger.current);
+
+    // if (!isObserver) {
+      ScrollTrigger.create({
         trigger: trigger.current,
-        onEnter: () => playAnimation(),
+        onToggle: (self) => self.isActive ? animationIn(delay) : animationRevert(),
         start: start || `top+=${calcTheshold}% bottom`,
-        horizontal,
         once: true,
         markers,
       });
-    } else {
-      refObserver.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            playAnimation();
-            trigger.current && refObserver.current?.unobserve(trigger.current);
-            refObserver.current?.disconnect();
-          }
-        },
-        { threshold: calcTheshold / 100 }
-      );
-      trigger.current && refObserver.current?.observe(trigger.current);
-    }
+    // } else {
+    //   refObserver.current = new IntersectionObserver(
+    //     (entries) => {
+    //       if (entries[0].isIntersecting) {
+    //         playAnimation(delay);
+    //         trigger.current && refObserver.current?.unobserve(trigger.current);
+    //         refObserver.current?.disconnect();
+    //       }
+    //     },
+    //     { threshold: calcTheshold / 100 }
+    //   );
+    //   trigger.current && refObserver.current?.observe(trigger.current);
+    // }
   });
 
-  useSignalEffect(() => {
-    if (!isPlayTrigger.value) return;
-    const rect = trigger.current?.getBoundingClientRect();
-    if (rect && rect.top < window.innerHeight && rect.top > 0) {
-      playAnimation();
-    } else {
-      addTriggerScroller();
-    }
-
+  usePageForeEnter(() => {
+    addTriggerScroller();
     return () => {
       if (isObserver) {
         trigger.current && refObserver.current?.unobserve(trigger.current);
