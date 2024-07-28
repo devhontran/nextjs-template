@@ -6,7 +6,7 @@ const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } = require('next/const
 
 const nextConfig = {
   swcMinify: true,
-  reactStrictMode: false,
+  reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
     forceSwcTransforms: true,

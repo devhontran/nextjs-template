@@ -7,25 +7,56 @@ import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
 
-interface IMaskBox extends PropsWithChildren {
-  motion?: IAnimationProps;
+export enum MaskBoxType {
+  BOTTOM = 'BOTTOM',
+  BOTTOM_CENTER = 'BOTTOM_CENTER',
 }
 
-export default function MotionMaskBox({ children, motion }: IMaskBox): ReactElement {
+interface IMaskBox extends PropsWithChildren {
+  motion?: IAnimationProps;
+  direction?: MaskBoxType;
+}
+
+export default function MotionMaskBox({ children, motion, direction }: IMaskBox): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
   const refGsap = useRef<gsap.core.Tween | null>(null);
 
   const { contextSafe } = useGSAP(() => {
-    refContent.current && gsap.set(refContent.current, { clipPath: 'inset(100%)' });
+    let clipPath = 'inset(100%)';
+    switch (direction) {
+      case MaskBoxType.BOTTOM:
+        clipPath = 'inset(100% 0% 0% 0%)';
+        break;
+      case MaskBoxType.BOTTOM_CENTER:
+        clipPath = 'polygon(50% 100%, 50% 100%, 50% 100%, 50% 100%)';
+        break;
+      default:
+        clipPath = 'inset(100%)';
+    }
+
+    refContent.current && gsap.set(refContent.current, { clipPath });
   });
 
   const motionPlay = contextSafe((tweenVars: gsap.TweenVars): void => {
     if (!refContent.current) return;
+
+    let clipPath = 'inset(100%)';
+    switch (direction) {
+      case MaskBoxType.BOTTOM:
+        clipPath = 'inset(0% 0% 0% 0%)';
+        break;
+      case MaskBoxType.BOTTOM_CENTER:
+        clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
+        break;
+      default:
+        clipPath = 'inset(0%)';
+    }
+
     refGsap.current = gsap.to(refContent.current, {
       ...tweenVars,
-      clipPath: 'inset(0%)',
+      clipPath,
       ease: 'power3.inOut',
-      duration: 1,
+      duration: 1.2,
     });
   });
 

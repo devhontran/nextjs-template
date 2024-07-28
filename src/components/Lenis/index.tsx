@@ -2,7 +2,7 @@
 
 import { PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
 import { useSignalEffect } from '@preact/signals-react';
-import { easingScrolling } from '@Utils/uiHelper';
+import { easingScrolling } from '@Utils/mathUtils';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ReactLenis } from 'lenis/react';

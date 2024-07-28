@@ -1,0 +1,8 @@
+.imageParallax {
+  @include masking;
+
+  &_inner {
+    will-change: transform;
+    @include with-will-change;
+  }
+}
