@@ -45,7 +45,6 @@ export default function useAnimationTypo({
         motionRevert();
         refText.current?.split({});
         refText.current && motionInit({ splitText: refText.current });
-        // console.log('______init2');
         refOptions.current.isCallPlay && animationIn();
       }, 150);
     });
@@ -60,7 +59,6 @@ export default function useAnimationTypo({
   });
 
   const animationIn = contextSafe(() => {
-    // console.log('______animationIn');
     refOptions.current.isCallPlay = true;
     const delay = getDelay({
       element: refContent.current as HTMLElement,
