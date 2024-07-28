@@ -1,6 +1,5 @@
 .imageParallax {
-  @include masking;
-
+  overflow: hidden;
   &_inner {
     will-change: transform;
     @include with-will-change;

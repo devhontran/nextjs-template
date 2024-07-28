@@ -57,11 +57,15 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
       clipPath,
       ease: 'power3.inOut',
       duration: 1.2,
+      onComplete: function () {
+        gsap.set(this.targets(), { clearProps: 'all' });
+      },
     });
   });
 
   const motionRevert = (): void => {
     refGsap.current?.revert();
+    gsap.set(refContent.current, { clearProps: 'all' });
   };
 
   useMotion({

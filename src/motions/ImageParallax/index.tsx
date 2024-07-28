@@ -22,8 +22,6 @@ export default function MotionImageParallax({
     const offset = Number(speed) || 1;
     const yPercent = Math.round(((scale - 1) / 2) * 100) * offset;
 
-    console.log('___init gsap');
-
     gsap.fromTo(
       refEl.current,
       { scale, yPercent: yPercent },
@@ -33,7 +31,6 @@ export default function MotionImageParallax({
           scrub: true,
           once: false,
           invalidateOnRefresh: true,
-          markers: true,
         },
         yPercent: -yPercent,
         ease: 'none',
