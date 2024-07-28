@@ -31,7 +31,7 @@ export default function MotionChars({ children, motion }: ParagraphLineMaskProps
       duration: 0.8,
       stagger: 0.015,
       onComplete: () => {
-        console.log('____run may lan');
+        // console.log('____run may lan');
       },
     });
   };

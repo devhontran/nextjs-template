@@ -16,6 +16,7 @@ interface IMaskBox extends PropsWithChildren {
 
 export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElement {
   const refContent = useRef<IAnimationElement>(null);
+  const refGsap = useRef<gsap.core.Tween | null>(null);
 
   const { contextSafe } = useGSAP(() => {
     refContent.current?.classList.add(s.motionFade);
@@ -23,7 +24,7 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
   });
 
   const motionPlay = contextSafe((tweenVars: gsap.TweenVars): void => {
-    gsap.to(refContent.current, {
+    refGsap.current = gsap.to(refContent.current, {
       ...tweenVars,
       opacity: 1,
       y: 0,
@@ -32,10 +33,15 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
     });
   });
 
+  const motionRevert = (): void => {
+    refGsap.current?.revert();
+  };
+
   useMotion({
     refContent,
     motion,
     motionPlay,
+    motionRevert,
   });
   if (!React.isValidElement(children)) {
     return <div>Error: Invalid children element</div>;

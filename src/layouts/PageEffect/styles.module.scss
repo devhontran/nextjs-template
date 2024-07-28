@@ -1,15 +1,17 @@
-@include marketing{
-  .transition {
-    position: fixed;
-    z-index: 99999999;
-    width: 100vw;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    opacity: 0;
-    background: var(--white-gray);
-    will-change: opacity;
-  }
-
+.transition {
+  position: fixed;
+  z-index: 99999999;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: white;
+  will-change: opacity;
+  color: black;
+  font-size: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

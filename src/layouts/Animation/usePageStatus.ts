@@ -1,6 +1,8 @@
 import { signal, useSignalEffect } from '@preact/signals-react';
+
 export enum PageStatus {
   PAGE_ONCE = 'PAGE_ONCE',
+  PAGE_REPLACE = 'PAGE_REPLACE',
   PAGE_BEFORE_ENTER = 'PAGE_BEFORE_ENTER',
   PAGE_ENTER = 'PAGE_ENTER',
   PAGE_BEFORE_LEAVE = 'PAGE_BEFORE_LEAVE',
@@ -15,6 +17,10 @@ export function pageBeforeEnter(): void {
 
 export function pageEnter(): void {
   pageStatus.value = PageStatus.PAGE_ENTER;
+}
+
+export function pageReplace(): void {
+  pageStatus.value = PageStatus.PAGE_REPLACE;
 }
 
 export function pageLeave(): void {
@@ -33,7 +39,7 @@ export function usePageForeEnter(callback: () => void): void {
 
 export function usePageEnter(callback: () => void): void {
   return useSignalEffect(() => {
-    console.log('____pageStatus.value', pageStatus.value);
+    // console.log('____pageStatus.value', pageStatus.value);
     pageStatus.value === PageStatus.PAGE_ENTER && callback();
   });
 }

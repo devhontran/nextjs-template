@@ -33,9 +33,10 @@ export default function useAnimationTypo({
   }>({ obResize: null, dbTiming: null, isCallPlay: false });
 
   const { contextSafe } = useGSAP(() => {
+    // console.log('______init');
     if (!refContent.current) return;
 
-    console.log('____rerender', refOptions.current.isCallPlay);
+    // console.log('____rerender', refOptions.current.isCallPlay);
 
     refText.current = new SplitType(refContent.current, { types });
     refOptions.current.obResize = new ResizeObserver(() => {
@@ -44,6 +45,7 @@ export default function useAnimationTypo({
         motionRevert();
         refText.current?.split({});
         refText.current && motionInit({ splitText: refText.current });
+        // console.log('______init2');
         refOptions.current.isCallPlay && animationIn();
       }, 150);
     });
@@ -58,9 +60,10 @@ export default function useAnimationTypo({
   });
 
   const animationIn = contextSafe(() => {
+    // console.log('______animationIn');
     refOptions.current.isCallPlay = true;
     const delay = getDelay({
-      element: refContent.current,
+      element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
       delayTrigger: motion?.delayTrigger,
     });
@@ -100,5 +103,8 @@ export default function useAnimationTypo({
     clearResize();
   };
 
-  usePageForeEnter(animationIn);
+  usePageForeEnter(() => {
+    animationIn();
+    return motionRevert;
+  });
 }

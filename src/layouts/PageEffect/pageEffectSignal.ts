@@ -1,38 +1,72 @@
-import { signal } from '@preact/signals-react';
+import { pageBeforeEnter, PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
+import { usePreloader } from '@Layouts/Animation/usePreloader';
+import { signal, useSignalEffect } from '@preact/signals-react';
 
-const toggleState = signal(false);
-const outCompleteState = signal(false);
-const inCompleteState = signal(false);
-const urlState = signal('/');
-
-type IValues = {
-  animationIn: (url: string) => void;
-  animationOut: () => void;
-  setOutComplete: () => void;
-  setInComplete: () => void;
-  reset: () => void;
-};
-export default function usePageEffectSignal(): IValues {
-  return {
-    animationIn: (url: string): void => {
-      toggleState.value = true;
-      urlState.value = url;
-    },
-    animationOut: (): void => {
-      toggleState.value = false;
-    },
-    setOutComplete: (): void => {
-      outCompleteState.value = false;
-    },
-    setInComplete: (): void => {
-      inCompleteState.value = true;
-    },
-    reset: (): void => {
-      outCompleteState.value = false;
-      inCompleteState.value = false;
-      toggleState.value = false;
-    },
-  };
+export enum PageEffectStatus {
+  IN = 'IN',
+  INNED = 'INNED',
+  OUT = 'OUT',
+  OUTED = 'OUTED',
+  ONCE = 'ONCE',
 }
 
-export { inCompleteState, outCompleteState, toggleState, urlState };
+export const urlState = signal<string>('/');
+export const pageEffectStatus = signal<PageEffectStatus>(PageEffectStatus.ONCE);
+
+export function dispatchUrl(url: string): void {
+  urlState.value = url;
+}
+
+export function dispatchUrlValue(): string {
+  return urlState.peek();
+}
+
+export function pageEffectIn(): void {
+  pageEffectStatus.value = PageEffectStatus.IN;
+}
+
+export function pageEffectInned(): void {
+  pageEffectStatus.value = PageEffectStatus.INNED;
+}
+
+export function pageEffectOut(): void {
+  pageEffectStatus.value = PageEffectStatus.OUT;
+}
+
+export function pageEffectOuted(): void {
+  pageEffectStatus.value = PageEffectStatus.OUTED;
+}
+
+export function usePageEffectOut(callback: () => void): void {
+  return useSignalEffect(() => {
+    pageEffectStatus.value === PageEffectStatus.OUT && callback();
+  });
+}
+
+export function usePageEffectOuted(callback: () => void): void {
+  return useSignalEffect(() => {
+    pageEffectStatus.value === PageEffectStatus.OUTED && callback();
+  });
+}
+
+export function usePageEffectIn(callback: () => void): void {
+  return useSignalEffect(() => {
+    // console.log('_____pageEffectStatus.value', pageEffectStatus.value);
+    pageEffectStatus.value === PageEffectStatus.IN && callback();
+  });
+}
+
+export function usePageEffectInned(callback: () => void): void {
+  return useSignalEffect(() => {
+    pageEffectStatus.value === PageEffectStatus.INNED && callback();
+  });
+}
+
+export function useHandleLoaderInEffect(): void {
+  const { progress } = usePreloader();
+  useSignalEffect(() => {
+    progress.value >= 1 &&
+      pageStatus.peek() === PageStatus.PAGE_REPLACE &&
+      setTimeout(pageBeforeEnter, 10);
+  });
+}

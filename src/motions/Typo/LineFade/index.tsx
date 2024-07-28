@@ -30,6 +30,9 @@ export default function MotionLineFade({ children, motion }: ParagraphLineMaskPr
       ease: 'power3.out',
       duration: 1.2,
       stagger: 0.1,
+      onComplete: () => {
+        console.log('____what');
+      },
     });
   };
 

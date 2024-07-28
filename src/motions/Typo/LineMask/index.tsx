@@ -33,7 +33,7 @@ export default function MotionLineMask({ children, motion }: ParagraphLineMaskPr
   };
 
   const motionPlay = ({ splitText, tweenVars }: IPropMotionPlay): void => {
-    console.log('____MotionLineMask', splitText.lines);
+    // console.log('____MotionLineMask', splitText.lines);
     regGsap.current = gsap.to(splitText.lines, {
       ...tweenVars,
       yPercent: 0,

@@ -1,16 +1,17 @@
 import { useRouter } from 'next/navigation';
+import { dispatchUrl, pageEffectIn, urlState } from '@Layouts/PageEffect/pageEffectSignal';
+import { pageBeforeLeave } from '@Layouts/Animation/usePageStatus';
 
 export default function useRouterEffect(): {
   routerEffect: ({ url }: { url: string }) => void;
 } {
   const router = useRouter();
-  // const pathName = usePathname();
-
   const routerEffect = ({ url }: { url: string }): void => {
-    if (url === pathName) return;
+    if(urlState.peek() === url) return;
     router.prefetch(url);
-    // setPageUrl(url);
-    // pageTransitionIn();
+    dispatchUrl(url);
+    pageBeforeLeave();
+    pageEffectIn();
   };
 
   return { routerEffect };

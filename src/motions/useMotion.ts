@@ -7,13 +7,19 @@ import { IAnimationElement } from '@/types/common';
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
   motionPlay: (tween: gsap.TweenVars) => void;
+  motionRevert?: () => void;
   motion?: IAnimationProps;
 }
 
-export default function useMotion({ refContent, motionPlay, motion }: IMotionProps): void {
+export default function useMotion({
+  refContent,
+  motionPlay,
+  motion,
+  motionRevert,
+}: IMotionProps): void {
   const animationIn = (): void => {
     const delay = getDelay({
-      element: refContent.current,
+      element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
       delayTrigger: motion?.delayTrigger,
     });
@@ -37,5 +43,8 @@ export default function useMotion({ refContent, motionPlay, motion }: IMotionPro
     });
   };
 
-  usePageForeEnter(animationIn);
+  usePageForeEnter(() => {
+    animationIn();
+    return motionRevert;
+  });
 }
