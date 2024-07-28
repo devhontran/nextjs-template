@@ -7,15 +7,18 @@ import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
+import { IAnimationElement } from '@/types/common';
+
+export enum MotionCharsType {
+  bottom = 'bottom',
+}
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
 }
 
-type typeRef = HTMLDivElement | HTMLSpanElement | HTMLHeadingElement;
-
 export default function MotionChars({ children, motion }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<typeRef>(null);
+  const refContent = useRef<IAnimationElement>(null);
   const regGsap = useRef<gsap.core.Tween>();
 
   const motionInit = ({ splitText }: IPropMotionInit): void => {
@@ -31,7 +34,7 @@ export default function MotionChars({ children, motion }: ParagraphLineMaskProps
       duration: 0.8,
       stagger: 0.015,
       onComplete: () => {
-        // console.log('____run may lan');
+        console.log('____chars animation done');
       },
     });
   };

@@ -21,7 +21,9 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
   const refContent = useRef<HTMLDivElement>(null);
   const refGsap = useRef<gsap.core.Tween | null>(null);
 
-  const { contextSafe } = useGSAP(() => {
+  const { contextSafe } = useGSAP();
+
+  const motionInit = contextSafe(() => {
     let clipPath = 'inset(100%)';
     switch (direction) {
       case MaskBoxType.BOTTOM:
@@ -36,7 +38,6 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
 
     refContent.current && gsap.set(refContent.current, { clipPath });
   });
-
   const motionPlay = contextSafe((tweenVars: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
@@ -73,6 +74,7 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
     motion,
     motionPlay,
     motionRevert,
+    motionInit,
   });
   return <div ref={refContent}>{children}</div>;
 }

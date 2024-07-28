@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { usePageForeEnter } from '@Layouts/Animation/usePageStatus';
 import { IMotionTypeFncs } from '@Motions/Typo/motionType';
+import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
@@ -32,11 +33,10 @@ export default function useAnimationTypo({
     isCallPlay: boolean;
   }>({ obResize: null, dbTiming: null, isCallPlay: false });
 
-  const { contextSafe } = useGSAP(() => {
-    // console.log('______init');
-    if (!refContent.current) return;
+  const { contextSafe } = useGSAP();
 
-    // console.log('____rerender', refOptions.current.isCallPlay);
+  const animationInit = contextSafe(() => {
+    if (!refContent.current) return;
 
     refText.current = new SplitType(refContent.current, { types });
     refOptions.current.obResize = new ResizeObserver(() => {
@@ -104,7 +104,9 @@ export default function useAnimationTypo({
   };
 
   usePageForeEnter(() => {
-    animationIn();
+    motionEnabled.peek() && animationIn();
     return motionRevert;
   });
+
+  useMotionEnabled(animationInit);
 }

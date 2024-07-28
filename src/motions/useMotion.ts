@@ -1,4 +1,5 @@
 import { usePageForeEnter } from '@Layouts/Animation/usePageStatus';
+import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 
 import { IAnimationProps } from '@/types/animation';
@@ -7,6 +8,7 @@ import { IAnimationElement } from '@/types/common';
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
   motionPlay: (tween: gsap.TweenVars) => void;
+  motionInit: () => void;
   motionRevert?: () => void;
   motion?: IAnimationProps;
 }
@@ -16,6 +18,7 @@ export default function useMotion({
   motionPlay,
   motion,
   motionRevert,
+  motionInit,
 }: IMotionProps): void {
   const animationIn = (): void => {
     const delay = getDelay({
@@ -44,7 +47,9 @@ export default function useMotion({
   };
 
   usePageForeEnter(() => {
-    animationIn();
+    motionEnabled.peek() && animationIn();
     return motionRevert;
   });
+
+  useMotionEnabled(motionInit);
 }

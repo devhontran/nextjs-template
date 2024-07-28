@@ -18,11 +18,12 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
   const refContent = useRef<IAnimationElement>(null);
   const refGsap = useRef<gsap.core.Tween | null>(null);
 
-  const { contextSafe } = useGSAP(() => {
+  const { contextSafe } = useGSAP();
+
+  const motionInit = contextSafe(() => {
     refContent.current?.classList.add(s.motionFade);
     refContent.current && gsap.set(refContent.current, { opacity: 0, y: 34 });
   });
-
   const motionPlay = contextSafe((tweenVars: gsap.TweenVars): void => {
     refGsap.current = gsap.to(refContent.current, {
       ...tweenVars,
@@ -42,6 +43,7 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
     motion,
     motionPlay,
     motionRevert,
+    motionInit,
   });
   if (!React.isValidElement(children)) {
     return <div>Error: Invalid children element</div>;

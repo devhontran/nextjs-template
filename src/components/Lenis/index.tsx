@@ -21,9 +21,14 @@ export default function LenisScroller({ children }: ISmoothScroller): React.Reac
     const update = (time: number): void => {
       lenisRef.current?.lenis?.raf(time * 1000);
     };
-    gsap.ticker.add(update);
-    lenisRef.current?.lenis?.on('scroll', ScrollTrigger.update);
+
+    // lenisRef.current?.lenis?.on('scroll', ScrollTrigger.update);
     gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add(update);
+
+    return () => {
+      gsap.ticker.remove(update);
+    };
   }, []);
 
   useSignalEffect(() => {
