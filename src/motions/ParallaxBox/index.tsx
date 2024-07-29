@@ -1,4 +1,5 @@
 import useWindowResize from '@Hooks/useWindowResize';
+import { PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
 import { useSignalEffect } from '@preact/signals-react';
 import { MathMap } from '@Utils/mathUtils';
 import { useLenis } from 'lenis/react';
@@ -18,7 +19,9 @@ export default function MotionParallaxBox({ speed, children }: IImageParallaxPro
   const { height } = useWindowResize();
 
   useSignalEffect(() => {
-    if (!refWrap.current) return;
+    const wHeight = height.value;
+    const isEnter = pageStatus.value === PageStatus.PAGE_ENTER;
+    if (!refWrap.current || !isEnter) return;
     const rect = refWrap.current.getBoundingClientRect();
     const scroll = window.lenis?.lenis?.scroll || 0;
     refRect.current = {
@@ -30,7 +33,7 @@ export default function MotionParallaxBox({ speed, children }: IImageParallaxPro
         width: rect.width,
         height: rect.height,
       } as DOMRect,
-      wHeight: height.value,
+      wHeight: wHeight,
     };
   });
 
