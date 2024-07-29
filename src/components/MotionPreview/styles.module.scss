@@ -1,14 +1,13 @@
-.motionPreview{
-
+.motionPreview {
   margin-bottom: rem(80px);
   margin-top: rem(80px);
 
-  &_heading{
+  &_heading {
     background: #d2d2d2;
     width: fit-content;
     padding: 6px;
   }
-  &_body{
+  &_body {
     padding: 80px 12px;
     border: 1px solid #d2d2d2;
   }

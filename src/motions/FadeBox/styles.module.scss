@@ -1,5 +1,5 @@
-.motionFade{
-  &:not(:global(.animated)){
+.motionFade {
+  &:not(:global(.animated)) {
     will-change: opacity;
   }
 }

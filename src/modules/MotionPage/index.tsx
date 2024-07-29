@@ -5,21 +5,67 @@ import MotionPreview from '@Components/MotionPreview';
 import MotionFadeBox from '@Motions/FadeBox';
 import MotionImageParallax from '@Motions/ImageParallax';
 import MotionMaskBox, { MaskBoxType } from '@Motions/MaskBox';
-import MotionChars from '@Motions/Typo/Chars';
+import MotionParallaxBox from '@Motions/ParallaxBox';
+import MotionChars, { MotionCharsType } from '@Motions/Typo/Chars';
 import MotionLineFade from '@Motions/Typo/LineFade';
 import MotionLineMask from '@Motions/Typo/LineMask';
-import MotionWords from '@Motions/Typo/Words';
+import MotionWords, { MotionWordsType } from '@Motions/Typo/Words';
 
 import s from './styles.module.scss';
 
 export default function MotionPage(): JSX.Element {
   return (
     <section className={s.landingPage}>
-      <MotionPreview heading={'Motion Line Fade'}>
-        <MotionLineFade>
-          <h1 className={s.heading}>Home title Section 1</h1>
-        </MotionLineFade>
-      </MotionPreview>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Line Fade'}>
+            <MotionLineFade>
+              <h1 className={s.heading}>Home title Section 1</h1>
+            </MotionLineFade>
+          </MotionPreview>
+        </div>
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Chars - Type: Scale'}>
+            <MotionChars type={MotionCharsType.scale}>
+              <h1 className={s.heading}>Home title Section 1</h1>
+            </MotionChars>
+          </MotionPreview>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-5">
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Chars - Type: Mask Random Char'}>
+            <MotionChars type={MotionCharsType.mask_random}>
+              <h1 className={s.heading}>Home title</h1>
+            </MotionChars>
+          </MotionPreview>
+        </div>
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Chars - Type: Typing'}>
+            <MotionChars type={MotionCharsType.typing}>
+              <h1 className={s.heading}>Home title Section</h1>
+            </MotionChars>
+          </MotionPreview>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-5">
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Words - Type: Fade slide left'}>
+            <MotionWords type={MotionWordsType.fade_slide_left}>
+              <h1 className={s.heading}>Home title home title</h1>
+            </MotionWords>
+          </MotionPreview>
+        </div>
+        <div className="col-span-1">
+          <MotionPreview heading={'Motion Chars - Type: Mask From Top'}>
+            <MotionChars type={MotionCharsType.mask_top}>
+              <h1 className={s.heading}>Home title Section</h1>
+            </MotionChars>
+          </MotionPreview>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-1">
@@ -34,7 +80,7 @@ export default function MotionPage(): JSX.Element {
                 width={1200}
                 height={900}
                 src={
-                  'https://images.unsplash.com/photo-1719937206491-ed673f64be1f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                  'https://images.unsplash.com/photo-1722152253464-4ad8cbec563f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                 }
                 alt={''}
               />
@@ -53,7 +99,7 @@ export default function MotionPage(): JSX.Element {
                 width={1200}
                 height={900}
                 src={
-                  'https://images.unsplash.com/photo-1719937206491-ed673f64be1f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                  'https://images.unsplash.com/photo-1691157915037-68576ba139b1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                 }
                 alt={''}
               />
@@ -67,7 +113,7 @@ export default function MotionPage(): JSX.Element {
             width={1200}
             height={900}
             src={
-              'https://images.unsplash.com/photo-1719937206491-ed673f64be1f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+              'https://images.unsplash.com/photo-1721742145342-9aff08c0b7f7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             }
             alt={''}
           />
@@ -91,11 +137,42 @@ export default function MotionPage(): JSX.Element {
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-5">
+        <div className="col-span-1">
+          <MotionPreview heading={`Motion Parallax Box - speed: -.2`}>
+            <MotionParallaxBox speed={-0.2}>
+              <ImagePlaceHolder
+                width={1200}
+                height={900}
+                src={
+                  'https://images.unsplash.com/photo-1669428175954-0bcd9efe5dcd?q=80&w=2644&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }
+                alt={''}
+              />
+            </MotionParallaxBox>
+          </MotionPreview>
+        </div>
+        <div className="col-span-1">
+          <MotionPreview heading={`Motion Parallax Box - speed: .2`}>
+            <MotionParallaxBox speed={0.2}>
+              <ImagePlaceHolder
+                width={1200}
+                height={900}
+                src={
+                  'https://images.unsplash.com/photo-1721564130772-c9ee561ab87b?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }
+                alt={''}
+              />
+            </MotionParallaxBox>
+          </MotionPreview>
+        </div>
+      </div>
+
       <ImagePlaceHolder
         width={1200}
         height={1803}
         src={
-          'https://images.unsplash.com/photo-1719937050792-a6a15d899281?q=80&w=2396&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+          'https://images.unsplash.com/photo-1720451815682-3353b81a6633?q=80&w=2778&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         }
         alt={''}
       />
@@ -135,7 +212,7 @@ export default function MotionPage(): JSX.Element {
             width={1200}
             height={1803}
             src={
-              'https://images.unsplash.com/photo-1719937050792-a6a15d899281?q=80&w=2396&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+              'https://images.unsplash.com/photo-1721981036255-2f673a5cf7a5?q=80&w=2664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             }
             alt={''}
           />

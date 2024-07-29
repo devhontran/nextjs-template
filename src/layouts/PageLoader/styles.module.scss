@@ -10,11 +10,10 @@
   justify-content: center;
   background: black;
   align-items: center;
+  will-change: opacity;
 
   &.isHide {
     pointer-events: none;
-    visibility: hidden;
-    z-index: -999;
     opacity: 0;
   }
 }

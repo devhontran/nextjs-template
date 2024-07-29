@@ -1,11 +1,10 @@
 'use client';
 
-import { PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
-import { useSignalEffect } from '@preact/signals-react';
 import { easingScrolling } from '@Utils/mathUtils';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Lenis from 'lenis';
-import { ReactLenis } from 'lenis/react';
+import { ReactLenis, useLenis } from 'lenis/react';
 import React, { PropsWithChildren, useEffect, useRef } from 'react';
 
 interface ISmoothScroller extends PropsWithChildren {}
@@ -31,13 +30,15 @@ export default function LenisScroller({ children }: ISmoothScroller): React.Reac
     };
   }, []);
 
-  useSignalEffect(() => {
-    if (pageStatus.value === PageStatus.PAGE_ENTER) {
-      lenisRef.current?.lenis?.start();
-    } else {
-      lenisRef.current?.lenis?.stop();
-    }
-  });
+  // useSignalEffect(() => {
+  //   if (pageStatus.value === PageStatus.PAGE_ENTER) {
+  //     lenisRef.current?.lenis?.start();
+  //   } else {
+  //     lenisRef.current?.lenis?.stop();
+  //   }
+  // });
+
+  useLenis(ScrollTrigger.update);
 
   return (
     <ReactLenis

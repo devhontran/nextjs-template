@@ -14,7 +14,7 @@ interface ParagraphLineMaskProps extends PropsWithChildren {
 }
 
 export default function MotionLineFade({ children, motion }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<IAnimationElement>(null);
+  const refContent = useRef<IAnimationElement | null>(null);
   const regGsap = useRef<gsap.core.Tween>();
 
   const motionInit = ({ splitText }: IPropMotionInit): void => {
@@ -30,9 +30,6 @@ export default function MotionLineFade({ children, motion }: ParagraphLineMaskPr
       ease: 'power3.out',
       duration: 1.2,
       stagger: 0.1,
-      onComplete: () => {
-        console.log('____what');
-      },
     });
   };
 

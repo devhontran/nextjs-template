@@ -1,5 +1,5 @@
-import { useIsomorphicLayoutEffect } from '@Hooks/useIsomorphicLayoutEffect';
 import type { RefObject } from 'react';
+import { useLayoutEffect } from 'react';
 
 type Event = MouseEvent | TouchEvent;
 
@@ -7,7 +7,7 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
   ref: RefObject<T>,
   handler: (event: Event) => void
 ): void => {
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     const listener = (event: Event): void => {
       const el = ref?.current;
       if (!el || el.contains((event?.target as Node) || null)) {

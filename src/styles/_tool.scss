@@ -62,7 +62,6 @@
   @media (max-width: theme('screens.lg')) and (min-width: theme('screens.sm')) {
     @content;
   }
-
 }
 
 @mixin min-tabletWide {
@@ -236,4 +235,3 @@
   opacity: 0;
   will-change: opacity;
 }
-

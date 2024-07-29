@@ -1,11 +1,12 @@
-.lineMask, .lineFade {
-  &:not(.animated){
-    :global{
-      .line__mask{
+.lineMask,
+.lineFade {
+  &:not(.animated) {
+    :global {
+      .line__mask {
         @include masking;
       }
 
-      .line{
+      .line {
         will-change: transform;
         @include with-will-change;
       }
@@ -13,13 +14,13 @@
   }
 }
 
-.words{
-  &:not(.animated){
-    :global{
-      .line{
+.words {
+  &:not(.animated) {
+    :global {
+      .line {
         @include masking;
       }
-      .word{
+      .word {
         will-change: transform;
         @include with-will-change;
       }
@@ -27,13 +28,13 @@
   }
 }
 
-.chars{
-  &:not(.animated){
-    :global{
-      .line{
+.chars {
+  &:not(.animated) {
+    :global {
+      .line {
         @include masking;
       }
-      .char{
+      .char {
         will-change: transform;
         @include with-will-change;
       }

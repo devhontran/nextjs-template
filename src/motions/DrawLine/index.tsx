@@ -8,6 +8,6 @@ interface IDrawLineProps extends IAnimationProps {
   className?: string;
 }
 
-export default function DrawLine({ className }: IDrawLineProps): ReactElement {
-  return <div className={`${s.line} ${className}`}></div>;
+export default function MotionDrawLine({ className }: IDrawLineProps): ReactElement {
+  return <div className={`${s.drawLine} ${className}`}></div>;
 }
