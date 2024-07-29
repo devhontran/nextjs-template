@@ -1,10 +1,10 @@
 'use client';
 
+import LinkEffect from '@Components/LinkEffect';
 import { useGSAP } from '@gsap/react';
 import React from 'react';
 
 import s from './styles.module.scss';
-import LinkEffect from '@Components/LinkEffect';
 
 export default function Header(): React.ReactElement {
   useGSAP(() => {
@@ -23,6 +23,9 @@ export default function Header(): React.ReactElement {
           </li>
           <li>
             <LinkEffect href={'/about'}>About</LinkEffect>
+          </li>
+          <li>
+            <LinkEffect href={'/motions'}>Motion</LinkEffect>
           </li>
         </ul>
       </div>

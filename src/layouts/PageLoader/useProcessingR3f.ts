@@ -1,4 +1,3 @@
-
 import { useProgress } from '@react-three/drei';
 import { useEffect } from 'react';
 

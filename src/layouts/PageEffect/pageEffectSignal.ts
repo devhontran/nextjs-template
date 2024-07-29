@@ -1,3 +1,4 @@
+import { TIME_WAIT_PAGE_ENTER_TRANSITION } from '@Constants/animation';
 import { pageBeforeEnter, PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
 import { usePreloader } from '@Layouts/Animation/usePreloader';
 import { signal, useSignalEffect } from '@preact/signals-react';
@@ -51,7 +52,6 @@ export function usePageEffectOuted(callback: () => void): void {
 
 export function usePageEffectIn(callback: () => void): void {
   return useSignalEffect(() => {
-    // console.log('_____pageEffectStatus.value', pageEffectStatus.value);
     pageEffectStatus.value === PageEffectStatus.IN && callback();
   });
 }
@@ -64,9 +64,9 @@ export function usePageEffectInned(callback: () => void): void {
 
 export function useHandleLoaderInEffect(): void {
   const { progress } = usePreloader();
-  useSignalEffect(() => {
+  return useSignalEffect(() => {
     progress.value >= 1 &&
       pageStatus.peek() === PageStatus.PAGE_REPLACE &&
-      setTimeout(pageBeforeEnter, 10);
+      setTimeout(pageBeforeEnter, TIME_WAIT_PAGE_ENTER_TRANSITION);
   });
 }
