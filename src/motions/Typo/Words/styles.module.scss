@@ -1,0 +1,15 @@
+.words {
+  &:not(:global(.animated)) {
+    :global {
+      .line {
+        @include masking;
+      }
+
+      .word {
+        will-change: transform;
+        @include with-will-change;
+      }
+    }
+  }
+}
+

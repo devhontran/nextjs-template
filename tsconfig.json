@@ -32,7 +32,8 @@
       "@Public/*": ["./public/*"],
       "@Utils/*": ["./src/utils/*"],
       "@Motions/*": ["./src/motions/*"],
-      "@Store/*": ["./src/store/*"]
+      "@Store/*": ["./src/store/*"],
+      "@Interactive/*": ["./src/interactive/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -7,8 +7,7 @@ import MotionImageParallax from '@Motions/ImageParallax';
 import MotionMaskBox, { MaskBoxType } from '@Motions/MaskBox';
 import MotionParallaxBox from '@Motions/ParallaxBox';
 import MotionChars, { MotionCharsType } from '@Motions/Typo/Chars';
-import MotionLineFade from '@Motions/Typo/LineFade';
-import MotionLineMask from '@Motions/Typo/LineMask';
+import MotionLines, { MotionLinesType } from '@Motions/Typo/Lines';
 import MotionWords, { MotionWordsType } from '@Motions/Typo/Words';
 
 import s from './styles.module.scss';
@@ -19,9 +18,9 @@ export default function MotionPage(): JSX.Element {
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-1">
           <MotionPreview heading={'Motion Line Fade'}>
-            <MotionLineFade>
+            <MotionLines type={MotionLinesType.fade}>
               <h1 className={s.heading}>Home title Section 1</h1>
-            </MotionLineFade>
+            </MotionLines>
           </MotionPreview>
         </div>
         <div className="col-span-1">
@@ -123,9 +122,9 @@ export default function MotionPage(): JSX.Element {
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-1">
           <MotionPreview heading={'Motion Line Mask'}>
-            <MotionLineMask>
+            <MotionLines type={MotionLinesType.mask}>
               <h1 className={s.heading}>Home Section title 2</h1>
-            </MotionLineMask>
+            </MotionLines>
           </MotionPreview>
         </div>
         <div className="col-span-1">

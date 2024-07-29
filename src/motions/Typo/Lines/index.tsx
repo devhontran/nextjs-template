@@ -1,64 +1,72 @@
 'use client';
 
 import { IPropMotionInit, IPropMotionPlay } from '@Motions/Typo/motionType';
-import useAnimationTypo from '@Motions/Typo/useAnimationTypo';
 import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
 import { IAnimationElement } from '@/types/common';
 
+import useAnimationTypo from '../useAnimationTypo';
 import s from './styles.module.scss';
 
-export enum MotionWordsType {
+export enum MotionLinesType {
   mask = 'mask',
-  fade_slide_left = 'fade_slide_left',
+  fade = 'fade',
 }
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
-  type?: MotionWordsType;
+  type?: MotionLinesType;
 }
 
-export default function MotionWords({
+export default function MotionLines({
   children,
   motion,
   type,
 }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<IAnimationElement | null>(null);
+  const refContent = useRef<IAnimationElement>(null);
   const regGsap = useRef<gsap.core.Tween>();
 
   const motionInit = ({ splitText }: IPropMotionInit): void => {
-    refContent.current?.classList.add(s.words);
+    let tweenVars: gsap.TweenVars = {};
 
-    let twVars: gsap.TweenVars;
     switch (type) {
-      case MotionWordsType.fade_slide_left:
-        twVars = { xPercent: 100, opacity: 0 };
+      case MotionLinesType.fade:
+        refContent.current?.classList.add(s.lineFade);
+        tweenVars = { yPercent: 100, opacity: 0 };
         break;
-      case MotionWordsType.mask:
+      case MotionLinesType.mask:
       default:
-        twVars = { yPercent: 100 };
+        refContent.current?.classList.add(s.lineMask);
+        splitText?.lines?.length &&
+          splitText.lines.forEach((line) => {
+            const div = document.createElement('div');
+            div.appendChild(line);
+            div.classList.add('line__mask');
+            refContent.current?.appendChild(div);
+          });
+        tweenVars = { yPercent: 100 };
     }
 
-    splitText.words?.length && gsap.set(splitText.words, twVars);
+    splitText.lines?.length && gsap.set(splitText.lines, tweenVars);
   };
 
   const motionPlay = ({ splitText, tweenVars }: IPropMotionPlay): void => {
-    let twVars: gsap.TweenVars;
+    let twVars: gsap.TweenVars = {};
     switch (type) {
-      case MotionWordsType.fade_slide_left:
-        twVars = { xPercent: 0, opacity: 1, stagger: 0.015, duration: 1, ease: 'power3.inOut' };
+      case MotionLinesType.fade:
+        twVars = { yPercent: 0, opacity: 1 };
         break;
-      case MotionWordsType.mask:
+      case MotionLinesType.mask:
       default:
         twVars = { yPercent: 0 };
     }
 
-    regGsap.current = gsap.to(splitText.words, {
+    regGsap.current = gsap.to(splitText.lines, {
       ...tweenVars,
       ease: 'power3.out',
-      duration: 0.8,
+      duration: 1.2,
       stagger: 0.1,
       ...twVars,
     });
@@ -69,7 +77,7 @@ export default function MotionWords({
   };
 
   useAnimationTypo({
-    types: ['lines', 'words'],
+    types: ['lines'],
     refContent,
     motionPlay,
     motionInit,

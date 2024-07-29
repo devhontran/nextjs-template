@@ -1,15 +1,15 @@
 'use client';
 
-import MotionLineFade from '@Motions/Typo/LineFade';
+import MotionLines, { MotionLinesType } from '@Motions/Typo/Lines';
 
 import s from './styles.module.scss';
 
 export default function AboutPage(): JSX.Element {
   return (
     <section className={s.landingPage}>
-      <MotionLineFade>
+      <MotionLines type={MotionLinesType.fade}>
         <h1 className={s.heading}>This is the About Page</h1>
-      </MotionLineFade>
+      </MotionLines>
     </section>
   );
 }

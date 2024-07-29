@@ -1,13 +1,14 @@
 'use client';
 
 import { IPropMotionInit, IPropMotionPlay } from '@Motions/Typo/motionType';
-import s from '@Motions/Typo/styles.module.scss';
 import useAnimationTypo from '@Motions/Typo/useAnimationTypo';
 import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
 import { IAnimationElement } from '@/types/common';
+
+import s from './styles.module.scss';
 
 export enum MotionCharsType {
   mask = 'mask',

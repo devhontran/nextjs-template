@@ -1,0 +1,14 @@
+.chars {
+  &:not(:global(.animated)) {
+    :global {
+      .line {
+        @include masking;
+      }
+
+      .char {
+        will-change: transform;
+        @include with-will-change;
+      }
+    }
+  }
+}

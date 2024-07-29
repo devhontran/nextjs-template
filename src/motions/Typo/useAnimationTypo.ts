@@ -9,8 +9,6 @@ import SplitType from 'split-type';
 import { IAnimationProps } from '@/types/animation';
 import { IAnimationElement } from '@/types/common';
 
-import s from './styles.module.scss';
-
 interface IAnimationTypo extends IMotionTypeFncs {
   refContent: MutableRefObject<IAnimationElement | null>;
   types: ('lines' | 'words' | 'chars')[];
@@ -95,7 +93,7 @@ export default function useAnimationTypo({
   };
 
   const animationRevert = (): void => {
-    refContent.current?.classList.add(s.animated);
+    refContent.current?.classList.add('animated');
     motionRevert();
     refText.current?.revert();
     clearResize();

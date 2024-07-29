@@ -24,7 +24,7 @@ export default function MotionImageParallax({
 
     gsap.fromTo(
       refEl.current,
-      { scale, yPercent: yPercent },
+      { scale, yPercent },
       {
         scrollTrigger: {
           trigger: refWrap.current,
