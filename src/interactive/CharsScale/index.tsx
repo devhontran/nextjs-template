@@ -13,13 +13,13 @@ import SplitType from 'split-type';
 
 import s from './styles.module.scss';
 
-export default function InteractiveVariable({ children }: PropsWithChildren): ReactElement {
+export default function InteractiveCharsScale({ children }: PropsWithChildren): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!refContent.current) return;
 
-    refContent.current.classList.add(s.interactiveVariable);
+    refContent.current.classList.add(s.InteractiveCharsScale);
     const pt = new SplitType(refContent.current, { types: ['words', 'chars'] });
 
     pt.chars?.forEach((char, idx) => {
@@ -33,18 +33,15 @@ export default function InteractiveVariable({ children }: PropsWithChildren): Re
       span.addEventListener('mouseenter', () => {
         pt.chars?.forEach((cc, iidx) => {
           const distance = Math.abs(iidx - idx);
-          const wght = MathMap(distance, 0, 3, 700, 300);
-          const wdth = MathMap(distance, 0, 3, 110, 50);
-          cc.style.setProperty('--wght', `${Math.max(wght, 300)}`);
-          cc.style.setProperty('--wdth', `${Math.max(wdth, 50)}`);
+          const scale = MathMap(distance, 0, 3, 2, 1);
+          cc.style.setProperty('--scale', `${Math.max(scale, 1)}`);
         });
       });
     });
 
     refContent.current.addEventListener('mouseleave', () => {
       pt.chars?.forEach((cc) => {
-        cc.style.setProperty('--wght', `300`);
-        cc.style.setProperty('--wdth', `50`);
+        cc.style.setProperty('--scale', `1`);
       });
     });
   }, []);

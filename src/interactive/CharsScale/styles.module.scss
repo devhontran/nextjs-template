@@ -1,0 +1,14 @@
+.InteractiveCharsScale {
+  --scale: 1;
+  width: fit-content;
+
+  :global {
+    .char {
+      cursor: pointer;
+      transform: scaleY(var(--scale));
+      transform-origin: bottom center;
+      will-change: transform;
+      transition: all 0.8s var(--easeOutQuart);
+    }
+  }
+}

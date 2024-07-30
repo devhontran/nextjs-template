@@ -1,8 +1,8 @@
 'use client';
 
 import MotionPreview from '@Components/MotionPreview';
-import MotionChars, { MotionCharsType } from '@Motions/Typo/Chars';
-import MotionLineFade from '@Motions/Typo/LineFade';
+import InteractiveCharsScale from '@Interactive/CharsScale';
+import InteractiveVariable from '@Interactive/Variable';
 
 import s from './styles.module.scss';
 
@@ -11,17 +11,17 @@ export default function InteractivePage(): JSX.Element {
     <section className={s.landingPage}>
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-1">
-          <MotionPreview heading={'Motion Line Fade'}>
-            <MotionLineFade>
-              <h1 className={s.heading}>Home title Section 1</h1>
-            </MotionLineFade>
+          <MotionPreview heading={'Interactive Variable Font'}>
+            <InteractiveVariable>
+              <h1 className={s.heading}>Lorem Ipsum</h1>
+            </InteractiveVariable>
           </MotionPreview>
         </div>
         <div className="col-span-1">
-          <MotionPreview heading={'Motion Chars - Type: Scale'}>
-            <MotionChars type={MotionCharsType.scale}>
-              <h1 className={s.heading}>Home title Section 1</h1>
-            </MotionChars>
+          <MotionPreview heading={'Interactive Chars Scale: Center'}>
+            <InteractiveCharsScale>
+              <h1 className={s.heading}>Lorem Ipsum</h1>
+            </InteractiveCharsScale>
           </MotionPreview>
         </div>
       </div>

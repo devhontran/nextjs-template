@@ -1,0 +1,15 @@
+.interactiveVariable {
+  --wght: 300;
+  --wdth: 50;
+  width: fit-content;
+
+  :global {
+    .char {
+      cursor: pointer;
+      font-variation-settings:
+        'wght' var(--wght),
+        'wdth' var(--wdth);
+      transition: all 0.4s var(--easeOutQuart);
+    }
+  }
+}
