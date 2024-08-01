@@ -1,6 +1,7 @@
 'use client';
 
 import ImagePlaceHolder from '@Components/ImagePlaceHolder';
+import ImagePreload from '@Components/ImagePreload';
 import MotionPreview from '@Components/MotionPreview';
 import MotionFadeBox from '@Motions/FadeBox';
 import MotionImageParallax from '@Motions/ImageParallax';
@@ -75,7 +76,7 @@ export default function MotionPage(): JSX.Element {
               }}
               direction={MaskBoxType.BOTTOM_CENTER}
             >
-              <ImagePlaceHolder
+              <ImagePreload
                 width={1200}
                 height={900}
                 src={
