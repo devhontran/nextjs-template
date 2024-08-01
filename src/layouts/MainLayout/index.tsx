@@ -1,4 +1,3 @@
-import LenisScroller from '@Components/Lenis';
 import Animate from '@Layouts/Animation';
 import Header from '@Layouts/Header';
 import React, { PropsWithChildren } from 'react';
@@ -8,7 +7,8 @@ export default function MainLayout({ children }: PropsWithChildren): React.React
     <>
       <Animate>
         <Header />
-        <LenisScroller>{children}</LenisScroller>
+        {/*<LenisScroller>{children}</LenisScroller>*/}
+        {children}
       </Animate>
       {/*<MobileDisabledRotation />*/}
     </>

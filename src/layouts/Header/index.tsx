@@ -30,6 +30,9 @@ export default function Header(): React.ReactElement {
           <li>
             <LinkEffect href={'/interactive'}>Interactive</LinkEffect>
           </li>
+          <li>
+            <LinkEffect href={'/gallery-3d-scrolling'}>Gallery 3d Scrolling</LinkEffect>
+          </li>
         </ul>
       </div>
     </header>
