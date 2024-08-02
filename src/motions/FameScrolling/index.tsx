@@ -123,6 +123,8 @@ export default function FameScrolling({
         }
       };
 
+      const init = (): void => {};
+
       const runFrame = (): void => {
         const progress = refDom.current.progress || 0;
 
