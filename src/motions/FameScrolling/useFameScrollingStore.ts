@@ -1,5 +1,6 @@
 import { signal, useSignalEffect } from '@preact/signals-react';
 import { MathMap } from '@Utils/mathUtils';
+import { gsap } from 'gsap';
 
 export const fameCurrent = signal<number>(0);
 
@@ -28,6 +29,30 @@ export default function useAnimationOnFame({
         refContent.current.style.transform = `translateY(${Math.max(y, -100)}%)`;
         refContent.current.style.opacity = `${Math.max(opacity, 0)}`;
       }
+    }
+  });
+}
+
+export function useAnimationTriggerFrame(
+  refContent: React.RefObject<HTMLDivElement>,
+  frameStart: number,
+  frameEnd: number
+): void {
+  const isAnimationIn = useRef<boolean>(false);
+  const isAnimationOut = useRef<boolean>(false);
+
+  useSignalEffect(() => {
+    const frame = poFame.value;
+    if (frame >= frameStart && frame < frameEnd) {
+      if (!isAnimationIn.current) {
+        isAnimationIn.current = true;
+        isAnimationOut.current = false;
+        gsap.to(refContent.current, { opacity: 1, ease: 'power3.inOut', duration: 0.8 });
+      }
+    } else if (!isAnimationOut.current) {
+      isAnimationOut.current = true;
+      isAnimationIn.current = false;
+      gsap.to(refContent.current, { opacity: 0, ease: 'power3.inOut', duration: 0.8 });
     }
   });
 }
