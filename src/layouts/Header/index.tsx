@@ -4,6 +4,8 @@ import LinkEffect from '@Components/LinkEffect';
 import { useGSAP } from '@gsap/react';
 import React from 'react';
 
+import DeText from '@/components/DeText';
+
 import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {
@@ -35,6 +37,7 @@ export default function Header(): React.ReactElement {
           </li>
         </ul>
       </div>
+      <DeText />
     </header>
   );
 }

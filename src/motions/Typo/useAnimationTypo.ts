@@ -1,13 +1,12 @@
 import { useGSAP } from '@gsap/react';
-import { usePageForeEnter } from '@Layouts/Animation/usePageStatus';
 import { IMotionTypeFncs } from '@Motions/Typo/motionType';
 import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
 
+import { usePlayPage } from '@/layouts/Animation/usePageStatus';
 import { IAnimationProps } from '@/types/animation';
-import { IAnimationElement } from '@/types/common';
 
 interface IAnimationTypo extends IMotionTypeFncs {
   refContent: MutableRefObject<IAnimationElement | null>;
@@ -99,7 +98,7 @@ export default function useAnimationTypo({
     clearResize();
   };
 
-  usePageForeEnter(() => {
+  usePlayPage(() => {
     motionEnabled.peek() && animationIn();
     return motionRevert;
   });

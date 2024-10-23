@@ -97,7 +97,7 @@ export default function FameScrolling({
           refDom.current.currentUrlFrame = urlFrame;
         }
 
-        if (frame > totalFrames || refDom.current.images[frame]) return;
+        if (frame > totalFrames || !refDom.current.images[frame]) return;
         registerImgDom(frame, true);
         refDom.current.images[frame].image.onload = (): void => {
           if (!onLoaded) {
@@ -122,8 +122,6 @@ export default function FameScrolling({
           });
         }
       };
-
-      const init = (): void => {};
 
       const runFrame = (): void => {
         const progress = refDom.current.progress || 0;

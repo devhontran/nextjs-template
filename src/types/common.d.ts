@@ -1,4 +1,4 @@
-export type IAnimationElement =
+type IAnimationElement =
   | HTMLDivElement
   | HTMLElement
   | HTMLParagraphElement
@@ -8,7 +8,7 @@ export type IAnimationElement =
   | HTMLButtonElement
   | HTMLHeadingElement;
 
-export interface ISliderItem {
+interface ISliderItem {
   urlVid: string;
   urlMov: string;
   urlMov_mobile: string;
@@ -18,4 +18,9 @@ export interface ISliderItem {
   idx?: number;
 }
 
-export type TSection = 'hero' | 'about' | 'service' | 'contact';
+type TSection = 'hero' | 'about' | 'service' | 'contact';
+interface ILinkEffect {
+  pathName: string;
+  pageName?: string;
+  typeEffect?: 'page' | 'work' | 'next';
+}

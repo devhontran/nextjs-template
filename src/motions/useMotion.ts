@@ -1,9 +1,8 @@
-import { usePageForeEnter } from '@Layouts/Animation/usePageStatus';
 import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 
+import { usePlayPage } from '@/layouts/Animation/usePageStatus';
 import { IAnimationProps } from '@/types/animation';
-import { IAnimationElement } from '@/types/common';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
@@ -46,7 +45,7 @@ export default function useMotion({
     });
   };
 
-  usePageForeEnter(() => {
+  usePlayPage(() => {
     motionEnabled.peek() && animationIn();
     return motionRevert;
   });
