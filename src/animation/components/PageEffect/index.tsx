@@ -1,6 +1,5 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import {
   dispatchUrl,
   pageEffectInned,
@@ -8,7 +7,8 @@ import {
   useHandleLoaderInEffect,
   usePageEffectIn,
   usePageEffectOut,
-} from '@Layouts/PageEffect/pageEffectSignal';
+} from '@/Animation/components/PageEffect/pageEffectSignal';
+import { useGSAP } from '@gsap/react';
 import cn from 'classnames';
 import { gsap } from 'gsap';
 import React, { useEffect, useRef } from 'react';

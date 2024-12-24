@@ -1,7 +1,8 @@
 import { TIME_WAIT_PAGE_ENTER_TRANSITION } from '@Constants/animation';
-import { pageBeforeEnter, PageStatus, pageStatus } from '@Layouts/Animation/usePageStatus';
 import { usePreloader } from '@Layouts/Animation/usePreloader';
 import { signal, useSignalEffect } from '@preact/signals-react';
+
+import { pageBeforeEnter, PageStatus, pageStatus } from '@/Animation/usePageStatus';
 
 export enum PageEffectStatus {
   IN = 'IN',

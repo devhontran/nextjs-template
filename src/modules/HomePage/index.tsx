@@ -1,27 +1,14 @@
 'use client';
 
-import MotionChars, { MotionCharsType } from '@Motions/Typo/Chars';
-import MotionLines, { MotionLinesType } from '@Motions/Typo/Lines';
+import MotionLines, { MotionLinesType } from '@/animation/motions/Typo/Lines';
 
 import s from './styles.module.scss';
 
 export default function HomePage(): JSX.Element {
   return (
     <section className={s.landingPage}>
-      <MotionChars type={MotionCharsType.mask_top}>
-        <h1 className={s.heading}>What is Lorem Ipsum?</h1>
-      </MotionChars>
-
-      <MotionLines type={MotionLinesType.mask} motion={{ delayEnter: 0.15 }}>
-        <div className={s.paragraph}>
-          {`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-          a galley of type and scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting, remaining essentially
-          unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-          Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-          PageMaker including versions of Lorem Ipsum.`}
-        </div>
+      <MotionLines type={MotionLinesType.fade}>
+        <h1 className={s.heading}>This is the Home Page</h1>
       </MotionLines>
     </section>
   );

@@ -1,8 +1,8 @@
 'use client';
 
-import useImagePreloader from '@Layouts/Animation/useImagePreloader';
+import useImagePreloader from '@/animation/useImagePreloader';
 import Image, { ImageProps } from 'next/image';
-import React, { ReactElement, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 
 import s from './style.module.scss';
 

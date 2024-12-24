@@ -1,7 +1,7 @@
 import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 
-import { usePlayPage } from '@/layouts/Animation/usePageStatus';
+import { usePlayPage } from '@/animation/usePageStatus';
 import { IAnimationProps } from '@/types/animation';
 
 interface IMotionProps {

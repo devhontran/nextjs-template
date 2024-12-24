@@ -1,4 +1,4 @@
-import Animate from '@Layouts/Animation';
+import Animate from '@/animation';
 import Header from '@Layouts/Header';
 import React, { PropsWithChildren } from 'react';
 

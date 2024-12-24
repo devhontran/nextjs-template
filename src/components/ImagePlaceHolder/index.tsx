@@ -1,9 +1,9 @@
 'use client';
 
-import useImagePreloader from '@Layouts/Animation/useImagePreloader';
+import useImagePreloader from '@/animation/useImagePreloader';
 import { useSignal, useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
-import React, { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 
 import s from './style.module.scss';
 

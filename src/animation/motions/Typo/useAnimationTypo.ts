@@ -5,7 +5,7 @@ import { calcThreshold, getDelay } from '@Utils/uiHelper';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
 
-import { usePlayPage } from '@/layouts/Animation/usePageStatus';
+import { usePlayPage } from '@/animation/usePageStatus';
 import { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo extends IMotionTypeFncs {

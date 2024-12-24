@@ -6,12 +6,17 @@ import {
   pageStatus,
   usePageEnter,
   usePageForeEnter,
-} from '@Layouts/Animation/usePageStatus';
+} from '@/animation/usePageStatus';
 import {
   registerPreloader,
   resetPreloader,
   unRegisterPreloader,
 } from '@Layouts/Animation/usePreloader';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+
 import {
   dispatchUrl,
   dispatchUrlValue,
@@ -20,11 +25,7 @@ import {
   pageEffectStatus,
   usePageEffectInned,
   usePageEffectOuted,
-} from '@Layouts/PageEffect/pageEffectSignal';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+} from '@/animation/components/PageEffect/pageEffectSignal';
 
 export default function useAnimationHelper(): void {
   const pathName = usePathname();

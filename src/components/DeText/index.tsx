@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { useRef } from 'react';
 import SplitType from 'split-type';
 
-import { usePageEnter } from '@/layouts/Animation/usePageStatus';
+import { usePageEnter } from '@/animation/usePageStatus';
 
 export default function DeText(): JSX.Element {
   const elTextClose = useRef<HTMLDivElement>(null);

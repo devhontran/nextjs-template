@@ -1,6 +1,11 @@
-import { pageBeforeLeave } from '@Layouts/Animation/usePageStatus';
-import { dispatchUrl, pageEffectIn, urlState } from '@Layouts/PageEffect/pageEffectSignal';
+import { pageBeforeLeave } from '@/animation/usePageStatus';
 import { useRouter } from 'next/navigation';
+
+import {
+  dispatchUrl,
+  pageEffectIn,
+  urlState,
+} from '@/animation/components/PageEffect/pageEffectSignal';
 
 export default function useRouterEffect(): {
   routerEffect: ({ url }: { url: string }) => void;
