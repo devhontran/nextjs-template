@@ -1,4 +1,3 @@
-import { pageBeforeLeave } from '@/animation/usePageStatus';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -6,6 +5,7 @@ import {
   pageEffectIn,
   urlState,
 } from '@/animation/components/PageEffect/pageEffectSignal';
+import { pageBeforeLeave } from '@/animation/usePageStatus';
 
 export default function useRouterEffect(): {
   routerEffect: ({ url }: { url: string }) => void;

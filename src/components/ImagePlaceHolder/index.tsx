@@ -1,9 +1,10 @@
 'use client';
 
-import useImagePreloader from '@/animation/useImagePreloader';
 import { useSignal, useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
 import { ReactElement, useRef, useState } from 'react';
+
+import useImagePreloader from '@/animation/useImagePreloader';
 
 import s from './style.module.scss';
 

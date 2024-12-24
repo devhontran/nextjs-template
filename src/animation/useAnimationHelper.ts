@@ -1,13 +1,4 @@
 import {
-  pageEnter,
-  pageLeave,
-  pageReplace,
-  PageStatus,
-  pageStatus,
-  usePageEnter,
-  usePageForeEnter,
-} from '@/animation/usePageStatus';
-import {
   registerPreloader,
   resetPreloader,
   unRegisterPreloader,
@@ -26,6 +17,15 @@ import {
   usePageEffectInned,
   usePageEffectOuted,
 } from '@/animation/components/PageEffect/pageEffectSignal';
+import {
+  pageEnter,
+  pageLeave,
+  pageReplace,
+  PageStatus,
+  pageStatus,
+  usePageEnter,
+  usePageForeEnter,
+} from '@/animation/usePageStatus';
 
 export default function useAnimationHelper(): void {
   const pathName = usePathname();

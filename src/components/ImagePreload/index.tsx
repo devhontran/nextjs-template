@@ -1,8 +1,9 @@
 'use client';
 
-import useImagePreloader from '@/animation/useImagePreloader';
 import Image, { ImageProps } from 'next/image';
 import { ReactElement, useRef } from 'react';
+
+import useImagePreloader from '@/animation/useImagePreloader';
 
 import s from './style.module.scss';
 

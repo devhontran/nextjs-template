@@ -1,9 +1,10 @@
-import { PageStatus, pageStatus } from '@/animation/usePageStatus';
 import useWindowResize from '@Hooks/useWindowResize';
 import { useSignalEffect } from '@preact/signals-react';
 import { MathMap } from '@Utils/mathUtils';
 import { useLenis } from 'lenis/react';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
+
+import { PageStatus, pageStatus } from '@/animation/usePageStatus';
 
 import s from './styles.module.scss';
 

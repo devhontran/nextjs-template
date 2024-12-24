@@ -1,6 +1,7 @@
-import Animate from '@/animation';
 import Header from '@Layouts/Header';
 import React, { PropsWithChildren } from 'react';
+
+import Animate from '@/animation';
 
 export default function MainLayout({ children }: PropsWithChildren): React.ReactElement {
   return (

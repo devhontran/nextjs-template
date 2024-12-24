@@ -1,5 +1,10 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
+import cn from 'classnames';
+import { gsap } from 'gsap';
+import React, { useEffect, useRef } from 'react';
+
 import {
   dispatchUrl,
   pageEffectInned,
@@ -8,10 +13,6 @@ import {
   usePageEffectIn,
   usePageEffectOut,
 } from '@/Animation/components/PageEffect/pageEffectSignal';
-import { useGSAP } from '@gsap/react';
-import cn from 'classnames';
-import { gsap } from 'gsap';
-import React, { useEffect, useRef } from 'react';
 
 import s from './styles.module.scss';
 

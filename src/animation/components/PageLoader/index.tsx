@@ -1,12 +1,13 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import { pageBeforeEnter, pageEnter } from '@/animation/usePageStatus';
 import { usePreloader } from '@Layouts/Animation/usePreloader';
 import { useSignalEffect } from '@preact/signals-react';
 import cn from 'classnames';
 import gsap from 'gsap';
 import React, { useRef } from 'react';
+
+import { pageBeforeEnter, pageEnter } from '@/animation/usePageStatus';
 
 import s from './styles.module.scss';
 

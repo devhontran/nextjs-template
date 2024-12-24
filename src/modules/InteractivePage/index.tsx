@@ -1,9 +1,10 @@
 'use client';
 
+import MotionPreview from '@Components/MotionPreview';
+
 import InteractiveCharsScale from '@/animation/interactive/CharsScale';
 import InteractiveTextGlitch, { TextGlitch } from '@/animation/interactive/TextGlitch';
 import InteractiveVariable from '@/animation/interactive/Variable';
-import MotionPreview from '@Components/MotionPreview';
 
 import s from './styles.module.scss';
 
