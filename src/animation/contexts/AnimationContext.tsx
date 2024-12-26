@@ -1,3 +1,4 @@
+'use client';
 import { useGSAP } from '@gsap/react';
 import { Signal, useComputed, useSignal } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
@@ -17,13 +18,13 @@ const DESKTOP_BREAKPOINT = 1200;
 const AnimationContext = createContext<AnimationContextValue | null>(null);
 
 export function AnimationProvider({ children }: { children: ReactNode }): ReactElement {
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-  });
-
   const width = useSignal(typeof window !== 'undefined' ? window.innerWidth : 0);
   const height = useSignal(typeof window !== 'undefined' ? window.innerHeight : 0);
   const scrollHeight = useSignal(typeof document !== 'undefined' ? document.body.scrollHeight : 0);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  });
 
   const listener = useMemo(
     () =>
@@ -34,8 +35,6 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
       }, 150),
     []
   );
-
-  useGSAP(() => {});
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;

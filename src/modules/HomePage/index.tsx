@@ -1,6 +1,6 @@
 'use client';
 
-import MotionLines, { MotionLinesType } from '@/animation/motions/Typo/Lines';
+import MotionLines, { MotionLinesType } from '@/animation/components/Typo/Lines';
 
 import s from './styles.module.scss';
 

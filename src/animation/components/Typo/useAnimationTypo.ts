@@ -1,10 +1,10 @@
 import { useGSAP } from '@gsap/react';
-import { IMotionTypeFncs } from '@Motions/Typo/motionType';
 import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
 
+import { IMotionTypeFncs } from '@/animation/components/Typo/motionType';
 import { usePlayPage } from '@/animation/usePageStatus';
 import { IAnimationProps } from '@/types/animation';
 

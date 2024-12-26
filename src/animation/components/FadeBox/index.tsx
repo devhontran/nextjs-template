@@ -1,10 +1,10 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import useMotion from '@Motions/useMotion';
 import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
+import useMotion from '@/animation/hooks/useMotion';
 import { IAnimationProps } from '@/types/animation';
 import { IAnimationElement } from '@/types/common';
 

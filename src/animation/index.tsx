@@ -1,9 +1,8 @@
-'use client';
-
 import { PropsWithChildren } from 'react';
 
 import PageEffect from './components/PageEffect';
 import PageLoader from './components/PageLoader';
+import PageReset from './components/PageReset';
 import { AnimationProvider } from './contexts/AnimationContext';
 
 interface Props extends PropsWithChildren {}
@@ -11,11 +10,10 @@ interface Props extends PropsWithChildren {}
 export default function Animation({ children }: Props): React.ReactElement {
   return (
     <AnimationProvider>
-      <main>
-        <PageLoader />
-        <PageEffect />
-        {children}
-      </main>
+      <PageLoader />
+      <PageEffect />
+      {children}
+      <PageReset />
     </AnimationProvider>
   );
 }

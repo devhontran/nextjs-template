@@ -1,7 +1,8 @@
 'use client';
 
-import FameScrolling from '@Motions/FameScrolling';
 import { ReactElement } from 'react';
+
+import FameScrolling from '@/animation/components/FameScrolling';
 
 import s from './style.module.scss';
 export default function ScrollFameModule(): ReactElement {

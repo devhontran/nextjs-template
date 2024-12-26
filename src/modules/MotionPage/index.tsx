@@ -3,13 +3,14 @@
 import ImagePlaceHolder from '@Components/ImagePlaceHolder';
 import ImagePreload from '@Components/ImagePreload';
 import MotionPreview from '@Components/MotionPreview';
-import MotionFadeBox from '@Motions/FadeBox';
-import MotionImageParallax from '@Motions/ImageParallax';
-import MotionMaskBox, { MaskBoxType } from '@Motions/MaskBox';
-import MotionParallaxBox from '@Motions/ParallaxBox';
-import MotionChars, { MotionCharsType } from '@Motions/Typo/Chars';
-import MotionLines, { MotionLinesType } from '@Motions/Typo/Lines';
-import MotionWords, { MotionWordsType } from '@Motions/Typo/Words';
+
+import MotionFadeBox from '@/animation/components/FadeBox';
+import MotionImageParallax from '@/animation/components/ImageParallax';
+import MotionMaskBox, { MaskBoxType } from '@/animation/components/MaskBox';
+import MotionParallaxBox from '@/animation/components/ParallaxBox';
+import MotionChars, { MotionCharsType } from '@/animation/components/Typo/Chars';
+import MotionLines, { MotionLinesType } from '@/animation/components/Typo/Lines';
+import MotionWords, { MotionWordsType } from '@/animation/components/Typo/Words';
 
 import s from './styles.module.scss';
 

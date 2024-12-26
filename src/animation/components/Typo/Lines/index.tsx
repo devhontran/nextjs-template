@@ -1,9 +1,9 @@
 'use client';
 
-import { IPropMotionInit, IPropMotionPlay } from '@Motions/Typo/motionType';
 import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
+import { IPropMotionInit, IPropMotionPlay } from '@/animation/components/Typo/motionType';
 import { IAnimationProps } from '@/types/animation';
 import { IAnimationElement } from '@/types/common';
 
