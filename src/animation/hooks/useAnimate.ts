@@ -10,6 +10,7 @@ interface IMotionProps {
 
 export default function useAnimate({ refContent, motion }: IMotionProps): gsap.TweenVars {
   const gsapWars = useMemo((): gsap.TweenVars => {
+    refContent.current?.classList.add('is-before-animate');
     const delay = getDelay({
       element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
@@ -25,11 +26,11 @@ export default function useAnimate({ refContent, motion }: IMotionProps): gsap.T
       scrollTrigger: {
         trigger: refContent.current,
         start: motion?.start || `top+=${topStart}% bottom`,
-        onToggle: (self): void => {
-          !self.isActive && refContent.current?.classList.add('animated');
-        },
         once: true,
         markers: motion?.markers,
+        onEnter: (): void => {
+          refContent.current?.classList.remove('is-before-animate');
+        },
       },
       delay,
     };

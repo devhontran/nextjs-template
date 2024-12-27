@@ -1,11 +1,11 @@
 import { useGSAP } from '@gsap/react';
-import { motionEnabled, useMotionEnabled } from '@Motions/useMotionStore';
+import { useSignal } from '@preact/signals-react';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
 
 import { IMotionTypeFncs } from '@/animation/components/Typo/motionType';
-import { usePlayPage } from '@/animation/usePageStatus';
+import { usePagePlay } from '@/animation/hooks/usePage';
 import { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo extends IMotionTypeFncs {
@@ -18,45 +18,29 @@ export default function useAnimationTypo({
   types,
   refContent,
   motionInit,
-  motionPlay,
   motionRevert,
+  motionPlay,
   motion,
 }: IAnimationTypo): void {
+  const isAnimated = useSignal<boolean>(false);
   const refText = useRef<SplitType | null>(null);
+  const { contextSafe } = useGSAP(() => {
+    refContent.current?.classList.add('is-before-animate');
 
-  const refOptions = useRef<{
-    dbTiming: NodeJS.Timeout | null;
-    obResize: ResizeObserver | null;
-    isCallPlay: boolean;
-  }>({ obResize: null, dbTiming: null, isCallPlay: false });
-
-  const { contextSafe } = useGSAP();
-
-  const animationInit = contextSafe(() => {
-    if (!refContent.current) return;
-
-    refText.current = new SplitType(refContent.current, { types });
-    refOptions.current.obResize = new ResizeObserver(() => {
-      refOptions.current.dbTiming && clearTimeout(refOptions.current.dbTiming);
-      refOptions.current.dbTiming = setTimeout(() => {
-        motionRevert();
-        refText.current?.split({});
-        refText.current && motionInit({ splitText: refText.current });
-        refOptions.current.isCallPlay && animationIn();
-      }, 150);
-    });
-
-    refOptions.current.obResize?.observe(refContent.current);
     return () => {
-      motionRevert();
-      refText.current?.revert();
-      refContent.current && refOptions.current.obResize?.unobserve(refContent.current);
-      refOptions.current.obResize?.disconnect();
+      refContent.current?.classList.remove('is-before-animate');
     };
   });
 
+  const animationInit = contextSafe(() => {
+    if (!refContent.current) return;
+    refText.current = new SplitType(refContent.current, { types });
+    motionInit({ splitText: refText.current });
+    return motionRevert;
+  });
+
   const animationIn = contextSafe(() => {
-    refOptions.current.isCallPlay = true;
+    if (!isAnimated.peek()) return;
     const delay = getDelay({
       element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
@@ -67,41 +51,27 @@ export default function useAnimationTypo({
       threshold: motion?.threshold,
     });
 
-    refText.current &&
-      motionPlay({
-        splitText: refText.current,
-        tweenVars: {
-          scrollTrigger: {
-            trigger: refContent.current,
-            start: motion?.start || `top+=${topStart}% bottom`,
-            onToggle: (self) => {
-              !self.isActive && animationRevert();
+    ScrollTrigger.create({
+      trigger: refContent.current,
+      start: motion?.start || `top+=${topStart}% bottom`,
+      once: true,
+      markers: motion?.markers,
+      onEnter: () => {
+        if (!refText.current) return;
+        animationInit();
+        motionPlay({
+          splitText: refText.current,
+          tweenVars: {
+            onStart: () => {
+              refContent.current?.classList.remove('is-before-animate');
+              isAnimated.value = true;
             },
-            once: true,
-            markers: motion?.markers,
+            delay,
           },
-          delay,
-          onStart: clearResize,
-        },
-      });
+        });
+      },
+    });
   });
 
-  const clearResize = (): void => {
-    refContent.current && refOptions.current.obResize?.unobserve(refContent.current);
-    refOptions.current.obResize?.disconnect();
-  };
-
-  const animationRevert = (): void => {
-    refContent.current?.classList.add('animated');
-    motionRevert();
-    refText.current?.revert();
-    clearResize();
-  };
-
-  usePlayPage(() => {
-    motionEnabled.peek() && animationIn();
-    return motionRevert;
-  });
-
-  useMotionEnabled(animationInit);
+  usePagePlay(animationIn);
 }

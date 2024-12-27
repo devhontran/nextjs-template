@@ -5,15 +5,6 @@ import cn from 'classnames';
 import { gsap } from 'gsap';
 import React, { useEffect, useRef } from 'react';
 
-import {
-  dispatchUrl,
-  pageEffectInned,
-  pageEffectOuted,
-  useHandleLoaderInEffect,
-  usePageEffectIn,
-  usePageEffectOut,
-} from '@/Animation/components/PageEffect/pageEffectSignal';
-
 import s from './styles.module.scss';
 
 export default function PageEffect(): React.ReactElement {
@@ -28,7 +19,7 @@ export default function PageEffect(): React.ReactElement {
       ease: 'power3.out',
       duration: 0.6,
       onComplete: () => {
-        pageEffectInned();
+        // pageEffectInned();
       },
     });
   });
@@ -40,19 +31,19 @@ export default function PageEffect(): React.ReactElement {
       pointerEvents: 'none',
       duration: 0.5,
       onComplete: () => {
-        pageEffectOuted();
+        // pageEffectOuted();
       },
     });
   });
 
-  usePageEffectIn(animationIn);
-  usePageEffectOut(animationOut);
-  useHandleLoaderInEffect();
+  // usePageEffectIn(animationIn);
+  // usePageEffectOut(animationOut);
+  // useHandleLoaderInEffect();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.onpopstate = (window.history as any).onpushstate = function (): void {
-      dispatchUrl(window.location.pathname);
+      // dispatchUrl(window.location.pathname);
     };
   }, []);
 
