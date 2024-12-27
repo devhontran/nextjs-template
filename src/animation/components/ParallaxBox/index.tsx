@@ -1,57 +1,67 @@
-import useWindowResize from '@Hooks/useWindowResize';
-import { useSignalEffect } from '@preact/signals-react';
+'use client';
+
 import { MathMap } from '@Utils/mathUtils';
+import classNames from 'classnames';
 import { useLenis } from 'lenis/react';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
 
-import { PageStatus, pageStatus } from '@/animation/usePageStatus';
+import { useAnimationContext } from '@/animation/contexts/AnimationContext';
+import { isPageEnter } from '@/animation/signals/pageSignals';
 
 import s from './styles.module.scss';
 
-interface IImageParallaxProps extends PropsWithChildren {
+type Props = PropsWithChildren & {
   speed: number;
-}
+  min?: number;
+  max?: number;
+  isBackground?: boolean;
+  className?: string;
+  classNameImage?: string;
+};
 
-export default function MotionParallaxBox({ speed, children }: IImageParallaxProps): ReactElement {
-  const refWrap = useRef<HTMLDivElement>(null);
-  const refInner = useRef<HTMLDivElement>(null);
-  const refRect = useRef<{ rect: DOMRect; wHeight: number }>({ rect: {} as DOMRect, wHeight: 0 });
+const MotionParallaxBox = ({
+  speed,
+  min,
+  max,
+  isBackground,
+  className,
+  classNameImage,
+  children,
+}: Props): ReactElement => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const { height: wH } = useAnimationContext();
 
-  const { height } = useWindowResize();
+  useLenis(() => {
+    if (!wrapperRef.current || !isPageEnter()) return;
+    const { top, height } = wrapperRef.current.getBoundingClientRect();
+    const wHeight = wH.peek();
 
-  useSignalEffect(() => {
-    const wHeight = height.value;
-    const isEnter = pageStatus.value === PageStatus.PAGE_ENTER;
-    if (!refWrap.current || !isEnter) return;
-    const rect = refWrap.current.getBoundingClientRect();
-    const scroll = window.lenis?.lenis?.scroll || 0;
-    refRect.current = {
-      rect: {
-        top: rect.top + scroll,
-        bottom: rect.bottom + scroll,
-        left: rect.left,
-        right: rect.right,
-        width: rect.width,
-        height: rect.height,
-      } as DOMRect,
-      wHeight: wHeight,
-    };
+    const center = top + height / 2 + (height - wHeight);
+    let yTran = MathMap(center, wHeight, 0, -wHeight / 2, wHeight / 2);
+
+    if (min !== undefined) {
+      yTran = Math.min(yTran, min);
+    }
+    if (max !== undefined) {
+      yTran = Math.max(yTran, max);
+    }
+
+    if (innerRef.current)
+      innerRef.current.style.transform = `translate3d(0, ${yTran * speed}px, 0)`;
   });
-
-  useLenis(({ scroll }) => {
-    const wHeight = refRect.current.wHeight;
-    const center = refRect.current.rect.top - scroll + refRect.current.rect.height / 2;
-
-    const yTran = MathMap(center, wHeight, wHeight / 2, wHeight, 0);
-    if (refInner.current)
-      refInner.current.style.transform = `translate3d(0, ${yTran * speed}px, 0)`;
-  });
-
   return (
-    <div ref={refWrap} className={s.parallaxBox}>
-      <div ref={refInner} className={s.parallaxBox_inner}>
+    <div
+      ref={wrapperRef}
+      className={classNames(s.parallaxBox, { [s.isBackground]: isBackground }, className)}
+    >
+      <div ref={innerRef} className={classNames(s.parallaxBox_inner, classNameImage)}>
         {children}
       </div>
     </div>
   );
-}
+};
+
+MotionParallaxBox.displayName = 'MotionParallaxBox';
+
+export default MotionParallaxBox;

@@ -1,5 +1,5 @@
-import '../styles/app.scss';
 import '@/constants/metadata';
+import '../styles/app.scss';
 
 // import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Viewport } from 'next';
@@ -19,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration = 'manual'` }} />
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
       </head>
       <body>
         <MainLayout>{children}</MainLayout>

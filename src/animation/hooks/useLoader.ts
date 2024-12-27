@@ -7,13 +7,13 @@ export function useLoader(): {
   isLoaded: ReadonlySignal<boolean>;
 } {
   const isLoaded = useComputed(() => {
-    const { requests, loadTo } = preloaderState;
-    return requests.value > 0 && requests.value === loadTo.value;
+    const { requests, loadTo } = preloaderState.value;
+    return requests > 0 && requests === loadTo;
   });
 
   const progress = useComputed(() => {
-    const { requests, loadTo } = preloaderState;
-    return Math.round((loadTo.value / requests.value) * 100);
+    const { requests, loadTo } = preloaderState.value;
+    return Math.round(requests === 0 ? 0 : (loadTo / requests) * 100);
   });
 
   return { progress, isLoaded };

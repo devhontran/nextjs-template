@@ -1,19 +1,24 @@
+'use client';
+
 import { useGSAP } from '@gsap/react';
+import classNames from 'classnames';
 import gsap from 'gsap';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import s from './styles.module.scss';
 
-interface IImageParallaxProps extends PropsWithChildren {
+type Props = PropsWithChildren & {
   speed: number;
   scale: number;
-}
+  className?: string;
+};
 
-export default function MotionImageParallax({
+const MotionImageParallax = ({
   children,
   speed,
+  className,
   scale: scaleInput,
-}: IImageParallaxProps): ReactElement {
+}: Props): ReactElement => {
   const refWrap = useRef<HTMLDivElement>(null);
   const refEl = useRef<HTMLDivElement>(null);
 
@@ -39,10 +44,14 @@ export default function MotionImageParallax({
   });
 
   return (
-    <div className={s.imageParallax} ref={refWrap}>
+    <div className={classNames(s.imageParallax, className)} ref={refWrap}>
       <div className={s.imageParallax_inner} ref={refEl}>
         {children}
       </div>
     </div>
   );
-}
+};
+
+MotionImageParallax.displayName = 'MotionImageParallax';
+
+export default MotionImageParallax;

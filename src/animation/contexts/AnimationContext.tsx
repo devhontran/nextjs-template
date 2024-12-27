@@ -12,6 +12,9 @@ interface AnimationContextValue {
   isMobile: Signal<boolean>;
   isTablet: Signal<boolean>;
   isDesktop: Signal<boolean>;
+  height: Signal<number>;
+  width: Signal<number>;
+  scrollHeight: Signal<number>;
 }
 
 const MOBILE_BREAKPOINT = 768;
@@ -41,8 +44,8 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
     }, 150);
 
     Promise.all([document.fonts.ready, document.readyState]).then(() => {
+      console.log('___fonts ready');
       unRegisterPreloader();
-      console.log('fonts ready');
     });
 
     const resizeObserver = new ResizeObserver(listener);
@@ -52,10 +55,12 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
       resizeObserver.unobserve(document.body);
       resizeObserver.disconnect();
     };
-  });
+  }, []);
 
   return (
-    <AnimationContext.Provider value={{ isMobile, isTablet, isDesktop }}>
+    <AnimationContext.Provider
+      value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}
+    >
       {children}
     </AnimationContext.Provider>
   );

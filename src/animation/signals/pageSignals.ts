@@ -8,10 +8,15 @@ export enum PageState {
 }
 
 export const pageState = signal<PageState>(PageState.Idle);
-export const pageEffectState = {
-  pathName: signal<string>('/'),
-  pageName: signal<string>('Home'),
-};
+export const routerState = signal<{
+  pathName: string;
+  pageName: string;
+  typeEffect: string;
+}>({
+  pathName: '/',
+  pageName: 'Home',
+  typeEffect: 'fade',
+});
 
 export const pageLeave = (): void => {
   pageState.value = PageState.Leave;
@@ -28,3 +33,11 @@ export const pagePlay = (): void => {
 export const pageIdle = (): void => {
   pageState.value = PageState.Idle;
 };
+
+export const isPageEnter = (): boolean => pageState.peek() === PageState.Enter;
+
+export const isPageLeave = (): boolean => pageState.peek() === PageState.Leave;
+
+export const isPagePlay = (): boolean => pageState.peek() === PageState.Play;
+
+export const isPageIdle = (): boolean => pageState.peek() === PageState.Idle;
