@@ -1,19 +1,26 @@
 import { ReadonlySignal, Signal, useComputed, useSignalEffect } from '@preact/signals-react';
 
-import { preloaderState } from '../signals/preloaderSignals';
+import { preloaderState_loadTo, preloaderState_requests } from '../signals/preloaderSignals';
 
 export function useLoader(): {
   progress: Signal<number>;
   isLoaded: ReadonlySignal<boolean>;
 } {
   const isLoaded = useComputed(() => {
-    const { requests, loadTo } = preloaderState.value;
-    return requests > 0 && requests === loadTo;
+    const requests = preloaderState_requests.value;
+    const loadTo = preloaderState_loadTo.value;
+    return requests > 0 && loadTo > 0 && requests === loadTo;
   });
 
   const progress = useComputed(() => {
-    const { requests, loadTo } = preloaderState.value;
-    return Math.round(requests === 0 ? 0 : (loadTo / requests) * 100);
+    const requests = preloaderState_requests.value;
+    const loadTo = preloaderState_loadTo.value;
+
+    console.log('____progress', requests, loadTo);
+    return Math.min(
+      Math.round(requests === 0 || loadTo === 0 ? 0 : (loadTo / requests) * 100),
+      100
+    );
   });
 
   return { progress, isLoaded };
@@ -24,7 +31,6 @@ export function useIsLoaded(callback: () => void): void {
 
   useSignalEffect(() => {
     if (!isLoaded.value) return;
-
     callback();
   });
 }
@@ -36,7 +42,6 @@ export function useIsFontLoaded(callback: () => void): void {
 
   useSignalEffect(() => {
     if (!isFontLoaded.value) return;
-
     callback();
   });
 }

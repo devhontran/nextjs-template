@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
-import { useSignal } from '@preact/signals-react';
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MutableRefObject, useRef } from 'react';
 import SplitType from 'split-type';
 
@@ -22,9 +23,9 @@ export default function useAnimationTypo({
   motionPlay,
   motion,
 }: IAnimationTypo): void {
-  const isAnimated = useSignal<boolean>(false);
   const refText = useRef<SplitType | null>(null);
   const { contextSafe } = useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     refContent.current?.classList.add('is-before-animate');
 
     return () => {
@@ -40,7 +41,6 @@ export default function useAnimationTypo({
   });
 
   const animationIn = contextSafe(() => {
-    if (!isAnimated.peek()) return;
     const delay = getDelay({
       element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
@@ -57,18 +57,18 @@ export default function useAnimationTypo({
       once: true,
       markers: motion?.markers,
       onEnter: () => {
-        if (!refText.current) return;
         animationInit();
-        motionPlay({
-          splitText: refText.current,
-          tweenVars: {
-            onStart: () => {
-              refContent.current?.classList.remove('is-before-animate');
-              isAnimated.value = true;
+        console.log('____animationIn');
+        refText.current &&
+          motionPlay({
+            splitText: refText.current,
+            tweenVars: {
+              onStart: () => {
+                refContent.current?.classList.remove('is-before-animate');
+              },
+              delay,
             },
-            delay,
-          },
-        });
+          });
       },
     });
   });

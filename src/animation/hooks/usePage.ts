@@ -1,25 +1,39 @@
-import { PageState, pageState } from '../signals/pageSignals';
+import { useSignalEffect } from '@preact/signals-react';
+
+import { PageState, pageState, routerState } from '../signals/pageSignals';
 
 export function usePageEnter(onEnter: () => void): void {
-  if (pageState.value === PageState.Enter) {
-    onEnter();
-  }
+  useSignalEffect(() => {
+    if (pageState.value === PageState.Enter) {
+      onEnter();
+    }
+  });
 }
 
 export function usePageLeave(onLeave: () => void): void {
-  if (pageState.value === PageState.Leave) {
-    onLeave();
-  }
+  useSignalEffect(() => {
+    if (pageState.value === PageState.Leave) {
+      onLeave();
+    }
+  });
 }
 
 export function usePagePlay(onPlay: () => void): void {
-  if (pageState.value === PageState.Play) {
-    onPlay();
-  }
+  useSignalEffect(() => {
+    if (pageState.value === PageState.Play) {
+      onPlay();
+    }
+  });
 }
 
 export function usePageIdle(onIdle: () => void): void {
-  if (pageState.value === PageState.Idle) {
-    onIdle();
-  }
+  useSignalEffect(() => {
+    if (pageState.value === PageState.Idle) {
+      onIdle();
+    }
+  });
+}
+
+export function usePageEffect(callback: () => void): void {
+  routerState.value && callback();
 }

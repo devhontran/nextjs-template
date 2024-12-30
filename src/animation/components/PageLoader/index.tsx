@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import React, { useRef } from 'react';
 
 import { useLoader } from '@/animation/hooks/useLoader';
+import { pageEnter, pagePlay } from '@/animation/signals/pageSignals';
 
 import s from './styles.module.scss';
 
@@ -25,14 +26,17 @@ export default function PageLoader(): React.ReactElement {
       duration: 1,
       onUpdate: () => {
         const po = Math.round(refAnimate.current.value);
+
         if (refPo.current) {
           refPo.current.textContent = `PO: ${po}%`;
         }
         if (po >= 100 && !isLoaded.value) {
           isLoaded.value = true;
+          pagePlay();
           gsap.to(refWrap.current, {
             opacity: 0,
             pointerEvents: 'none',
+            onComplete: pageEnter,
           });
         }
       },

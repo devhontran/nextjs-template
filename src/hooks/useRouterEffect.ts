@@ -18,7 +18,7 @@ export default function useRouterEffect(): {
     ({ pathName, pageName = 'Home', typeEffect = 'fade' }: ILinkEffect): void => {
       if (pathName === routerState.value.pathName) return window.location.reload();
       router.prefetch(pathName);
-
+      pageLeave();
       routerState.value = {
         pathName,
         pageName,
@@ -29,7 +29,7 @@ export default function useRouterEffect(): {
   );
 
   const routerPush = useCallback(() => {
-    pageLeave();
+    console.log('____', routerState.value.pathName);
     router.push(routerState.value.pathName);
   }, [router]);
 

@@ -2,11 +2,7 @@
 import { useGSAP } from '@gsap/react';
 import { Signal, useComputed, useSignal } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { createContext, ReactElement, ReactNode, useContext } from 'react';
-
-import { registerPreloader, unRegisterPreloader } from '../signals/preloaderSignals';
 
 interface AnimationContextValue {
   isMobile: Signal<boolean>;
@@ -33,20 +29,11 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
   const isDesktop = useComputed(() => width.value >= DESKTOP_BREAKPOINT);
 
   useGSAP(() => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    registerPreloader();
-
     const listener = debounce((): void => {
       width.value = window.innerWidth || document.body.clientWidth || 0;
       height.value = window.innerHeight || document.body.clientHeight || 0;
       scrollHeight.value = document.body.scrollHeight;
     }, 150);
-
-    Promise.all([document.fonts.ready, document.readyState]).then(() => {
-      console.log('___fonts ready');
-      unRegisterPreloader();
-    });
 
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
