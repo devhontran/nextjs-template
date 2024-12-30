@@ -4,6 +4,8 @@ import { Signal, useComputed, useSignal } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
 import { createContext, ReactElement, ReactNode, useContext } from 'react';
 
+import useRouterEffect from '@/hooks/useRouterEffect';
+
 interface AnimationContextValue {
   isMobile: Signal<boolean>;
   isTablet: Signal<boolean>;
@@ -27,6 +29,7 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
     () => width.value >= MOBILE_BREAKPOINT && width.value < DESKTOP_BREAKPOINT
   );
   const isDesktop = useComputed(() => width.value >= DESKTOP_BREAKPOINT);
+  const { routerPrefetch } = useRouterEffect();
 
   useGSAP(() => {
     const listener = debounce((): void => {
@@ -37,6 +40,10 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
 
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
+
+    window.onpopstate = (window.history as any).onpushstate = function (): void {
+      routerPrefetch({ pathName: window.location.pathname });
+    };
 
     return () => {
       resizeObserver.unobserve(document.body);

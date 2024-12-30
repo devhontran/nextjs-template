@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import cn from 'classnames';
 import { gsap } from 'gsap';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { useIsLoaded } from '@/animation/hooks/useLoader';
 import { usePageLeave } from '@/animation/hooks/usePage';
@@ -42,12 +42,6 @@ export default function PageEffect(): React.ReactElement {
 
   useIsLoaded(animationOut);
   usePageLeave(animationIn);
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.onpopstate = (window.history as any).onpushstate = function (): void {
-      // dispatchUrl(window.location.pathname);
-    };
-  }, []);
 
   return (
     <div className={cn(s.transition)} ref={refContent}>

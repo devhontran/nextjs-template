@@ -29,7 +29,6 @@ export default function useRouterEffect(): {
   );
 
   const routerPush = useCallback(() => {
-    console.log('____', routerState.value.pathName);
     router.push(routerState.value.pathName);
   }, [router]);
 
