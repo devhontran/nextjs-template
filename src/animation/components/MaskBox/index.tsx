@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
 
-import useMotion from '@/animation/hooks/useMotion';
+import useAnimate from '@/animation/hooks/useAnimate';
 import { IAnimationProps } from '@/types/animation';
 
 export enum MaskBoxType {
@@ -20,61 +20,41 @@ interface IMaskBox extends PropsWithChildren {
 export default function MotionMaskBox({ children, motion, direction }: IMaskBox): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
   const refGsap = useRef<gsap.core.Tween | null>(null);
+  const { tweenVars } = useAnimate({ refContent, motion });
 
-  const { contextSafe } = useGSAP();
+  useGSAP(() => {
+    let clipPathTo = 'inset(100%)';
+    let clipPathForm = 'inset(0%)';
 
-  const motionInit = contextSafe(() => {
-    let clipPath = 'inset(100%)';
     switch (direction) {
       case MaskBoxType.BOTTOM:
-        clipPath = 'inset(100% 0% 0% 0%)';
+        clipPathTo = 'inset(0% 0% 0% 0%)';
+        clipPathForm = 'inset(100% 0% 0% 0%)';
         break;
       case MaskBoxType.BOTTOM_CENTER:
-        clipPath = 'polygon(50% 100%, 50% 100%, 50% 100%, 50% 100%)';
+        clipPathTo = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
+        clipPathForm = 'polygon(50% 100%, 50% 100%, 50% 100%, 50% 100%)';
         break;
       default:
-        clipPath = 'inset(100%)';
+        clipPathTo = 'inset(0%)';
+        clipPathForm = 'inset(100% 0% 0% 0%)';
     }
 
-    refContent.current && gsap.set(refContent.current, { clipPath });
-  });
-  const motionPlay = contextSafe((tweenVars: gsap.TweenVars): void => {
-    if (!refContent.current) return;
+    refGsap.current = gsap.fromTo(
+      refContent.current,
+      { clipPath: clipPathForm, ...motion?.from },
+      {
+        ...tweenVars,
+        clipPath: clipPathTo,
+        ease: 'power3.inOut',
+        duration: 1.2,
+        onComplete: function () {
+          gsap.set(this.targets(), { clearProps: 'all' });
+        },
+        ...motion?.to,
+      }
+    );
+  }, [tweenVars]);
 
-    let clipPath = 'inset(100%)';
-    switch (direction) {
-      case MaskBoxType.BOTTOM:
-        clipPath = 'inset(0% 0% 0% 0%)';
-        break;
-      case MaskBoxType.BOTTOM_CENTER:
-        clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
-        break;
-      default:
-        clipPath = 'inset(0%)';
-    }
-
-    refGsap.current = gsap.to(refContent.current, {
-      ...tweenVars,
-      clipPath,
-      ease: 'power3.inOut',
-      duration: 1.2,
-      onComplete: function () {
-        gsap.set(this.targets(), { clearProps: 'all' });
-      },
-    });
-  });
-
-  const motionRevert = (): void => {
-    refGsap.current?.revert();
-    gsap.set(refContent.current, { clearProps: 'all' });
-  };
-
-  useMotion({
-    refContent,
-    motion,
-    motionPlay,
-    motionRevert,
-    motionInit,
-  });
   return <div ref={refContent}>{children}</div>;
 }

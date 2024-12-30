@@ -12,6 +12,8 @@ export interface IAnimationProps extends IAnimationHook {
   threshold?: number;
   isObserver?: boolean;
   markers?: boolean;
+  from?: gsap.TweenVars;
+  to?: gsap.TweenVars;
 }
 
 export interface IValueHookAnimation {

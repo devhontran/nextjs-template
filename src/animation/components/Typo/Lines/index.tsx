@@ -1,13 +1,12 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
-import { IPropMotionInit, IPropMotionPlay } from '@/animation/components/Typo/motionType';
+import useAnimationTypo from '@/animation/components/Typo/useAnimationTypo';
 import { IAnimationProps } from '@/types/animation';
-import { IAnimationElement } from '@/types/common';
 
-import useAnimationTypo from '../useAnimationTypo';
 import s from './styles.module.scss';
 
 export enum MotionLinesType {
@@ -20,70 +19,50 @@ interface ParagraphLineMaskProps extends PropsWithChildren {
   type?: MotionLinesType;
 }
 
-export default function MotionLines({
+export default function MotionChars({
   children,
   motion,
   type,
 }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<IAnimationElement>(null);
-  const regGsap = useRef<gsap.core.Tween>();
+  const refContent = useRef<IAnimationElement | null>(null);
+  const { gsapWars, textSplitTypes } = useAnimationTypo({
+    types: ['lines', 'words', 'chars'],
+    refContent,
+    motion,
+  });
 
-  const motionInit = ({ splitText }: IPropMotionInit): void => {
-    let tweenVars: gsap.TweenVars = {};
-
+  useGSAP(() => {
+    let toTweenVars: gsap.TweenVars = {};
+    let fromTweenVars: gsap.TweenVars = {};
     switch (type) {
       case MotionLinesType.fade:
         refContent.current?.classList.add(s.lineFade);
-        tweenVars = { yPercent: 100, opacity: 0 };
+        fromTweenVars = { yPercent: 100, opacity: 0 };
+        toTweenVars = { yPercent: 0, opacity: 1 };
         break;
+
       case MotionLinesType.mask:
       default:
+        toTweenVars = { yPercent: 0 };
         refContent.current?.classList.add(s.lineMask);
-        splitText?.lines?.length &&
-          splitText.lines.forEach((line) => {
+        textSplitTypes?.lines?.length &&
+          textSplitTypes.lines.forEach((line) => {
             const div = document.createElement('div');
             div.appendChild(line);
             div.classList.add('line__mask');
             refContent.current?.appendChild(div);
           });
-        tweenVars = { yPercent: 100 };
-    }
-
-    splitText.lines?.length && gsap.set(splitText.lines, tweenVars);
-  };
-
-  const motionPlay = ({ splitText, tweenVars }: IPropMotionPlay): void => {
-    let twVars: gsap.TweenVars = {};
-    switch (type) {
-      case MotionLinesType.fade:
-        twVars = { yPercent: 0, opacity: 1 };
+        toTweenVars = { yPercent: 100 };
         break;
-      case MotionLinesType.mask:
-      default:
-        twVars = { yPercent: 0 };
     }
 
-    regGsap.current = gsap.to(splitText.lines, {
-      ...tweenVars,
-      ease: 'power3.out',
-      duration: 1.2,
-      stagger: 0.1,
-      ...twVars,
-    });
-  };
-
-  const motionRevert = (): void => {
-    regGsap.current?.revert();
-  };
-
-  useAnimationTypo({
-    types: ['lines'],
-    refContent,
-    motionPlay,
-    motionInit,
-    motionRevert,
-    motion,
-  });
+    textSplitTypes?.chars &&
+      gsap.fromTo(textSplitTypes.chars, fromTweenVars, {
+        ...toTweenVars,
+        ...gsapWars,
+        ...motion?.to,
+      });
+  }, [gsapWars, textSplitTypes]);
 
   if (!React.isValidElement(children)) {
     return <div>Error: Invalid children element</div>;

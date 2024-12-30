@@ -24,6 +24,9 @@ export default function Header(): React.ReactElement {
           <li>
             <LinkEffect href={'/about'}>ABOUT</LinkEffect>
           </li>
+          <li>
+            <LinkEffect href={'/motions'}>Motion</LinkEffect>
+          </li>
           {/* <li>
             <LinkEffect href={'/about'}>About</LinkEffect>
           </li>

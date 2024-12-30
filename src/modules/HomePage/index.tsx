@@ -1,6 +1,7 @@
 'use client';
 
-import MotionLines, { MotionLinesType } from '@/animation/components/Typo/Lines';
+import MotionChars, { MotionCharsType } from '@/animation/components/Typo/Chars';
+import { MotionLinesType } from '@/animation/components/Typo/Lines';
 
 import s from './styles.module.scss';
 
@@ -151,9 +152,9 @@ export default function HomePage(): JSX.Element {
         </MotionLines>
       </div> */}
       <div style={{ marginBottom: '50vh' }}>
-        <MotionLines type={MotionLinesType.fade}>
+        <MotionChars type={MotionCharsType.mask}>
           <h1 className={s.heading}>This is the Home Page</h1>
-        </MotionLines>
+        </MotionChars>
       </div>
     </section>
   );
