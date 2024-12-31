@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import classNames from 'classnames';
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import s from './styles.module.scss';
@@ -23,6 +24,8 @@ const MotionImageParallax = ({
   const refEl = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const scale = Math.max(1, scaleInput);
     const offset = Number(speed) || 1;
     const yPercent = Math.round(((scale - 1) / 2) * 100) * offset;

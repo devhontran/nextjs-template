@@ -51,8 +51,8 @@ export default function MotionChars({
         toTweenVars = { yPercent: 0, stagger: 0.015, duration: 0.8, ease: 'power3.out' };
     }
 
-    textSplitTypes?.chars &&
-      gsap.fromTo(textSplitTypes.chars, fromTweenVars, {
+    textSplitTypes?.words &&
+      gsap.fromTo(textSplitTypes.words, fromTweenVars, {
         ...toTweenVars,
         ...gsapWars,
         ...motion?.to,

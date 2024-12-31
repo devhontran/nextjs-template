@@ -25,7 +25,6 @@ export const unRegisterR3fPreloader = (): void => {
 
 // Reset all preloader states
 export const resetPreloader = (): void => {
-  // console.log('____resetPreloader');
   preloaderState_requests.value = 0;
   preloaderState_loadTo.value = 0;
   preloaderState_r3f_requests.value = 0;

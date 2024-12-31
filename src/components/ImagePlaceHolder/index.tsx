@@ -1,48 +1,56 @@
 'use client';
 
-import { useSignal, useSignalEffect } from '@preact/signals-react';
+import { useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useLayoutEffect, useRef, useState } from 'react';
 
-// import useImagePreloader from '@/animation/useImagePreloader';
+import { registerPreloader, unRegisterPreloader } from '@/animation/signals/preloaderSignals';
+import { useIsInViewport } from '@/hooks/useIsInViewport';
+
 import s from './style.module.scss';
 
 const ImagePlaceHolder = (props: ImageProps): ReactElement => {
-  const [isReady, setIsReady] = useState<boolean>(false);
-  const isLoaded = useSignal<boolean>(false);
   const refPlaceImg = useRef<HTMLImageElement>(null);
-  // const onLoaded = useImagePreloader(refPlaceImg);
-  const { className, width, alt, src } = props;
+  const [width, setWidth] = useState<number>(50);
+  const [height, setHeight] = useState<number>(50);
 
-  useSignalEffect(() => {
-    isLoaded.value && refPlaceImg.current?.classList.add(s.isLoaded);
+  const { className, width: widthProp, height: heightProp, alt, src } = props;
+
+  const { visible, kill: killVisible } = useIsInViewport({
+    ref: refPlaceImg,
   });
 
+  useSignalEffect(() => {
+    if (visible.value) {
+      setWidth(Number(widthProp) ?? 50);
+      setHeight(Number(heightProp) ?? 50);
+      killVisible();
+    }
+  });
+
+  const onLoaded = (): void => {
+    unRegisterPreloader();
+    refPlaceImg.current?.style.setProperty(
+      'aspect-ratio',
+      `${refPlaceImg.current?.width} / ${refPlaceImg.current?.height}`
+    );
+  };
+
+  useLayoutEffect(() => {
+    registerPreloader();
+  }, []);
+
   return (
-    <div className={`${s.imagePreload} imagePreload`}>
-      {isReady && (
-        <Image
-          className={`${className} ${s.imagePreload_origin}`}
-          onLoad={(): void => {
-            isLoaded.value = true;
-          }}
-          quality={100}
-          sizes={`${width ? `(max-width: ${width}px) 100vw, ${width}px` : '100vw'}`}
-          {...props}
-          alt={alt}
-        />
-      )}
+    <div className={`${s.imagePlaceholder} image-placeholder`}>
       <Image
         ref={refPlaceImg}
-        className={`${className} ${s.imagePreload_placeholder}`}
+        className={`${className}`}
         src={src}
-        onLoad={() => {
-          // onLoaded();
-          setIsReady(true);
-        }}
-        width={50}
-        height={50}
-        alt={`${alt}-placeholder`}
+        width={width}
+        height={height}
+        alt={`${alt}`}
+        loading="eager"
+        onLoad={onLoaded}
       />
     </div>
   );

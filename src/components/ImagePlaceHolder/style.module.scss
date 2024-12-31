@@ -1,19 +1,7 @@
-.imagePreload {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  &_placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
+.imagePlaceholder {
+  img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-
-    &.isLoaded {
-      opacity: 0;
-      will-change: opacity;
-    }
+    object-fit: contain;
   }
 }
