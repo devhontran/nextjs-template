@@ -1,6 +1,6 @@
 'use client';
 
-import { calcThreshold, getDelay } from '@Utils/uiHelper';
+import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import { MutableRefObject, useCallback } from 'react';
 import SplitType from 'split-type';
 
@@ -51,10 +51,13 @@ export default function useAnimateTypo({
   }, [motion, types, refContent.current]);
 
   const initAnimation = useCallback(() => {
-    const gsapWars = getGsapWars();
-    const splitType = getSplitType();
-    animate(gsapWars, splitType);
-  }, [getGsapWars, getSplitType, animate]);
+    refContent.current &&
+      splitAnimate(refContent.current as HTMLElement, () => {
+        const gsapWars = getGsapWars();
+        const splitType = getSplitType();
+        animate(gsapWars, splitType);
+      });
+  }, [getGsapWars, getSplitType, animate, refContent.current]);
 
   usePagePlay(() => requestAnimationFrame(initAnimation));
 }

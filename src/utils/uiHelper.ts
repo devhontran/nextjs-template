@@ -134,3 +134,10 @@ export function shuffle(array: (string | number | HTMLElement)[]): void {
     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 }
+
+export const splitAnimate = (refContent: HTMLElement, callback: () => void): void => {
+  const rect = refContent.getBoundingClientRect();
+  if (rect) {
+    setTimeout(callback, Math.max(0, Math.min(rect.top - window.innerHeight, 2000)));
+  }
+};
