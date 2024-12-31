@@ -137,7 +137,15 @@ export function shuffle(array: (string | number | HTMLElement)[]): void {
 
 export const splitAnimate = (refContent: HTMLElement, callback: () => void): void => {
   const rect = refContent.getBoundingClientRect();
+  refContent.style.visibility = 'hidden';
   if (rect) {
-    setTimeout(callback, Math.max(0, Math.min(rect.top - window.innerHeight, 2000)));
+    const delay = (rect.top / window.innerHeight) * 100;
+    setTimeout(
+      () => {
+        callback();
+        refContent.style.visibility = 'visible';
+      },
+      Math.max(0, Math.min(delay, 2000))
+    );
   }
 };
