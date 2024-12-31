@@ -1,6 +1,6 @@
 'use client';
 
-import { calcThreshold, getDelay } from '@Utils/uiHelper';
+import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import { useCallback } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
@@ -42,9 +42,12 @@ export default function useAnimate({ refContent, motion, animate }: IMotionProps
   }, [refContent, motion]);
 
   const initAnimation = useCallback(() => {
-    const gsapWars = getGsapWars();
-    animate(gsapWars);
-  }, [getGsapWars, animate]);
+    refContent.current &&
+      splitAnimate(refContent.current as HTMLElement, () => {
+        const gsapWars = getGsapWars();
+        animate(gsapWars);
+      });
+  }, [getGsapWars, animate, refContent.current]);
 
-  usePagePlay(initAnimation);
+  usePagePlay(() => requestAnimationFrame(initAnimation));
 }
