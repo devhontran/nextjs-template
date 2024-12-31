@@ -8,6 +8,7 @@ import SplitType from 'split-type';
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
 import { IAnimationProps } from '@/types/animation';
 
+import s from './styles.module.scss';
 export enum MotionCharsType {
   mask = 'mask',
   mask_top = 'mask_top',
@@ -33,6 +34,7 @@ export default function MotionChars({
   const animate = contextSafe((gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null) => {
     let fromTweenVars: gsap.TweenVars = {};
     let toTweenVars: gsap.TweenVars = {};
+    refContent.current?.classList.add(s.chars);
 
     switch (type) {
       case MotionCharsType.solidBox:

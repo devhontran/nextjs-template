@@ -6,7 +6,6 @@ import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 
 import useAnimate from '@/animation/hooks/useAnimate';
 import { IAnimationProps } from '@/types/animation';
-import { IAnimationElement } from '@/types/common';
 
 interface IMaskBox extends PropsWithChildren {
   motion?: IAnimationProps;
@@ -14,14 +13,14 @@ interface IMaskBox extends PropsWithChildren {
 
 export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElement {
   const refContent = useRef<IAnimationElement>(null);
-  const refGsap = useRef<gsap.core.Tween | null>(null);
-  const { tweenVars } = useAnimate({ refContent, motion });
-  useGSAP(() => {
-    refGsap.current = gsap.fromTo(
+
+  const { contextSafe } = useGSAP();
+  const animate = contextSafe((gsapWars: gsap.TweenVars) => {
+    gsap.fromTo(
       refContent.current,
       { opacity: 0, y: 34, ...motion?.from },
       {
-        ...tweenVars,
+        ...gsapWars,
         opacity: 1,
         y: 0,
         ease: 'power3.inOut',
@@ -29,8 +28,9 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
         ...motion?.to,
       }
     );
-  }, [tweenVars]);
+  });
 
+  useAnimate({ refContent, motion, animate });
   if (!React.isValidElement(children)) {
     return <div>Error: Invalid children element</div>;
   }

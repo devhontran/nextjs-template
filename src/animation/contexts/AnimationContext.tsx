@@ -53,7 +53,7 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
       resizeObserver.unobserve(document.body);
       resizeObserver.disconnect();
     };
-  }, []);
+  });
 
   return (
     <AnimationContext.Provider

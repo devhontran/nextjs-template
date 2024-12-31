@@ -49,12 +49,12 @@ export default function MotionLines({
             div.classList.add('line__mask');
             refContent.current?.appendChild(div);
           });
-        toTweenVars = { yPercent: 100 };
+        fromTweenVars = { yPercent: 100 };
         break;
     }
 
-    textSplitTypes?.chars &&
-      gsap.fromTo(textSplitTypes.chars, fromTweenVars, {
+    textSplitTypes?.lines &&
+      gsap.fromTo(textSplitTypes.lines, fromTweenVars, {
         ...toTweenVars,
         ...gsapWars,
         ...motion?.to,

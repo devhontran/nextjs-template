@@ -56,7 +56,6 @@ export default function useAnimateTypo({
   const initAnimation = useCallback(() => {
     const gsapWars = getGsapWars();
     const splitType = getSplitType();
-
     animate(gsapWars, splitType);
   }, [getGsapWars, getSplitType, animate]);
 

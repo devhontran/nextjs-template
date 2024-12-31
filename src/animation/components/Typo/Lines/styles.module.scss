@@ -7,8 +7,7 @@
       }
 
       .line {
-        will-change: transform;
-        @include with-will-change;
+        will-change: transform, opacity;
       }
     }
   }
