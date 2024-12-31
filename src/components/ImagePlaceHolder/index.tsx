@@ -1,17 +1,17 @@
 'use client';
 
-import useImagePreloader from '@Layouts/Animation/useImagePreloader';
 import { useSignal, useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
-import React, { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 
+// import useImagePreloader from '@/animation/useImagePreloader';
 import s from './style.module.scss';
 
 const ImagePlaceHolder = (props: ImageProps): ReactElement => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const isLoaded = useSignal<boolean>(false);
   const refPlaceImg = useRef<HTMLImageElement>(null);
-  const onLoaded = useImagePreloader(refPlaceImg);
+  // const onLoaded = useImagePreloader(refPlaceImg);
   const { className, width, alt, src } = props;
 
   useSignalEffect(() => {
@@ -37,7 +37,7 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
         className={`${className} ${s.imagePreload_placeholder}`}
         src={src}
         onLoad={() => {
-          onLoaded();
+          // onLoaded();
           setIsReady(true);
         }}
         width={50}

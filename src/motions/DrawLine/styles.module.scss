@@ -1,8 +1,0 @@
-.drawLine {
-  border-bottom: 1px solid var(--dark);
-  display: block;
-
-  &:not(:global(.animated)) {
-    will-change: transform;
-  }
-}

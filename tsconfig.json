@@ -21,6 +21,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@Components/*": ["./src/components/*"],
+      "@Animation/*": ["./src/animation/*"],
       "@Modules/*": ["./src/modules/*"],
       "@Services/*": ["./src/services/*"],
       "@Contexts/*": ["./src/contexts/*"],
@@ -31,9 +32,9 @@
       "@Images/*": ["./public/images/*"],
       "@Public/*": ["./public/*"],
       "@Utils/*": ["./src/utils/*"],
-      "@Motions/*": ["./src/motions/*"],
+      "@Motions/*": ["./src/animation/motions/*"],
       "@Store/*": ["./src/store/*"],
-      "@Interactive/*": ["./src/interactive/*"]
+      "@Interactive/*": ["./src/animation/interactive/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

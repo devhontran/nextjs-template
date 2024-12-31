@@ -1,12 +1,12 @@
 .header {
   position: fixed;
-  z-index: 2;
+  z-index: 99999;
   width: 100%;
   mix-blend-mode: difference;
+  background: black;
 }
 
 .list {
-  margin-bottom: 80px;
   display: flex;
   align-items: center;
   justify-content: center;

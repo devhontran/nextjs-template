@@ -1,0 +1,14 @@
+.lineMask,
+.lineFade {
+  &:not(:global(.animated)) {
+    :global {
+      .line__mask {
+        @include masking;
+      }
+
+      .line {
+        will-change: transform, opacity;
+      }
+    }
+  }
+}

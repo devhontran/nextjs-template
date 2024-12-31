@@ -15,14 +15,14 @@ export default function LinkEffect({
   target,
   children,
 }: Props): React.ReactElement {
-  const { routerEffect } = useRouterEffect();
+  const { routerPrefetch } = useRouterEffect();
   return (
     <Link
       href={href}
       target={target}
       className={className}
       onClick={(e): void => {
-        routerEffect({ url: href });
+        routerPrefetch({ pathName: href });
         e.preventDefault();
       }}
       passHref

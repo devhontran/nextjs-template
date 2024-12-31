@@ -1,18 +1,36 @@
-import { pageBeforeLeave } from '@Layouts/Animation/usePageStatus';
-import { dispatchUrl, pageEffectIn, urlState } from '@Layouts/PageEffect/pageEffectSignal';
 import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+
+import { pageLeave, routerState } from '@/animation/signals/pageSignals';
+
+interface ILinkEffect {
+  pathName: string;
+  pageName?: string;
+  typeEffect?: string;
+}
 
 export default function useRouterEffect(): {
-  routerEffect: ({ url }: { url: string }) => void;
+  routerPrefetch: ({ pathName, pageName, typeEffect }: ILinkEffect) => void;
+  routerPush: () => void;
 } {
   const router = useRouter();
-  const routerEffect = ({ url }: { url: string }): void => {
-    if (urlState.peek() === url) return;
-    router.prefetch(url);
-    dispatchUrl(url);
-    pageBeforeLeave();
-    pageEffectIn();
-  };
+  const routerPrefetch = useCallback(
+    ({ pathName, pageName = 'Home', typeEffect = 'fade' }: ILinkEffect): void => {
+      if (pathName === routerState.value.pathName) return window.location.reload();
+      router.prefetch(pathName);
+      pageLeave();
+      routerState.value = {
+        pathName,
+        pageName,
+        typeEffect,
+      };
+    },
+    [router]
+  );
 
-  return { routerEffect };
+  const routerPush = useCallback(() => {
+    router.push(routerState.value.pathName);
+  }, [router]);
+
+  return { routerPrefetch, routerPush };
 }
