@@ -1,7 +1,7 @@
 'use client';
 
 import MotionChars, { MotionCharsType } from '@/animation/components/Typo/Chars';
-import { MotionLinesType } from '@/animation/components/Typo/Lines';
+import { TypographyHeading } from '@/components/Typography';
 
 import s from './styles.module.scss';
 
@@ -153,7 +153,7 @@ export default function HomePage(): JSX.Element {
       </div> */}
       <div style={{ marginBottom: '50vh' }}>
         <MotionChars type={MotionCharsType.mask}>
-          <h1 className={s.heading}>This is the Home Page</h1>
+          <TypographyHeading className={s.heading}>This is the Home Page</TypographyHeading>
         </MotionChars>
       </div>
     </section>

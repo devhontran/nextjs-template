@@ -2,10 +2,10 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import React, { PropsWithChildren, ReactElement, useRef } from 'react';
+import { cloneElement, isValidElement, PropsWithChildren, ReactElement, useRef } from 'react';
+import SplitType from 'split-type';
 
-import useAnimationTypo from '@/animation/components/Typo/useAnimationTypo';
+import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
 import { IAnimationProps } from '@/types/animation';
 
 export enum MotionCharsType {
@@ -27,15 +27,10 @@ export default function MotionChars({
   motion,
   type,
 }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<IAnimationElement | null>(null);
-  const { gsapWars, textSplitTypes } = useAnimationTypo({
-    types: ['lines', 'words', 'chars'],
-    refContent,
-    motion,
-  });
+  const refContent = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  const { contextSafe } = useGSAP();
+  const animate = contextSafe((gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null) => {
     let fromTweenVars: gsap.TweenVars = {};
     let toTweenVars: gsap.TweenVars = {};
 
@@ -73,20 +68,26 @@ export default function MotionChars({
     }
 
     textSplitTypes?.chars &&
-      gsap.fromTo(textSplitTypes?.chars, fromTweenVars, {
+      gsap.fromTo(textSplitTypes.chars, fromTweenVars, {
         ...toTweenVars,
         ...gsapWars,
         ease: 'power3.out',
         duration: 0.8,
         stagger: 0.015,
-        delay: 2.5,
         ...motion?.to,
       });
-  }, [gsapWars, textSplitTypes]);
+  });
 
-  if (!React.isValidElement(children)) {
+  useAnimateTypo({
+    types: ['lines', 'words', 'chars'],
+    refContent,
+    motion,
+    animate,
+  });
+
+  if (!isValidElement(children)) {
     return <div>Error: Invalid children element</div>;
   }
 
-  return React.cloneElement(children, { ...{ ref: refContent } });
+  return cloneElement(children, { ...{ ref: refContent } });
 }

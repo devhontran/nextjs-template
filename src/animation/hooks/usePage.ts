@@ -21,7 +21,7 @@ export function usePageLeave(onLeave: () => void): void {
 export function usePagePlay(onPlay: () => void): void {
   useSignalEffect(() => {
     if (pageState.value === PageState.Play) {
-      onPlay();
+      requestAnimationFrame(onPlay);
     }
   });
 }

@@ -1,15 +1,20 @@
+'use client';
+
 import { calcThreshold, getDelay } from '@Utils/uiHelper';
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
+
+import { usePagePlay } from './usePage';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
   motion?: IAnimationProps;
+  animate: (gsapWars: gsap.TweenVars) => void;
 }
 
-export default function useAnimate({ refContent, motion }: IMotionProps): gsap.TweenVars {
-  const gsapWars = useMemo((): gsap.TweenVars => {
+export default function useAnimate({ refContent, motion, animate }: IMotionProps): void {
+  const getGsapWars = useCallback((): gsap.TweenVars => {
     refContent.current?.classList.add('is-before-animate');
     const delay = getDelay({
       element: refContent.current as HTMLElement,
@@ -36,5 +41,10 @@ export default function useAnimate({ refContent, motion }: IMotionProps): gsap.T
     };
   }, [refContent, motion]);
 
-  return gsapWars;
+  const initAnimation = useCallback(() => {
+    const gsapWars = getGsapWars();
+    animate(gsapWars);
+  }, [getGsapWars, animate]);
+
+  usePagePlay(initAnimation);
 }

@@ -2,6 +2,8 @@
 import { useGSAP } from '@gsap/react';
 import { Signal, useComputed, useSignal } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { createContext, ReactElement, ReactNode, useContext } from 'react';
 
 import useRouterEffect from '@/hooks/useRouterEffect';
@@ -32,6 +34,8 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
   const { routerPrefetch } = useRouterEffect();
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const listener = debounce((): void => {
       width.value = window.innerWidth || document.body.clientWidth || 0;
       height.value = window.innerHeight || document.body.clientHeight || 0;
