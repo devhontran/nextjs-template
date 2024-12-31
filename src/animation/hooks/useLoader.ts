@@ -16,7 +16,6 @@ export function useLoader(): {
     const requests = preloaderState_requests.value;
     const loadTo = preloaderState_loadTo.value;
 
-    console.log('____progress', requests, loadTo);
     return Math.min(
       Math.round(requests === 0 || loadTo === 0 ? 0 : (loadTo / requests) * 100),
       100

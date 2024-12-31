@@ -46,9 +46,6 @@ export default function useAnimateTypo({
         once: true,
         markers: motion?.markers,
       },
-      onStart: (): void => {
-        console.log('___animation__onStart');
-      },
       delay,
     };
   }, [motion, types, refContent.current]);

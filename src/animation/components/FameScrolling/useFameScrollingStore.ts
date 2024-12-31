@@ -1,6 +1,7 @@
-import { signal, useSignalEffect } from '@preact/signals-react';
+import { signal, useSignal, useSignalEffect } from '@preact/signals-react';
 import { MathMap } from '@Utils/mathUtils';
 import { gsap } from 'gsap';
+import { useRef } from 'react';
 
 export const fameCurrent = signal<number>(0);
 
@@ -40,6 +41,7 @@ export function useAnimationTriggerFrame(
 ): void {
   const isAnimationIn = useRef<boolean>(false);
   const isAnimationOut = useRef<boolean>(false);
+  const poFame = useSignal<number>(0);
 
   useSignalEffect(() => {
     const frame = poFame.value;

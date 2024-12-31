@@ -45,6 +45,7 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
 
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.onpopstate = (window.history as any).onpushstate = function (): void {
       routerPrefetch({ pathName: window.location.pathname });
     };
