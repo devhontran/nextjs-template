@@ -46,5 +46,5 @@ export default function useAnimate({ refContent, motion, animate }: IMotionProps
     animate(gsapWars);
   }, [getGsapWars, animate]);
 
-  usePagePlay(initAnimation);
+  usePagePlay(() => requestAnimationFrame(initAnimation));
 }

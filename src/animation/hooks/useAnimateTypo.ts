@@ -56,5 +56,5 @@ export default function useAnimateTypo({
     animate(gsapWars, splitType);
   }, [getGsapWars, getSplitType, animate]);
 
-  usePagePlay(initAnimation);
+  usePagePlay(() => requestAnimationFrame(initAnimation));
 }
