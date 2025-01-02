@@ -123,7 +123,9 @@ body {
   scroll-behavior: unset !important;
   overscroll-behavior-y: none !important;
   min-height: -webkit-fill-available;
-  background-color: var(--dark-grey);
+  font-family: var(--font-default);
+  background-color: var(--dark);
+  color: var(--white);
 
   ::-webkit-scrollbar {
     display: none;

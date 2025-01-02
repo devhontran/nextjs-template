@@ -1,12 +1,12 @@
 import cn from 'classnames';
-import React, { forwardRef, PropsWithChildren } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
 
 import { TypographyColor } from '..';
 import styles from './styles.module.scss';
 
 export interface TypographyParagraphProps extends PropsWithChildren {
   color?: TypographyColor;
-  size?: 24 | 36;
+  size?: 18 | 20 | 24;
   tag?: 'p';
   className?: string;
 }

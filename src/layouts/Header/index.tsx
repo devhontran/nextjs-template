@@ -1,7 +1,7 @@
 'use client';
 
-import LinkEffect from '@Components/LinkEffect';
 import { useGSAP } from '@gsap/react';
+import Image from 'next/image';
 import React from 'react';
 
 import s from './styles.module.scss';
@@ -16,30 +16,19 @@ export default function Header(): React.ReactElement {
   });
   return (
     <header className={s.header}>
-      <div className={s.header_inner}>
-        <ul className={s.list}>
-          <li>
-            <LinkEffect href={'/'}>HOME</LinkEffect>
-          </li>
-          <li>
-            <LinkEffect href={'/about'}>ABOUT</LinkEffect>
-          </li>
-          <li>
-            <LinkEffect href={'/motions'}>Motion</LinkEffect>
-          </li>
-          {/* <li>
-            <LinkEffect href={'/about'}>About</LinkEffect>
-          </li>
-          <li>
-            <LinkEffect href={'/motions'}>Motion</LinkEffect>
-          </li>
-          <li>
-            <LinkEffect href={'/interactive'}>Interactive</LinkEffect>
-          </li>
-          <li>
-            <LinkEffect href={'/gallery-3d-scrolling'}>Gallery 3d Scrolling</LinkEffect>
-          </li> */}
-        </ul>
+      <div className="container">
+        <div className={`${s.header_container} grid grid-cols-10 gap-24 justify-between`}>
+          <div className={`${s.header_logo} col-span-1`}>
+            <Image src="/logo-yellow.svg" alt="logo" width={40} height={40} />
+          </div>
+          <div className={`${s.header_label} col-span-2`}>
+            HONTRAN. <br /> DEV
+          </div>
+          <div className={`${s.header_label} col-span-2`}>
+            CREATIVE <br /> DEVELOPER IN SAIGON
+          </div>
+          <div className={`${s.header_label} col-span-2 col-start-8`}>AVAILABLE FOR FREELANCE</div>
+        </div>
       </div>
     </header>
   );

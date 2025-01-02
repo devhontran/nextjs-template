@@ -1,54 +1,16 @@
 .label {
   font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
+  font-weight: 700;
+  line-height: 110%;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 
-  &__20 {
-    font-size: rem(14px);
-    line-height: rem(16.8px);
-    letter-spacing: 0;
-    font-weight: 500;
-
-    @include min-tablet {
-      font-size: rem(16px);
-      line-height: rem(38px);
-      letter-spacing: rem(-0.48px);
-      font-weight: 500;
-    }
-
-    @include pcSmall {
-      font-size: rem(20px);
-      line-height: rem(38px);
-      letter-spacing: rem(-0.14px);
-      font-weight: 500;
-    }
+  &__16 {
+    font-size: 1.6rem;
   }
 
-  &__blue {
-    color: var(--blue, '#1aacc0');
-  }
-
-  &__greyBlue {
-    color: var(--grey-blue, #b8ccda);
-  }
-
-  &__white {
-    color: var(--white, #fff);
-  }
-
-  &__black {
-    color: var(--black, #000);
-  }
-
-  &__lightGrey {
-    color: var(--lightGrey, #819aab);
-  }
-
-  &__mediumGrey {
-    color: var(--mediumGrey, #151823);
-  }
-
-  &__darkGrey {
-    color: var(--darkGrey, #0c0f16);
+  &__yellow {
+    color: var(--yellow, #f5c518);
   }
 }
