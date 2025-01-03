@@ -4,4 +4,8 @@
     object-fit: cover;
     height: min(60vh, 100vw);
   }
+  &_inner {
+    border-radius: rem(12px);
+    overflow: hidden;
+  }
 }

@@ -1,13 +1,13 @@
 import cn from 'classnames';
-import React, { forwardRef, PropsWithChildren } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
 
 import { TypographyColor } from '..';
 import styles from './styles.module.scss';
 
 export interface TypographyLabelProps extends PropsWithChildren {
   color?: TypographyColor;
-  size?: 20;
-  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  size?: 14 | 16 | 18 | 20;
+  tag?: 'h5' | 'h6' | 'span' | 'p' | 'div';
   className?: string;
 }
 
@@ -15,8 +15,8 @@ const TypographyLabel = forwardRef<HTMLHeadingElement, TypographyLabelProps>(
   (props: TypographyLabelProps, ref) => {
     const {
       color = 'white',
-      size = 20,
-      tag: Tag = 'h1',
+      size = 16,
+      tag: Tag = 'h6',
       className,
       children,
       ...restProps

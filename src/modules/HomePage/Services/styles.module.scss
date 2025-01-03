@@ -1,0 +1,10 @@
+.title {
+  margin-bottom: var(--space-40);
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-120);
+  margin-bottom: var(--space-240);
+}

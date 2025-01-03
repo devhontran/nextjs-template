@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 export interface TypographyParagraphProps extends PropsWithChildren {
   color?: TypographyColor;
   size?: 18 | 20 | 24;
-  tag?: 'p';
+  tag?: 'p' | 'span' | 'div';
   className?: string;
 }
 
