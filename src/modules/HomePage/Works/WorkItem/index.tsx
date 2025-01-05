@@ -1,6 +1,7 @@
 import ImagePlaceHolder from '@/components/ImagePlaceHolder';
-import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
+import { TypographyHeading, TypographyParagraph } from '@/components/Typography';
 
+import Tags from '../../Tags';
 import s from './styles.module.scss';
 
 export default function WorkItem({
@@ -29,13 +30,7 @@ export default function WorkItem({
           <div className={s.description}>
             <TypographyParagraph size={18}>{description}</TypographyParagraph>
           </div>
-          <div className={s.tags}>
-            {tags.map((tag) => (
-              <TypographyLabel size={18} key={tag}>
-                {tag}
-              </TypographyLabel>
-            ))}
-          </div>
+          <Tags tags={tags} />
         </div>
       </div>
     </div>

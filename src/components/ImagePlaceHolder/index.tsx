@@ -51,6 +51,7 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
         alt={`${alt}`}
         loading="eager"
         onLoad={onLoaded}
+        onError={onLoaded}
       />
     </div>
   );
