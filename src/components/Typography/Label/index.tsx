@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 
 export interface TypographyLabelProps extends PropsWithChildren {
   color?: TypographyColor;
-  size?: 14 | 16 | 18 | 20;
+  size?: 12 | 14 | 16 | 18 | 20;
   tag?: 'h5' | 'h6' | 'span' | 'p' | 'div';
   className?: string;
 }

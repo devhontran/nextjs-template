@@ -1,10 +1,11 @@
 export const WORKS = [
   {
-    title: 'Work 1',
-    description: 'Description 1',
+    title: 'MinhPham',
+    description: `Our project is a testament to the power of creativity and innovation in digital design. With a focus on user experience and interactive storytelling, we've created a truly immersive experience that engages and inspires.`,
     image: 'https://picsum.photos/1920/1080?random',
-    tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    link: '/work-1',
+    tags: ['Frontend Engineer', 'Typescript', 'Three.js', 'WebGL', 'Web Development'],
+    link: 'https://minhpham.design',
+    awards: ['FWA', 'CSS Design Awards', 'Site of the Day', 'Dev Awards'],
   },
   {
     title: 'Work 2',
@@ -12,6 +13,7 @@ export const WORKS = [
     image: 'https://picsum.photos/1920/1080?random',
     tags: ['Tag 4', 'Tag 5', 'Tag 6'],
     link: '/work-2',
+    awards: ['FWA', 'CSS Design Awards', 'Site of the Day', 'Dev Awards'],
   },
 ];
 
