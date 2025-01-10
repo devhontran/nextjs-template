@@ -23,6 +23,17 @@ export default function WorkItem({
     <div className={s.workItem}>
       <div className="grid grid-cols-10 gap-24">
         <div className={`${s.thumbnail} col-span-6`}>
+          <div className={`${s.metadata} flex items-center justify-between`}>
+            <TypographyLabel size={12} className={s.year}>
+              2024
+            </TypographyLabel>
+            <TypographyLabel size={12} className={s.type}>
+              Personal
+            </TypographyLabel>
+            <TypographyLabel size={12} className={s.country}>
+              Vietnam
+            </TypographyLabel>
+          </div>
           <ImagePlaceHolder src={image} alt="work-1" width={1600} height={900} />
         </div>
         <div className={`${s.content} col-span-3 col-start-8`}>
