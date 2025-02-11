@@ -1,5 +1,5 @@
 import ImagePlaceHolder from '@/components/ImagePlaceHolder';
-import { TypographyHeading, TypographyParagraph } from '@/components/Typography';
+import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
 
 import Tags from '../../Tags';
 import s from './styles.module.scss';
@@ -21,6 +21,10 @@ export default function ServiceItem({
     <div className={s.serviceItem}>
       <div className="grid grid-cols-10 gap-24">
         <div className={`${s.thumbnail} col-span-6`}>
+          <div className="metadata flex justify-between">
+            <TypographyLabel size={12}>Projects</TypographyLabel>
+            <TypographyLabel size={12}>10</TypographyLabel>
+          </div>
           <ImagePlaceHolder src={image} alt={title} width={1600} height={900} />
         </div>
         <div className={`${s.content} col-span-3 col-start-8`}>
