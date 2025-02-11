@@ -11,6 +11,9 @@ const ImagePreload = (props: ImageProps): ReactElement => {
 
   useLayoutEffect(() => {
     registerPreloader();
+    return () => {
+      unRegisterPreloader();
+    };
   }, []);
 
   return (
@@ -22,6 +25,7 @@ const ImagePreload = (props: ImageProps): ReactElement => {
       {...props}
       alt={alt}
       onLoad={unRegisterPreloader}
+      onError={unRegisterPreloader}
     />
   );
 };

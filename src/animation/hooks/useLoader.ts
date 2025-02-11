@@ -9,6 +9,9 @@ export function useLoader(): {
   const isLoaded = useComputed(() => {
     const requests = preloaderState_requests.value;
     const loadTo = preloaderState_loadTo.value;
+
+    //eslint-disable-next-line no-console
+    console.log(requests, loadTo);
     return requests > 0 && loadTo > 0 && requests === loadTo;
   });
 

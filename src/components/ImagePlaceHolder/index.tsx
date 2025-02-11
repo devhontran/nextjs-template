@@ -38,6 +38,9 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
 
   useLayoutEffect(() => {
     registerPreloader();
+    return () => {
+      unRegisterPreloader();
+    };
   }, []);
 
   return (
