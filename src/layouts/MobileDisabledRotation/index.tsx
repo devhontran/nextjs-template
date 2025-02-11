@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 
 import ImagePreload from '@/components/ImagePreload';
-import { TypographyBody } from '@/components/Typography';
 
 import s from './styles.module.scss';
 
@@ -59,9 +58,6 @@ export default function MobileDisabledRotation(): JSX.Element {
           <div className={s.shake_phone}>
             <ImagePreload src={'/icons/phone-drag.svg'} width={64} height={64} alt="phone-drag" />
           </div>
-          <TypographyBody className={s.content_text} size={'16'} color="greyBlue">
-            This site is only viewable in portrait mode. Please rotate your device.
-          </TypographyBody>
         </div>
       </div>
     </div>

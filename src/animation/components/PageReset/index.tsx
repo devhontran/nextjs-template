@@ -15,10 +15,8 @@ export default function PageReset(): React.ReactElement | null {
   useEffect(() => {
     registerPreloader();
     document.fonts.ready
-      ? Promise.all([document.fonts.ready, document.readyState]).then(() => {
-          setTimeout(unRegisterPreloader, 300);
-        })
-      : setTimeout(unRegisterPreloader, 300);
+      ? Promise.all([document.fonts.ready, document.readyState]).then(() => unRegisterPreloader())
+      : unRegisterPreloader();
 
     return () => resetPreloader();
   }, [pathName]);

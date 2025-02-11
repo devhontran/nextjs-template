@@ -4,6 +4,8 @@ import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
 import React from 'react';
 
+import LinkEffect from '@/components/LinkEffect';
+
 import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {
@@ -22,7 +24,9 @@ export default function Header(): React.ReactElement {
             <Image src="/logo-white.svg" alt="logo" width={40} height={40} />
           </div>
           <div className={`${s.header_label} col-span-2`}>
-            HONTRAN. <br /> DEV
+            <LinkEffect href="/about">
+              HONTRAN. <br /> DEV
+            </LinkEffect>
           </div>
           <div className={`${s.header_label} col-span-2`}>
             CREATIVE <br /> DEVELOPER IN SAIGON

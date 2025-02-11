@@ -30,7 +30,10 @@ export function useIsLoaded(callback: () => void): void {
 
   useSignalEffect(() => {
     if (!isLoaded.value) return;
-    callback();
+    const timeout = setTimeout(() => {
+      callback();
+    }, 100);
+    return () => clearTimeout(timeout);
   });
 }
 

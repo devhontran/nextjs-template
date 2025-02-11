@@ -42,6 +42,7 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
       scrollHeight.value = document.body.scrollHeight;
     }, 150);
 
+    listener();
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
 

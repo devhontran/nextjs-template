@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import ImagePlaceHolder from '@/components/ImagePlaceHolder';
 import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
 
@@ -20,7 +22,7 @@ export default function WorkItem({
   link: string;
 }): React.ReactElement {
   return (
-    <div className={s.workItem}>
+    <Link href={link} className={s.workItem}>
       <div className="grid grid-cols-10 gap-24">
         <div className={`${s.thumbnail} col-span-6`}>
           <ImagePlaceHolder src={image} alt="work-1" width={1600} height={900} />
@@ -44,6 +46,6 @@ export default function WorkItem({
           </ul>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

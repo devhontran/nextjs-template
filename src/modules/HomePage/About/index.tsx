@@ -36,7 +36,7 @@ export default function About(): React.ReactElement {
               </li>
             </ul>
             <TypographyHeading className={s.mainContent}>
-              I'm a creative developer and founder at hontran.dev, based in HCM City,
+              {`I'm a creative developer and founder at hontran.dev, based in HCM City,`}
               <span className="yellow">Vietnam.</span>
             </TypographyHeading>
             <div className={s.contact}>
