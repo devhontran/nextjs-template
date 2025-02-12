@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { useLenis } from 'lenis/react';
 import { PropsWithChildren, ReactElement, useRef } from 'react';
 
-import { useAnimationContext } from '@/animation/contexts/AnimationContext';
-import { isPageEnter } from '@/animation/signals/pageSignals';
+import { useEffectContext } from '@/animation/contexts/EffectContext';
+import { useUiContext } from '@/animation/contexts/UiContext';
 
 import s from './styles.module.scss';
 
@@ -30,7 +30,8 @@ const MotionParallaxBox = ({
 }: Props): ReactElement => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const { height: wH } = useAnimationContext();
+  const { height: wH } = useUiContext();
+  const { isPageEnter } = useEffectContext();
 
   useLenis(() => {
     if (!wrapperRef.current || !isPageEnter()) return;

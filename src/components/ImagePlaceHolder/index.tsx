@@ -4,7 +4,7 @@ import { useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
 import { ReactElement, useLayoutEffect, useRef, useState } from 'react';
 
-import { registerPreloader, unRegisterPreloader } from '@/animation/signals/preloaderSignals';
+import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 import { useIsInViewport } from '@/hooks/useIsInViewport';
 
 import s from './style.module.scss';
@@ -15,7 +15,7 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
   const [height, setHeight] = useState<number>(50);
 
   const { className, width: widthProp, height: heightProp, alt, src } = props;
-
+  const { registerAssets, unRegisterAssets } = useAssetsContext();
   const { visible, kill: killVisible } = useIsInViewport({
     ref: refPlaceImg,
   });
@@ -29,7 +29,7 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
   });
 
   const onLoaded = (): void => {
-    unRegisterPreloader();
+    unRegisterAssets();
     refPlaceImg.current?.style.setProperty(
       'aspect-ratio',
       `${refPlaceImg.current?.width} / ${refPlaceImg.current?.height}`
@@ -37,9 +37,9 @@ const ImagePlaceHolder = (props: ImageProps): ReactElement => {
   };
 
   useLayoutEffect(() => {
-    registerPreloader();
+    registerAssets();
     return () => {
-      unRegisterPreloader();
+      unRegisterAssets();
     };
   }, []);
 

@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 
 import { IAnimationProps } from '@/types/animation';
 
-import { usePagePlay } from './usePage';
+import { usePagePlay } from './useEffectHooks';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;

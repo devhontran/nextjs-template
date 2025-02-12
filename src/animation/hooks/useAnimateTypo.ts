@@ -4,7 +4,7 @@ import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import { MutableRefObject, useCallback } from 'react';
 import SplitType from 'split-type';
 
-import { usePagePlay } from '@/animation/hooks/usePage';
+import { usePagePlay } from '@/animation/hooks/useEffectHooks';
 import { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo {

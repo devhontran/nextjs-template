@@ -6,9 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { createContext, ReactElement, ReactNode, useContext } from 'react';
 
-import useRouterEffect from '@/hooks/useRouterEffect';
-
-interface AnimationContextValue {
+interface UiContextValue {
   isMobile: Signal<boolean>;
   isTablet: Signal<boolean>;
   isDesktop: Signal<boolean>;
@@ -20,9 +18,9 @@ interface AnimationContextValue {
 const MOBILE_BREAKPOINT = 768;
 const DESKTOP_BREAKPOINT = 1200;
 
-const AnimationContext = createContext<AnimationContextValue | null>(null);
+const UiContext = createContext<UiContextValue | null>(null);
 
-export function AnimationProvider({ children }: { children: ReactNode }): ReactElement {
+export function UiProvider({ children }: { children: ReactNode }): ReactElement {
   const width = useSignal(typeof window !== 'undefined' ? window.innerWidth : 0);
   const height = useSignal(typeof window !== 'undefined' ? window.innerHeight : 0);
   const scrollHeight = useSignal(typeof document !== 'undefined' ? document.body.scrollHeight : 0);
@@ -31,7 +29,6 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
     () => width.value >= MOBILE_BREAKPOINT && width.value < DESKTOP_BREAKPOINT
   );
   const isDesktop = useComputed(() => width.value >= DESKTOP_BREAKPOINT);
-  const { routerPrefetch } = useRouterEffect();
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -46,11 +43,6 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
 
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.onpopstate = (window.history as any).onpushstate = function (): void {
-      routerPrefetch({ pathName: window.location.pathname });
-    };
-
     return () => {
       resizeObserver.unobserve(document.body);
       resizeObserver.disconnect();
@@ -58,18 +50,16 @@ export function AnimationProvider({ children }: { children: ReactNode }): ReactE
   });
 
   return (
-    <AnimationContext.Provider
-      value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}
-    >
+    <UiContext.Provider value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}>
       {children}
-    </AnimationContext.Provider>
+    </UiContext.Provider>
   );
 }
 
-export const useAnimationContext = (): AnimationContextValue => {
-  const context = useContext(AnimationContext);
+export const useUiContext = (): UiContextValue => {
+  const context = useContext(UiContext);
   if (!context) {
-    throw new Error('useAnimationContext must be used within AnimationProvider');
+    throw new Error('useUiContext must be used within UiProvider');
   }
   return context;
 };

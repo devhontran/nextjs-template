@@ -4,10 +4,12 @@ import { useGSAP } from '@gsap/react';
 import { useSignal, useSignalEffect } from '@preact/signals-react';
 import cn from 'classnames';
 import gsap from 'gsap';
-import React, { useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useLayoutEffect, useRef } from 'react';
 
-import { useLoader } from '@/animation/hooks/useLoader';
-import { pageEnter, pagePlay } from '@/animation/signals/pageSignals';
+import { useAssetsContext } from '@/animation/contexts/AssetsContext';
+import { useEffectContext } from '@/animation/contexts/EffectContext';
+import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
 import s from './styles.module.scss';
 
@@ -18,8 +20,10 @@ export default function PageLoader(): React.ReactElement {
   const refQT = useRef<gsap.QuickToFunc>();
   const isLoaded = useSignal<boolean>(false);
 
-  const { progress } = useLoader();
-
+  const pathName = usePathname();
+  const { pagePlay, pageEnter } = useEffectContext();
+  const { assetsProgress, registerAssets, unRegisterAssets, resetAssets } = useAssetsContext();
+  const { routerPrefetch } = useRouterEffect();
   useGSAP(() => {
     refQT.current = gsap.quickTo(refAnimate.current, 'value', {
       ease: 'power3',
@@ -44,9 +48,28 @@ export default function PageLoader(): React.ReactElement {
   });
 
   useSignalEffect(() => {
-    const po = Math.round(progress.value);
+    const po = Math.round(assetsProgress.value);
     refQT.current && !isLoaded.peek() && refQT.current(po);
   });
+
+  useLayoutEffect(() => {
+    registerAssets();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.onpopstate = (window.history as any).onpushstate = function (): void {
+      routerPrefetch({ pathName: window.location.pathname });
+    };
+
+    Promise.all([document.fonts.ready]).then(() => {
+      unRegisterAssets();
+    });
+
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.onpopstate = (window.history as any).onpushstate = null;
+      unRegisterAssets();
+      resetAssets();
+    };
+  }, [pathName]);
 
   return (
     <div className={cn(s.pageLoader)} ref={refWrap}>
