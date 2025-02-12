@@ -1,4 +1,10 @@
-import { ReadonlySignal, Signal, useComputed, useSignalEffect } from '@preact/signals-react';
+import {
+  ReadonlySignal,
+  Signal,
+  useComputed,
+  useSignal,
+  useSignalEffect,
+} from '@preact/signals-react';
 
 import { preloaderState_loadTo, preloaderState_requests } from '../signals/preloaderSignals';
 
@@ -6,13 +12,16 @@ export function useLoader(): {
   progress: Signal<number>;
   isLoaded: ReadonlySignal<boolean>;
 } {
-  const isLoaded = useComputed(() => {
+  const isLoaded = useSignal(false);
+  useSignalEffect(() => {
     const requests = preloaderState_requests.value;
     const loadTo = preloaderState_loadTo.value;
 
     //eslint-disable-next-line no-console
     console.log(requests, loadTo);
-    return requests > 0 && loadTo > 0 && requests === loadTo;
+    if (!isLoaded.value) {
+      isLoaded.value = requests > 0 && loadTo > 0 && requests === loadTo;
+    }
   });
 
   const progress = useComputed(() => {
