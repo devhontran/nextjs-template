@@ -15,7 +15,7 @@ export default function PageEffect(): React.ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
   const { contextSafe } = useGSAP();
   const { routerPush } = useRouterEffect();
-  const { pageEnter } = useEffectContext();
+  const { pageEnter, pagePlay } = useEffectContext();
 
   const animationIn = contextSafe(() => {
     gsap.to(refContent.current, {
@@ -28,6 +28,7 @@ export default function PageEffect(): React.ReactElement {
   });
 
   const animationOut = contextSafe(() => {
+    pagePlay();
     gsap.to(refContent.current, {
       opacity: 0,
       ease: 'power3.inOut',
