@@ -7,18 +7,24 @@ interface ILinkEffect {
   pathName: string;
   pageName?: string;
   typeEffect?: string;
+  isPrefetch?: boolean;
 }
 
 export default function useRouterEffect(): {
-  routerPrefetch: ({ pathName, pageName, typeEffect }: ILinkEffect) => void;
+  routerPrefetch: ({ pathName, pageName, typeEffect, isPrefetch }: ILinkEffect) => void;
   routerPush: () => void;
 } {
   const router = useRouter();
   const { pageLeave, routerState } = useEffectContext();
   const routerPrefetch = useCallback(
-    ({ pathName, pageName = 'Home', typeEffect = 'fade' }: ILinkEffect): void => {
+    ({
+      pathName,
+      pageName = 'Home',
+      typeEffect = 'fade',
+      isPrefetch = true,
+    }: ILinkEffect): void => {
       if (pathName === routerState.peek().pathName) return window.location.reload();
-      router.prefetch(pathName);
+      if (isPrefetch) router.prefetch(pathName);
       pageLeave();
       routerState.value = {
         pathName,

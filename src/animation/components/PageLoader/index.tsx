@@ -64,10 +64,9 @@ export default function PageLoader(): React.ReactElement {
     });
 
     return () => {
+      resetAssets();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       window.onpopstate = (window.history as any).onpushstate = null;
-      unRegisterAssets();
-      resetAssets();
     };
   }, [pathName]);
 

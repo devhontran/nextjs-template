@@ -1,20 +1,11 @@
 'use client';
 
 import Image, { ImageProps } from 'next/image';
-import { ReactElement, useLayoutEffect, useRef } from 'react';
-
-import { useAssetsContext } from '@/animation/contexts/AssetsContext';
+import { ReactElement, useRef } from 'react';
 
 const ImagePreload = (props: ImageProps): ReactElement => {
   const refImg = useRef<HTMLImageElement>(null);
   const { className, alt } = props;
-  const { registerAssets, unRegisterAssets } = useAssetsContext();
-  useLayoutEffect(() => {
-    registerAssets();
-    return () => {
-      unRegisterAssets();
-    };
-  }, []);
 
   return (
     <Image
@@ -24,8 +15,6 @@ const ImagePreload = (props: ImageProps): ReactElement => {
       quality={100}
       {...props}
       alt={alt}
-      onLoad={unRegisterAssets}
-      onError={unRegisterAssets}
     />
   );
 };

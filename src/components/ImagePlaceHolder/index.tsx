@@ -1,63 +1,48 @@
 'use client';
 
-import { useSignalEffect } from '@preact/signals-react';
 import Image, { ImageProps } from 'next/image';
-import { ReactElement, useLayoutEffect, useRef, useState } from 'react';
+import { forwardRef, useLayoutEffect } from 'react';
 
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
-import { useIsInViewport } from '@/hooks/useIsInViewport';
 
 import s from './style.module.scss';
 
-const ImagePlaceHolder = (props: ImageProps): ReactElement => {
-  const refPlaceImg = useRef<HTMLImageElement>(null);
-  const [width, setWidth] = useState<number>(50);
-  const [height, setHeight] = useState<number>(50);
-
-  const { className, width: widthProp, height: heightProp, alt, src } = props;
+const ImagePlaceHolder = forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
+  const { className, width, height, alt, src } = props;
   const { registerAssets, unRegisterAssets } = useAssetsContext();
-  const { visible, kill: killVisible } = useIsInViewport({
-    ref: refPlaceImg,
-  });
-
-  useSignalEffect(() => {
-    if (visible.value) {
-      setWidth(Number(widthProp) ?? 50);
-      setHeight(Number(heightProp) ?? 50);
-      killVisible();
-    }
-  });
-
-  const onLoaded = (): void => {
-    unRegisterAssets();
-    refPlaceImg.current?.style.setProperty(
-      'aspect-ratio',
-      `${refPlaceImg.current?.width} / ${refPlaceImg.current?.height}`
-    );
-  };
 
   useLayoutEffect(() => {
     registerAssets();
-    return () => {
-      unRegisterAssets();
-    };
+    return (): void => unRegisterAssets();
   }, []);
 
   return (
-    <div className={`${s.imagePlaceholder} image-placeholder`}>
+    <div className={`${s.imagePlaceholder} image-placeholder`} ref={ref}>
       <Image
-        ref={refPlaceImg}
-        className={`${className}`}
+        className={`${className} ${s.imagePlaceholder__placeholder}`}
+        src={src}
+        width={50}
+        height={50}
+        alt={`${alt}`}
+        loading="eager"
+        onLoad={unRegisterAssets}
+        onError={unRegisterAssets}
+      />
+      <Image
         src={src}
         width={width}
         height={height}
+        onLoad={(e) => {
+          (e.target as HTMLImageElement).classList.add(s.isLoaded);
+        }}
         alt={`${alt}`}
-        loading="eager"
-        onLoad={onLoaded}
-        onError={onLoaded}
+        sizes="100vws"
+        className={`${className} ${s.imagePlaceholder__original}`}
       />
     </div>
   );
-};
+});
+
+ImagePlaceHolder.displayName = 'ImagePlaceHolder';
 
 export default ImagePlaceHolder;

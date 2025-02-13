@@ -1,7 +1,25 @@
 .imagePlaceholder {
+  font-size: 0;
+  line-height: 0;
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+
   img {
+    grid-row: 1;
+    grid-column: 1;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+  }
+
+  &__original {
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.4s var(--easeInOutCubic);
+    &.isLoaded {
+      opacity: 1;
+    }
   }
 }

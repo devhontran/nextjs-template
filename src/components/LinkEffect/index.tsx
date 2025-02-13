@@ -23,7 +23,7 @@ export default function LinkEffect({
       target={target}
       className={className}
       onClick={(e): void => {
-        routerPrefetch({ pathName: href });
+        routerPrefetch({ pathName: href, isPrefetch: false });
         e.preventDefault();
       }}
       passHref

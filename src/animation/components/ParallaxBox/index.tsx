@@ -34,9 +34,9 @@ const MotionParallaxBox = ({
   const { isPageEnter } = useEffectContext();
 
   useLenis(() => {
-    if (!wrapperRef.current || !isPageEnter()) return;
+    if (!wrapperRef.current || !isPageEnter.peek()) return;
     const { top, height } = wrapperRef.current.getBoundingClientRect();
-    const wHeight = wH.peek();
+    const wHeight = wH.value;
 
     const center = top + height / 2 + (height - wHeight);
     let yTran = MathMap(center, wHeight, 0, -wHeight / 2, wHeight / 2);

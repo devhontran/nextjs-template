@@ -1,5 +1,5 @@
 'use client';
-import { Signal, untracked, useSignal } from '@preact/signals-react';
+import { Signal, untracked, useComputed, useSignal } from '@preact/signals-react';
 import { createContext, ReactElement, ReactNode, useContext, useLayoutEffect } from 'react';
 
 export enum PageState {
@@ -21,10 +21,10 @@ interface EffectContextValue {
   pageEnter: () => void;
   pagePlay: () => void;
   pageIdle: () => void;
-  isPageEnter: () => boolean;
-  isPageLeave: () => boolean;
-  isPagePlay: () => boolean;
-  isPageIdle: () => boolean;
+  isPageEnter: Signal<boolean>;
+  isPageLeave: Signal<boolean>;
+  isPagePlay: Signal<boolean>;
+  isPageIdle: Signal<boolean>;
   routerState: Signal<RouterState>;
 }
 const EffectContext = createContext<EffectContextValue | null>(null);
@@ -53,13 +53,13 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
     pageStatus.value = PageState.Idle;
   };
 
-  const isPageEnter = (): boolean => pageStatus.peek() === PageState.Enter;
+  const isPageEnter = useComputed(() => pageStatus.value === PageState.Enter);
 
-  const isPageLeave = (): boolean => pageStatus.peek() === PageState.Leave;
+  const isPageLeave = useComputed(() => pageStatus.value === PageState.Leave);
 
-  const isPagePlay = (): boolean => pageStatus.peek() === PageState.Play;
+  const isPagePlay = useComputed(() => pageStatus.value === PageState.Play);
 
-  const isPageIdle = (): boolean => pageStatus.peek() === PageState.Idle;
+  const isPageIdle = useComputed(() => pageStatus.value === PageState.Idle);
 
   useLayoutEffect(() => {
     routerState.value = untracked(() => {

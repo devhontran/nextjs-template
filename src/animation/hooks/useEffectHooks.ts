@@ -47,13 +47,13 @@ export function usePageEffect(callback: () => void): void {
 export function usePageEffectIn(callback: () => void): void {
   const { isPageIdle } = useEffectContext();
   usePageLeave(() => {
-    !isPageIdle() && callback();
+    !isPageIdle.peek() && callback();
   });
 }
 
 export function usePageEffectOut(callback: () => void): void {
   const { isPageIdle } = useEffectContext();
   useIsAssetsLoaded(() => {
-    !isPageIdle() && callback();
+    !isPageIdle.peek() && callback();
   });
 }
