@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 import s from './styles.module.scss';
 

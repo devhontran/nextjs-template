@@ -2,10 +2,11 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { PropsWithChildren, ReactElement, useRef } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useRef } from 'react';
 
 import useAnimate from '@/animation/hooks/useAnimate';
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 export enum MaskBoxType {
   BOTTOM = 'BOTTOM',

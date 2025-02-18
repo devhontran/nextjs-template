@@ -1,11 +1,12 @@
 'use client';
 
 import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
-import { MutableRefObject, useCallback } from 'react';
+import type { MutableRefObject } from 'react';
+import { useCallback } from 'react';
 import SplitType from 'split-type';
 
 import { usePagePlay } from '@/animation/hooks/useEffectHooks';
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo {
   refContent: MutableRefObject<IAnimationElement | null>;

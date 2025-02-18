@@ -1,6 +1,8 @@
 'use client';
-import { Signal, untracked, useComputed, useSignal } from '@preact/signals-react';
-import { createContext, ReactElement, ReactNode, useContext, useLayoutEffect } from 'react';
+import type { Signal } from '@preact/signals-react';
+import { untracked, useComputed, useSignal } from '@preact/signals-react';
+import type { ReactElement, ReactNode } from 'react';
+import { createContext, use, useLayoutEffect } from 'react';
 
 export enum PageState {
   Enter = 'enter',
@@ -72,7 +74,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
   }, []);
 
   return (
-    <EffectContext.Provider
+    <EffectContext
       value={{
         pageStatus,
         pageLeave,
@@ -87,12 +89,12 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
       }}
     >
       {children}
-    </EffectContext.Provider>
+    </EffectContext>
   );
 }
 
 export const useEffectContext = (): EffectContextValue => {
-  const context = useContext(EffectContext);
+  const context = use(EffectContext);
   if (!context) {
     throw new Error('useEffectContext must be used within EffectProvider');
   }

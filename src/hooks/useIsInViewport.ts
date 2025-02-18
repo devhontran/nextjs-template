@@ -1,5 +1,7 @@
-import { Signal, useSignal } from '@preact/signals-react';
-import { MutableRefObject, useEffect, useRef } from 'react';
+import type { Signal } from '@preact/signals-react';
+import { useSignal } from '@preact/signals-react';
+import type { MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useIsInViewport({
   ref,
@@ -24,12 +26,12 @@ export function useIsInViewport({
       }
     );
 
-    ref.current && refobserver.current?.observe(ref.current);
+    ref.current && refobserver.current.observe(ref.current);
     return kill;
   }, []);
 
   const kill = (): void => {
-    ref?.current && refobserver.current?.unobserve(ref.current);
+    ref.current && refobserver.current?.unobserve(ref.current);
     refobserver.current?.disconnect();
   };
 

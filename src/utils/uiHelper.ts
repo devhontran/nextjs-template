@@ -5,7 +5,7 @@ import { MathMap } from '@Utils/mathUtils';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { getImageProps } from 'next/image';
 
-import { IImageGenerative } from '@/types/image';
+import type { IImageGenerative } from '@/types/image';
 
 export const pageScrollTop = (): number => {
   return window.pageYOffset || document.documentElement.scrollTop || 0;

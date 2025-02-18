@@ -12,10 +12,7 @@ export default function MobileDisabledRotation(): JSX.Element {
   useEffect(() => {
     const handleOrientationChange = (): void => {
       let angle;
-      if (
-        typeof screen.orientation !== 'undefined' &&
-        typeof screen.orientation.angle !== 'undefined'
-      ) {
+      if (typeof screen.orientation.angle !== 'undefined') {
         angle = screen.orientation.angle;
       } else {
         angle = window.orientation;

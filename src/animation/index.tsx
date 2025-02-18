@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import PageEffect from './components/PageEffect';
 import PageLoader from './components/PageLoader';

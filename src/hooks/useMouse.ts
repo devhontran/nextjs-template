@@ -1,4 +1,5 @@
-import { Signal, useSignal, useSignalEffect } from '@preact/signals-react';
+import type { Signal } from '@preact/signals-react';
+import { useSignal, useSignalEffect } from '@preact/signals-react';
 
 export default function useMouse(): Signal<{ x: number; y: number }> {
   const mouse = useSignal<{ x: number; y: number }>({ x: 0, y: 0 });

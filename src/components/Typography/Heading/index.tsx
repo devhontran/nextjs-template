@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import { forwardRef, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
-import { TypographyColor } from '..';
+import type { TypographyColor } from '..';
 import styles from './styles.module.scss';
 
 export interface TypographyHeadingProps extends PropsWithChildren {
@@ -12,29 +12,23 @@ export interface TypographyHeadingProps extends PropsWithChildren {
   id?: string;
 }
 
-const TypographyHeading = forwardRef<HTMLHeadingElement, TypographyHeadingProps>(
-  (props: TypographyHeadingProps, ref) => {
-    const {
-      color = 'white',
-      size = 80,
-      tag: Tag = 'h1',
-      className,
-      children,
-      ...restProps
-    } = props;
-    const headingClassNames = cn(
-      styles.heading,
-      color && styles[`heading__${color}`],
-      styles[`heading__${size}`],
-      className
-    );
-    return (
-      <Tag {...restProps} ref={ref} className={headingClassNames} id={restProps.id}>
-        {children}
-      </Tag>
-    );
-  }
-);
+const TypographyHeading = ({
+  ref,
+  ...props
+}: TypographyHeadingProps & { ref?: React.RefObject<HTMLHeadingElement | null> }) => {
+  const { color = 'white', size = 80, tag: Tag = 'h1', className, children, ...restProps } = props;
+  const headingClassNames = cn(
+    styles.heading,
+    color && styles[`heading__${color}`],
+    styles[`heading__${size}`],
+    className
+  );
+  return (
+    <Tag {...restProps} ref={ref} className={headingClassNames} id={restProps.id}>
+      {children}
+    </Tag>
+  );
+};
 
 TypographyHeading.displayName = 'TypographyHeading';
 

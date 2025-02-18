@@ -2,9 +2,10 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Lenis from 'lenis';
+import type Lenis from 'lenis';
 import { ReactLenis, useLenis } from 'lenis/react';
-import React, { PropsWithChildren, useLayoutEffect, useRef } from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 interface ISmoothScroller extends PropsWithChildren {}
 
@@ -17,7 +18,7 @@ export default function LenisScroller({ children }: ISmoothScroller): React.Reac
 
   useLayoutEffect(() => {
     const update = (time: number): void => {
-      lenisRef.current?.lenis?.raf(time * 1000);
+      lenisRef.current.lenis?.raf(time * 1000);
     };
 
     gsap.ticker.lagSmoothing(0);

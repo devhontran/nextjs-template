@@ -1,6 +1,8 @@
 'use client';
-import { Signal, useComputed, useSignal, useSignalEffect } from '@preact/signals-react';
-import { createContext, ReactElement, ReactNode, useContext } from 'react';
+import type { Signal } from '@preact/signals-react';
+import { useComputed, useSignal, useSignalEffect } from '@preact/signals-react';
+import type { ReactElement, ReactNode } from 'react';
+import { createContext, use } from 'react';
 
 interface AssetsContextValue {
   assetsProgress: Signal<number>;
@@ -13,7 +15,7 @@ interface AssetsContextValue {
 const AssetsContext = createContext<AssetsContextValue | null>(null);
 
 export function useAssetsContext(): AssetsContextValue {
-  const context = useContext(AssetsContext);
+  const context = use(AssetsContext);
   if (!context) {
     throw new Error('useAssetsContext must be used within AssetsProvider');
   }
@@ -63,5 +65,5 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
     resetAssets,
   };
 
-  return <AssetsContext.Provider value={contextValue}>{children}</AssetsContext.Provider>;
+  return <AssetsContext value={contextValue}>{children}</AssetsContext>;
 }

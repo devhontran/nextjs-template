@@ -19,7 +19,7 @@ export default function Header(): React.ReactElement {
   return (
     <header className={s.header}>
       <div className="container">
-        <div className={`${s.header_container} grid grid-cols-10 gap-24 justify-between items-end`}>
+        <div className={`${s.header_container} grid grid-cols-10 items-end justify-between gap-24`}>
           <div className={`${s.header_logo} col-span-1`}>
             <LinkEffect href="/">
               <Image src="/logo-white.svg" alt="logo" width={40} height={40} />

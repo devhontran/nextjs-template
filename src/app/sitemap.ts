@@ -1,6 +1,6 @@
 import { DOMAIN_URL } from '@Constants/common';
 import { isProduction } from '@Utils/utils';
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!isProduction()) return [];

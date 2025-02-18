@@ -1,6 +1,9 @@
-import TypographyHeading, { TypographyHeadingProps } from './Heading';
-import TypographyLabel, { TypographyLabelProps } from './Label';
-import TypographyParagraph, { TypographyParagraphProps } from './Paragraph';
+import type { TypographyHeadingProps } from './Heading';
+import TypographyHeading from './Heading';
+import type { TypographyLabelProps } from './Label';
+import TypographyLabel from './Label';
+import type { TypographyParagraphProps } from './Paragraph';
+import TypographyParagraph from './Paragraph';
 
 export type TypographyProps =
   | TypographyHeadingProps

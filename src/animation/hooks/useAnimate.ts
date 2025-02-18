@@ -3,7 +3,7 @@
 import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import { useCallback } from 'react';
 
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 import { usePagePlay } from './useEffectHooks';
 

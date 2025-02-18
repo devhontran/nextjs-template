@@ -1,7 +1,9 @@
 'use client';
 
-import Image, { ImageProps } from 'next/image';
-import { ReactElement, useRef } from 'react';
+import type { ImageProps } from 'next/image';
+import Image from 'next/image';
+import type { ReactElement } from 'react';
+import { useRef } from 'react';
 
 const ImagePreload = (props: ImageProps): ReactElement => {
   const refImg = useRef<HTMLImageElement>(null);

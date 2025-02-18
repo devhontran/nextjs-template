@@ -3,7 +3,8 @@ import { MathMap } from '@Utils/mathUtils';
 import classNames from 'classnames';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { ReactElement, useRef } from 'react';
+import type { ReactElement } from 'react';
+import { useRef } from 'react';
 
 import { fameCurrent } from '@/animation/components/FameScrolling/useFameScrollingStore';
 
@@ -145,12 +146,12 @@ export default function FameScrolling({
         }
       };
 
-      const runCanvas = async (): Promise<void> => {
+      const runCanvas = (): void => {
         if (!refContent.current || !refCanavs.current) return;
 
-        const rect: DOMRect | undefined = refContent.current?.getBoundingClientRect();
-        refCanavs.current.width = width || rect?.width || window.innerWidth;
-        refCanavs.current.height = height || rect?.height || window.innerHeight;
+        const rect: DOMRect | undefined = refContent.current.getBoundingClientRect();
+        refCanavs.current.width = width || rect.width || window.innerWidth;
+        refCanavs.current.height = height || rect.height || window.innerHeight;
         refDom.current.ctx = refCanavs.current.getContext('2d');
 
         runFrame();

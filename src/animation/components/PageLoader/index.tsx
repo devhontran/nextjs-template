@@ -24,6 +24,7 @@ export default function PageLoader(): React.ReactElement {
   const { pagePlay, pageEnter } = useEffectContext();
   const { assetsProgress, registerAssets, unRegisterAssets, resetAssets } = useAssetsContext();
   const { routerPrefetch } = useRouterEffect();
+
   useGSAP(() => {
     refQT.current = gsap.quickTo(refAnimate.current, 'value', {
       ease: 'power3',
@@ -45,7 +46,7 @@ export default function PageLoader(): React.ReactElement {
         }
       },
     });
-  });
+  }, [pagePlay, pageEnter]);
 
   useSignalEffect(() => {
     const po = Math.round(assetsProgress.value);
@@ -68,7 +69,7 @@ export default function PageLoader(): React.ReactElement {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       window.onpopstate = (window.history as any).onpushstate = null;
     };
-  }, [pathName]);
+  }, [pathName, registerAssets, unRegisterAssets, resetAssets, routerPrefetch]);
 
   return (
     <div className={cn(s.pageLoader)} ref={refWrap}>

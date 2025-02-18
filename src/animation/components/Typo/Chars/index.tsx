@@ -2,11 +2,12 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { cloneElement, isValidElement, PropsWithChildren, ReactElement, useRef } from 'react';
-import SplitType from 'split-type';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { cloneElement, isValidElement, useRef } from 'react';
+import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 import s from './styles.module.scss';
 export enum MotionCharsType {
@@ -52,7 +53,7 @@ export default function MotionChars({
 
       case MotionCharsType.mask_random:
         textSplitTypes?.chars?.length &&
-          textSplitTypes.chars?.forEach((char) => {
+          textSplitTypes.chars.forEach((char) => {
             gsap.set(char, { yPercent: Math.random() < 0.5 ? -100 : 100 });
           });
         toTweenVars = { yPercent: 0 };

@@ -4,12 +4,12 @@ import React from 'react';
 
 import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
-type Props = {
+interface Props {
   href: string;
   className?: string;
   target?: string;
   children: React.ReactNode;
-};
+}
 export default function LinkEffect({
   href,
   className,

@@ -1,4 +1,5 @@
-import { DependencyList, useEffect, useRef } from 'react';
+import type { DependencyList } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const useLoop = (looper: () => void, desp: DependencyList): void => {
   const refLoop = useRef<number | null>(null);

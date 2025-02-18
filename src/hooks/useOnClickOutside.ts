@@ -9,20 +9,20 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
 ): void => {
   useLayoutEffect(() => {
     const listener = (event: Event): void => {
-      const el = ref?.current;
-      if (!el || el.contains((event?.target as Node) || null)) {
+      const el = ref.current;
+      if (!el || el.contains((event.target as Node) || null)) {
         return;
       }
 
       handler(event);
     };
 
-    document?.addEventListener('mousedown', listener);
-    document?.addEventListener('touchstart', listener);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      document?.removeEventListener('mousedown', listener);
-      document?.removeEventListener('touchstart', listener);
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
   }, [ref, handler]); // Reload only if ref or handler changes
 };

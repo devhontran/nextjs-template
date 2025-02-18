@@ -2,11 +2,12 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { PropsWithChildren, ReactElement, useRef } from 'react';
-import SplitType from 'split-type';
+import type { PropsWithChildren, ReactElement } from 'react';
+import React, { useRef } from 'react';
+import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 import s from './styles.module.scss';
 

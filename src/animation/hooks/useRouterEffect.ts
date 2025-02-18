@@ -23,7 +23,10 @@ export default function useRouterEffect(): {
       typeEffect = 'fade',
       isPrefetch = true,
     }: ILinkEffect): void => {
-      if (pathName === routerState.peek().pathName) return window.location.reload();
+      if (pathName === routerState.peek().pathName) {
+        window.location.reload();
+        return;
+      }
       if (isPrefetch) router.prefetch(pathName);
       pageLeave();
       routerState.value = {

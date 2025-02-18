@@ -4,7 +4,8 @@ import { useGSAP } from '@gsap/react';
 import classNames from 'classnames';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { PropsWithChildren, ReactElement, useRef } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useRef } from 'react';
 
 import s from './styles.module.scss';
 

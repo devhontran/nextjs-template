@@ -1,5 +1,7 @@
-import { computed, effect, ReadonlySignal } from '@preact/signals-core';
-import { DependencyList, useEffect, useMemo, useRef } from 'react';
+import type { ReadonlySignal } from '@preact/signals-core';
+import { computed, effect } from '@preact/signals-core';
+import type { DependencyList } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 export function useSignalEffectDeps(cb: () => void | (() => void), deps: DependencyList): void {
   const callback = useRef(cb);
