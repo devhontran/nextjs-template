@@ -1,5 +1,4 @@
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 
 import { useEffectContext } from '@/animation/contexts/EffectContext';
 
@@ -16,7 +15,7 @@ export default function useRouterEffect(): {
 } {
   const router = useRouter();
   const { pageLeave, routerState } = useEffectContext();
-  const routerPrefetch = useCallback(
+  const routerPrefetch = 
     ({
       pathName,
       pageName = 'Home',
@@ -31,13 +30,11 @@ export default function useRouterEffect(): {
         pageName,
         typeEffect,
       };
-    },
-    [router]
-  );
+    };
 
-  const routerPush = useCallback(() => {
+  const routerPush = () => {
     router.push(routerState.peek().pathName);
-  }, [router]);
+  };
 
   return { routerPrefetch, routerPush };
 }
