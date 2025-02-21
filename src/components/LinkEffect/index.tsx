@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react';
 
 import useRouterEffect from '@/animation/hooks/useRouterEffect';
-
 type Props = {
   href: string;
   className?: string;

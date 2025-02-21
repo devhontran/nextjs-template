@@ -5,7 +5,6 @@ import Image from 'next/image';
 import React from 'react';
 
 import LinkEffect from '@/components/LinkEffect';
-
 import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {
@@ -17,7 +16,7 @@ export default function Header(): React.ReactElement {
     };
   });
   return (
-    <header className={s.header}>
+    <header className={`${s.header} js-header`}>
       <div className="container">
         <div className={`${s.header_container} grid grid-cols-10 gap-24 justify-between items-end`}>
           <div className={`${s.header_logo} col-span-1`}>

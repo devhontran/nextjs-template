@@ -1,5 +1,10 @@
 .header {
   padding-top: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--dark);
+
   &_container {
     padding: 24px 0;
   }
