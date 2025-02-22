@@ -54,6 +54,7 @@ export default function PageLoader(): React.ReactElement {
 
   useLayoutEffect(() => {
     registerAssets();
+    window.lenis?.lenis?.scrollTo(0, { force: true, immediate: true, lock: true });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.onpopstate = (window.history as any).onpushstate = function (): void {
       routerPrefetch({ pathName: window.location.pathname });

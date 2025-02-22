@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 
-import PageEffect from './components/PageEffect';
 import PageLoader from './components/PageLoader';
 import { AssetsProvider } from './contexts/AssetsContext';
 import { EffectProvider } from './contexts/EffectContext';
@@ -15,7 +14,6 @@ export default function Animation({ children }: Props): React.ReactElement {
         <AssetsProvider>
           <PageLoader />
           {children}
-          <PageEffect />
         </AssetsProvider>
       </EffectProvider>
     </UiProvider>

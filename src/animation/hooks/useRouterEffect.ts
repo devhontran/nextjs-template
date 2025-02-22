@@ -15,24 +15,23 @@ export default function useRouterEffect(): {
 } {
   const router = useRouter();
   const { pageLeave, routerState } = useEffectContext();
-  const routerPrefetch = 
-    ({
+  const routerPrefetch = ({
+    pathName,
+    pageName = 'Home',
+    typeEffect = 'fade',
+    isPrefetch = true,
+  }: ILinkEffect): void => {
+    if (pathName === routerState.peek().pathName) return window.location.reload();
+    if (isPrefetch) router.prefetch(pathName);
+    pageLeave();
+    routerState.value = {
       pathName,
-      pageName = 'Home',
-      typeEffect = 'fade',
-      isPrefetch = true,
-    }: ILinkEffect): void => {
-      if (pathName === routerState.peek().pathName) return window.location.reload();
-      if (isPrefetch) router.prefetch(pathName);
-      pageLeave();
-      routerState.value = {
-        pathName,
-        pageName,
-        typeEffect,
-      };
+      pageName,
+      typeEffect,
     };
+  };
 
-  const routerPush = () => {
+  const routerPush = (): void => {
     router.push(routerState.peek().pathName);
   };
 

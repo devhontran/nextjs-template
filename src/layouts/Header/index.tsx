@@ -17,7 +17,7 @@ export default function Header(): React.ReactElement {
     };
   });
   return (
-    <header className={s.header}>
+    <header className={`${s.header} js-header`}>
       <div className="container">
         <div className={`${s.header_container} grid grid-cols-10 gap-24 justify-between items-end`}>
           <div className={`${s.header_logo} col-span-1`}>
