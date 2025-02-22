@@ -1,6 +1,7 @@
 'use client';
 
 import LinkEffect from '@/components/LinkEffect';
+
 import About from './About';
 import Hero from './Hero';
 import Services from './Services';

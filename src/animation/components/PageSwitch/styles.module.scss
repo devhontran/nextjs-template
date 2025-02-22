@@ -1,6 +1,6 @@
 .pageSwitch {
   display: grid;
-  background: var(--white);
+  // background: var(--white);
 }
 
 .transition {
@@ -8,7 +8,7 @@
   grid-row: 1;
   background: var(--dark);
   will-change: transform, opacity;
-  height: 100vh;
+
   // transform-origin: top center;
 
   &__old {
@@ -29,5 +29,6 @@
   &__history,
   &__label {
     transform: scale(0.5);
+    height: 100vh;
   }
 }

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import LinkEffect from '@/components/LinkEffect';
+
 import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {

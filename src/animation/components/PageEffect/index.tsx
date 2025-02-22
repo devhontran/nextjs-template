@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import React, { useRef } from 'react';
 
 import { useEffectContext } from '@/animation/contexts/EffectContext';
+import { usePageEffectIn, usePageEffectOut } from '@/animation/hooks/useEffectHooks';
 import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
 import s from './styles.module.scss';
@@ -37,8 +38,8 @@ export default function PageEffect(): React.ReactElement {
     });
   });
 
-  // usePageEffectOut(animationOut);
-  // usePageEffectIn(animationIn);
+  usePageEffectOut(animationOut);
+  usePageEffectIn(animationIn);
 
   return (
     <div className={cn(s.transition)} ref={refContent}>

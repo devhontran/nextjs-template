@@ -1,16 +1,16 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
+import { signal } from '@preact/signals-react';
 import cn from 'classnames';
 import { gsap } from 'gsap';
 import React, { useLayoutEffect, useRef } from 'react';
 
 import { useEffectContext } from '@/animation/contexts/EffectContext';
-import useRouterEffect from '@/animation/hooks/useRouterEffect';
-
 import { usePageEffectIn, usePageEffectOut } from '@/animation/hooks/useEffectHooks';
+import useRouterEffect from '@/animation/hooks/useRouterEffect';
 import { pageScrollTop } from '@/utils/uiHelper';
-import { signal } from '@preact/signals-react';
+
 import s from './styles.module.scss';
 
 export const preRenderOldContent = signal<boolean>(false);
@@ -21,11 +21,11 @@ export default function PageSwitch({
 }: {
   children: React.ReactNode;
 }): React.ReactElement {
-  const refContentHistory = useRef<HTMLDivElement>(null);
+  const _refContentHistory = useRef<HTMLDivElement>(null);
   const refContentOld = useRef<HTMLDivElement>(null);
   const refContentNew = useRef<HTMLDivElement>(null);
   const refContentRoot = useRef<HTMLDivElement>(null);
-  const refContentLabel = useRef<HTMLDivElement>(null);
+  const _refContentLabel = useRef<HTMLDivElement>(null);
 
   const { contextSafe } = useGSAP();
   const { routerPush } = useRouterEffect();
@@ -61,53 +61,54 @@ export default function PageSwitch({
   const animationSwitch = contextSafe(() => {
     if (!refContentOld.current || !refContentNew.current) return;
 
-    gsap.set(refContentNew.current, { scale: 0.5 });
-    const tl = gsap.timeline();
+    // gsap.set(refContentNew.current, { scale: 0.5 });
+    // const tl = gsap.timeline();
 
-    tl.to(refContentOld.current, {
-      scale: 0.5,
-      duration: 0.6,
-      ease: 'power3.inOut',
-    });
+    // tl.to(refContentOld.current, {
+    //   scale: 0.5,
+    //   duration: 0.6,
+    //   ease: 'power3.inOut',
+    // });
 
-    // gsap.fromTo(
-    //   refContentOld.current,
-    //   { x: '0vw', scale: 1, opacity: 1 },
-    //   {
-    //     transformOrigin: 'top center',
-    //     opacity: 0,
-    //     x: '-100vw',
-    //     pointerEvents: 'none',
-    //     ease: 'power3.inOut',
-    //     duration: 0.6,
-    //     onComplete: () => {
-    //       if (refContentOld.current) {
-    //         refContentOld.current.innerHTML = '';
-    //         refContentOld.current.scrollTo(0, 0);
-    //       }
-    //     },
-    //   }
-    // );
-    // gsap.fromTo(
-    //   refContentNew.current,
-    //   { x: '100vw', transformOrigin: 'top center' },
-    //   {
-    //     x: '0vw',
-    //     ease: 'power3.inOut',
-    //     pointerEvents: 'auto',
-    //     duration: 0.6,
-    //     onComplete: () => {
-    //       pageEnter();
-    //     },
-    //   }
-    // );
+    gsap.fromTo(
+      refContentOld.current,
+      { x: '0vw', scale: 1, opacity: 1 },
+      {
+        transformOrigin: 'top center',
+        opacity: 0,
+        x: '-100vw',
+        pointerEvents: 'none',
+        ease: 'power3.inOut',
+        duration: 0.6,
+        onComplete: () => {
+          if (refContentOld.current) {
+            refContentOld.current.innerHTML = '';
+            refContentOld.current.scrollTo(0, 0);
+          }
+        },
+      }
+    );
+    gsap.fromTo(
+      refContentNew.current,
+      { x: '100vw', transformOrigin: 'top center' },
+      {
+        x: '0vw',
+        ease: 'power3.inOut',
+        pointerEvents: 'auto',
+        duration: 0.6,
+        onStart: pagePlay,
+        onComplete: () => {
+          pageEnter();
+        },
+      }
+    );
   });
 
   usePageEffectOut(animationSwitch);
   usePageEffectIn(animationIn);
 
   useLayoutEffect(() => {
-    const pageTransition = (event: any): void => {
+    const pageTransition = (): void => {
       gsap.set(refContentNew.current, { x: '100vw', transformOrigin: 'top center' });
     };
 
@@ -124,12 +125,12 @@ export default function PageSwitch({
 
   return (
     <div className={s.pageSwitch} ref={refContentRoot}>
-      <div className={cn(s.transition, s.transition__history)} ref={refContentHistory} />
+      {/* <div className={cn(s.transition, s.transition__history)} ref={refContentHistory} /> */}
       <div className={cn(s.transition, s.transition__old)} ref={refContentOld} />
       <div className={cn(s.transition, s.transition__new)} ref={refContentNew}>
         {children}
       </div>
-      <div className={cn(s.transition, s.transition__label)} ref={refContentLabel} />
+      {/* <div className={cn(s.transition, s.transition__label)} ref={refContentLabel} /> */}
     </div>
   );
 }
