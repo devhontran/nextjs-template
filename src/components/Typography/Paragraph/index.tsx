@@ -13,7 +13,14 @@ export interface TypographyParagraphProps extends PropsWithChildren {
 
 const TypographyParagraph = forwardRef<HTMLParagraphElement, TypographyParagraphProps>(
   (props: TypographyParagraphProps, ref) => {
-    const { color = 'white', size = 24, tag: Tag = 'p', className, children, ...restProps } = props;
+    const {
+      color = 'white',
+      size = 24,
+      tag: Tag = 'div',
+      className,
+      children,
+      ...restProps
+    } = props;
     const paragraphClassNames = cn(
       styles.paragraph,
       color && styles[`paragraph__${color}`],

@@ -21,11 +21,11 @@ export default function PageSwitch({
 }: {
   children: React.ReactNode;
 }): React.ReactElement {
-  const _refContentHistory = useRef<HTMLDivElement>(null);
+  const refContentHistory = useRef<HTMLDivElement>(null);
   const refContentOld = useRef<HTMLDivElement>(null);
   const refContentNew = useRef<HTMLDivElement>(null);
   const refContentRoot = useRef<HTMLDivElement>(null);
-  const _refContentLabel = useRef<HTMLDivElement>(null);
+  const refContentLabel = useRef<HTMLDivElement>(null);
 
   const { contextSafe } = useGSAP();
   const { routerPush } = useRouterEffect();
@@ -34,19 +34,23 @@ export default function PageSwitch({
   const animationIn = contextSafe(async () => {
     Promise.all([
       new Promise((resolve) => {
-        if (!refContentOld.current || !refContentNew.current) return;
+        if (!refContentOld.current || !refContentNew.current || !refContentHistory.current) return;
+
+        refContentHistory.current.innerHTML = refContentOld.current.innerHTML;
         refContentOld.current.innerHTML = refContentNew.current.innerHTML;
-        refContentOld.current.style.setProperty(
-          '--header-height',
-          `${document.querySelector('.js-header')?.getBoundingClientRect().height || 0}px`
-        );
 
         gsap.set(refContentOld.current, {
           opacity: 1,
           scale: 1,
           x: '0vw',
         });
+
+        const oldScrollPosition = refContentOld.current.getAttribute('data-scroll-position');
+        refContentHistory.current.scrollTo(0, Number(oldScrollPosition));
+
         refContentOld.current.scrollTo(0, pageScrollTop());
+        refContentOld.current.setAttribute('data-scroll-position', pageScrollTop().toString());
+
         resolve(true);
       }),
       new Promise((resolve) => {
@@ -61,47 +65,78 @@ export default function PageSwitch({
   const animationSwitch = contextSafe(() => {
     if (!refContentOld.current || !refContentNew.current) return;
 
-    // gsap.set(refContentNew.current, { scale: 0.5 });
-    // const tl = gsap.timeline();
+    const tl = gsap.timeline();
 
-    // tl.to(refContentOld.current, {
-    //   scale: 0.5,
-    //   duration: 0.6,
-    //   ease: 'power3.inOut',
-    // });
+    gsap.set(refContentHistory.current, { x: '-51vw', overflow: 'hidden', height: '100vh' });
+    gsap.set(refContentLabel.current, { x: '101vw', overflow: 'hidden', height: '100vh' });
+    gsap.set(refContentNew.current, {
+      x: '51vw',
+      scale: 0.5,
+      zIndex: 1,
+      overflow: 'hidden',
+      height: '100vh',
+    });
+    gsap.set(refContentOld.current, { zIndex: 2, overflow: 'hidden', height: '100vh' });
 
-    gsap.fromTo(
-      refContentOld.current,
-      { x: '0vw', scale: 1, opacity: 1 },
-      {
-        transformOrigin: 'top center',
-        opacity: 0,
-        x: '-100vw',
-        pointerEvents: 'none',
-        ease: 'power3.inOut',
-        duration: 0.6,
-        onComplete: () => {
-          if (refContentOld.current) {
-            refContentOld.current.innerHTML = '';
-            refContentOld.current.scrollTo(0, 0);
+    const time = 0.8;
+
+    tl.to(refContentOld.current, {
+      scale: 0.5,
+      duration: time,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        gsap.fromTo(
+          refContentOld.current,
+          { zIndex: 1 },
+          {
+            x: '-51vw',
+
+            duration: time,
+            ease: 'power3.inOut',
           }
-        },
-      }
-    );
-    gsap.fromTo(
-      refContentNew.current,
-      { x: '100vw', transformOrigin: 'top center' },
-      {
-        x: '0vw',
-        ease: 'power3.inOut',
-        pointerEvents: 'auto',
-        duration: 0.6,
-        onStart: pagePlay,
-        onComplete: () => {
-          pageEnter();
-        },
-      }
-    );
+        );
+        gsap.fromTo(
+          refContentNew.current,
+          { x: '51vw', zIndex: 2 },
+          {
+            x: '0vw',
+            duration: time,
+            ease: 'power3.inOut',
+          }
+        );
+        gsap.fromTo(
+          refContentHistory.current,
+          { x: '-51vw' },
+          {
+            x: '-101vw',
+            duration: time,
+            ease: 'power3.inOut',
+          }
+        );
+        gsap.fromTo(
+          refContentLabel.current,
+          { x: '101vw' },
+          {
+            x: '51vw',
+            duration: time,
+            ease: 'power3.inOut',
+          }
+        );
+      },
+    });
+
+    tl.to(refContentNew.current, {
+      x: '0vw',
+      delay: time,
+      scale: 1,
+      duration: time,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        pagePlay();
+        gsap.set(refContentNew.current, { overflow: 'auto', height: 'fit-content' });
+        pageEnter();
+      },
+    });
   });
 
   usePageEffectOut(animationSwitch);
@@ -109,7 +144,7 @@ export default function PageSwitch({
 
   useLayoutEffect(() => {
     const pageTransition = (): void => {
-      gsap.set(refContentNew.current, { x: '100vw', transformOrigin: 'top center' });
+      gsap.set(refContentNew.current, { x: '25vw', scale: 0.5 });
     };
 
     if (window?.navigation && window.navigation.addEventListener) {
@@ -125,12 +160,12 @@ export default function PageSwitch({
 
   return (
     <div className={s.pageSwitch} ref={refContentRoot}>
-      {/* <div className={cn(s.transition, s.transition__history)} ref={refContentHistory} /> */}
+      <div className={cn(s.transition, s.transition__history)} ref={refContentHistory} />
       <div className={cn(s.transition, s.transition__old)} ref={refContentOld} />
       <div className={cn(s.transition, s.transition__new)} ref={refContentNew}>
         {children}
       </div>
-      {/* <div className={cn(s.transition, s.transition__label)} ref={refContentLabel} /> */}
+      <div className={cn(s.transition, s.transition__label)} ref={refContentLabel} />
     </div>
   );
 }
