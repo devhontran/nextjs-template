@@ -46,7 +46,7 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
   });
 
   useSignalEffect(() => {
-    if (assetsProgress.value >= 100 && !isAssetsLoaded.peek()) {
+    if (assetsProgress.value >= 100 && !isAssetsLoaded.value) {
       isAssetsLoaded.value = true;
     }
   });
