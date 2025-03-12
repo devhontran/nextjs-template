@@ -1,6 +1,5 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import cn from 'classnames';
 import { gsap } from 'gsap';
 import React, { useRef } from 'react';
@@ -13,11 +12,12 @@ import s from './styles.module.scss';
 
 export default function PageEffect(): React.ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
-  const { contextSafe } = useGSAP();
+
   const { routerPush } = useRouterEffect();
   const { pageEnter, pagePlay } = useEffectContext();
 
-  const animationIn = contextSafe(() => {
+  const animationIn = (): void => {
+    if (!refContent.current) return;
     gsap.to(refContent.current, {
       opacity: 1,
       pointerEvents: 'auto',
@@ -25,9 +25,10 @@ export default function PageEffect(): React.ReactElement {
       duration: 0.6,
       onComplete: routerPush,
     });
-  });
+  };
 
-  const animationOut = contextSafe(() => {
+  const animationOut = (): void => {
+    if (!refContent.current) return;
     pagePlay();
     gsap.to(refContent.current, {
       opacity: 0,
@@ -36,7 +37,7 @@ export default function PageEffect(): React.ReactElement {
       duration: 0.5,
       onComplete: pageEnter,
     });
-  });
+  };
 
   usePageEffectOut(animationOut);
   usePageEffectIn(animationIn);

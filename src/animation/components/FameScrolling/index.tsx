@@ -61,7 +61,10 @@ export default function FameScrolling({
         if (frame > totalFrames) return;
         for (let i = frame; i < frame + willLoad; i++) {
           if (i > totalFrames) return;
-          if (refDom.current.currentUrlFrame && !refDom.current.images[i]) {
+          if (
+            refDom.current.currentUrlFrame &&
+            refDom.current.images[i] instanceof HTMLImageElement
+          ) {
             refDom.current.images[i] = {
               image: document.createElement('img'),
               frame: i,
@@ -81,8 +84,8 @@ export default function FameScrolling({
           refDom.current.ctx?.clearRect(
             0,
             0,
-            refDom.current.canvas?.width || window.innerWidth,
-            refDom.current.canvas?.height || window.innerHeight
+            refDom.current.canvas?.width ?? window.innerWidth,
+            refDom.current.canvas?.height ?? window.innerHeight
           );
           refDom.current.ctx?.drawImage(
             image as CanvasImageSource,
@@ -94,7 +97,7 @@ export default function FameScrolling({
         }
       };
 
-      const loadFrame = async (frame: number, onLoaded?: () => void | null): Promise<void> => {
+      const loadFrame = (frame: number, onLoaded?: () => void): void => {
         if (!refDom.current.currentUrlFrame) {
           refDom.current.currentUrlFrame = urlFrame;
         }
@@ -107,7 +110,7 @@ export default function FameScrolling({
               drawFrame(refDom.current.images[frame].image);
             }
           } else {
-            onLoaded && onLoaded();
+            onLoaded();
           }
         };
       };
@@ -166,7 +169,7 @@ export default function FameScrolling({
         trigger: refContent.current,
         start: 'center center',
         pin: true,
-        end: () => `${MathMap(totalFrames, 0, 15, 0, window.innerHeight)}px center`,
+        end: () => `${MathMap(totalFrames, 0, 15, 0, window.innerHeight).toString()}px center`,
         onUpdate: (self: ScrollTrigger) => {
           refDom.current.progress = self.progress;
           runFrame();

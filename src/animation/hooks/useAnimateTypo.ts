@@ -2,10 +2,9 @@
 
 import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import type { MutableRefObject } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 import SplitType from 'split-type';
 
-import { usePagePlay } from '@/animation/hooks/useEffectHooks';
 import type { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo {
@@ -22,11 +21,14 @@ export default function useAnimateTypo({
   animate,
 }: IAnimationTypo): void {
   const getSplitType = useCallback(() => {
-    if (refContent.current) {
-      return new SplitType(refContent.current, { types });
-    }
-    return null;
-  }, [types, refContent.current]);
+    return new Promise<SplitType>((resolve) => {
+      if (refContent.current) {
+        requestAnimationFrame(() => {
+          resolve(new SplitType(refContent.current as HTMLElement, { types }));
+        });
+      }
+    });
+  }, [types]);
 
   const getGsapWars = useCallback((): gsap.TweenVars => {
     const delay = getDelay({
@@ -43,22 +45,31 @@ export default function useAnimateTypo({
     return {
       scrollTrigger: {
         trigger: refContent.current,
-        start: motion?.start || `top+=${topStart}% bottom`,
+        start: motion?.start ?? `top+=${topStart.toString()}% bottom`,
         once: true,
         markers: motion?.markers,
       },
       delay,
     };
-  }, [motion, types, refContent.current]);
+  }, [motion, types]);
 
   const initAnimation = useCallback(() => {
-    refContent.current &&
-      splitAnimate(refContent.current as HTMLElement, () => {
-        const gsapWars = getGsapWars();
-        const splitType = getSplitType();
-        animate(gsapWars, splitType);
-      });
-  }, [getGsapWars, getSplitType, animate, refContent.current]);
+    if (!refContent.current) return;
 
-  usePagePlay(() => requestAnimationFrame(initAnimation));
+    splitAnimate(refContent.current as HTMLElement, (): void => {
+      const gsapWars = getGsapWars();
+      getSplitType()
+        .then((splitType): void => {
+          animate(gsapWars, splitType);
+        })
+        .catch((error: unknown): void => {
+          // eslint-disable-next-line no-console
+          console.error('Error in split type animation:', error);
+        });
+    });
+  }, [getGsapWars, getSplitType, animate]);
+
+  useLayoutEffect(() => {
+    requestAnimationFrame(initAnimation);
+  }, [initAnimation]);
 }

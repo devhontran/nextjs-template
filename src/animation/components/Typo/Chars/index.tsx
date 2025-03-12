@@ -1,9 +1,9 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
+import cn from 'classnames';
 import gsap from 'gsap';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { cloneElement, isValidElement, useRef } from 'react';
+import { useRef } from 'react';
 import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
@@ -22,20 +22,22 @@ export enum MotionCharsType {
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
   type?: MotionCharsType;
+  className?: string;
 }
 
 export default function MotionChars({
   children,
   motion,
   type,
+  className,
 }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<HTMLDivElement | null>(null);
+  const refContent = useRef<HTMLDivElement>(null);
 
-  const { contextSafe } = useGSAP();
-  const animate = contextSafe((gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null) => {
+  const animate = (gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null): void => {
+    if (!refContent.current) return;
+
     let fromTweenVars: gsap.TweenVars = {};
     let toTweenVars: gsap.TweenVars = {};
-    refContent.current?.classList.add(s.chars);
 
     switch (type) {
       case MotionCharsType.solidBox:
@@ -52,10 +54,11 @@ export default function MotionChars({
         break;
 
       case MotionCharsType.mask_random:
-        textSplitTypes?.chars?.length &&
+        if (textSplitTypes?.chars?.length) {
           textSplitTypes.chars.forEach((char) => {
             gsap.set(char, { yPercent: Math.random() < 0.5 ? -100 : 100 });
           });
+        }
         toTweenVars = { yPercent: 0 };
         break;
 
@@ -70,7 +73,7 @@ export default function MotionChars({
         break;
     }
 
-    textSplitTypes?.chars &&
+    if (textSplitTypes?.chars) {
       gsap.fromTo(textSplitTypes.chars, fromTweenVars, {
         ...toTweenVars,
         ...gsapWars,
@@ -79,7 +82,8 @@ export default function MotionChars({
         stagger: 0.015,
         ...motion?.to,
       });
-  });
+    }
+  };
 
   useAnimateTypo({
     types: ['lines', 'words', 'chars'],
@@ -87,10 +91,9 @@ export default function MotionChars({
     motion,
     animate,
   });
-
-  if (!isValidElement(children)) {
-    return <div>Error: Invalid children element</div>;
-  }
-
-  return cloneElement(children, { ...{ ref: refContent } });
+  return (
+    <div ref={refContent} className={cn(s.chars, className)}>
+      {children}
+    </div>
+  );
 }

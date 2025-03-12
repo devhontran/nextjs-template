@@ -1,27 +1,25 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { cloneElement, isValidElement, useRef } from 'react';
+import { useRef } from 'react';
 
 import useAnimate from '@/animation/hooks/useAnimate';
 import type { IAnimationProps } from '@/types/animation';
 
 interface IMaskBox extends PropsWithChildren {
   motion?: IAnimationProps;
+  className?: string;
 }
 
-export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElement {
-  const refContent = useRef<IAnimationElement>(null);
+export default function MotionFadeBox({ children, motion, className }: IMaskBox): ReactElement {
+  const refContent = useRef<HTMLDivElement>(null);
 
-  const { contextSafe } = useGSAP();
-  const animate = contextSafe((gsapWars: gsap.TweenVars) => {
-    const el = refContent.current;
-    if (!el) return;
+  const animate = (gsapWars: gsap.TweenVars): void => {
+    if (!refContent.current) return;
 
     gsap.fromTo(
-      el,
+      refContent.current,
       { opacity: 0, y: 34, ...motion?.from },
       {
         ...gsapWars,
@@ -32,13 +30,12 @@ export default function MotionFadeBox({ children, motion }: IMaskBox): ReactElem
         ...motion?.to,
       }
     );
-  });
+  };
 
   useAnimate({ refContent, motion, animate });
-  if (!isValidElement(children)) {
-    return <div>Error: Invalid children element</div>;
-  }
-
-  // Consider alternatives to cloneElement if possible
-  return cloneElement(children, { ...{ ref: refContent } });
+  return (
+    <div ref={refContent} className={className}>
+      {children}
+    </div>
+  );
 }

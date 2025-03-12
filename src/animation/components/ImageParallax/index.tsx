@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import classNames from 'classnames';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
 

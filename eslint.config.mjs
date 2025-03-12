@@ -120,6 +120,8 @@ const config = tseslint.config(
       'no-return-assign': 'error',
       'no-console': 'error',
       'no-param-reassign': 'error',
+      'security/detect-object-injection': 'off',
+      'tailwindcss/no-custom-classname': 'off',
     },
   },
 

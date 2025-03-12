@@ -1,11 +1,9 @@
 'use client';
 
 import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 
 import type { IAnimationProps } from '@/types/animation';
-
-import { usePagePlay } from './useEffectHooks';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
@@ -30,7 +28,7 @@ export default function useAnimate({ refContent, motion, animate }: IMotionProps
     return {
       scrollTrigger: {
         trigger: refContent.current,
-        start: motion?.start || `top+=${topStart}% bottom`,
+        start: motion?.start ?? `top+=${topStart.toString()}% bottom`,
         once: true,
         markers: motion?.markers,
         onEnter: (): void => {
@@ -39,15 +37,18 @@ export default function useAnimate({ refContent, motion, animate }: IMotionProps
       },
       delay,
     };
-  }, [refContent, motion]);
+  }, [motion]);
 
   const initAnimation = useCallback(() => {
-    refContent.current &&
-      splitAnimate(refContent.current as HTMLElement, () => {
-        const gsapWars = getGsapWars();
-        animate(gsapWars);
-      });
-  }, [getGsapWars, animate, refContent.current]);
+    if (!refContent.current) return;
 
-  usePagePlay(() => requestAnimationFrame(initAnimation));
+    splitAnimate(refContent.current as HTMLElement, (): void => {
+      const gsapWars = getGsapWars();
+      animate(gsapWars);
+    });
+  }, [getGsapWars, animate]);
+
+  useLayoutEffect(() => {
+    requestAnimationFrame(initAnimation);
+  }, [initAnimation]);
 }

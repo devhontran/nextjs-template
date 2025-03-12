@@ -1,6 +1,5 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
@@ -21,8 +20,7 @@ interface IMaskBox extends PropsWithChildren {
 export default function MotionMaskBox({ children, motion, direction }: IMaskBox): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
-  const { contextSafe } = useGSAP();
-  const animate = contextSafe((gsapWars: gsap.TweenVars) => {
+  const animate = (gsapWars: gsap.TweenVars): void => {
     let clipPathTo = 'inset(100%)';
     let clipPathForm = 'inset(0%)';
 
@@ -48,13 +46,10 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
         clipPath: clipPathTo,
         ease: 'power3.inOut',
         duration: 1.2,
-        onComplete: function () {
-          gsap.set(this.targets(), { clearProps: 'all' });
-        },
         ...motion?.to,
       }
     );
-  });
+  };
 
   useAnimate({ refContent, motion, animate });
   return <div ref={refContent}>{children}</div>;

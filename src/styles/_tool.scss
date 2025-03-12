@@ -1,15 +1,7 @@
 @use 'sass:math' as math;
 
 @function rem($px, $base: 10px) {
-  @if unitless($px) {
-    $px: $px * 1px;
-  }
-
-  @if unitless($base) {
-    $base: $base * 1px;
-  }
-
-  @return ($px / $base) * 1rem;
+  @return math.div($px, $base) * 1rem;
 }
 
 @function em($px, $base: 10px) {

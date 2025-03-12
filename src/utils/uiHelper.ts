@@ -8,32 +8,26 @@ import { getImageProps } from 'next/image';
 import type { IImageGenerative } from '@/types/image';
 
 export const pageScrollTop = (): number => {
-  return window.pageYOffset || document.documentElement.scrollTop || 0;
+  return window.scrollY || document.documentElement.scrollTop || 0;
 };
 
 export const isSafariChecked = (): boolean => {
-  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  return /^(?:(?!chrome|android).)*safari/i.test(navigator.userAgent);
 };
 
-//eslint-disable-next-line
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void {
   let timeoutId: NodeJS.Timeout | null;
 
-  return function (...args: Parameters<T>): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context = this;
-
+  return function (this: unknown, ...args: Parameters<T>): void {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
 
     timeoutId = setTimeout(() => {
-      func.apply(context, args);
+      func.apply(this, args);
     }, delay);
   };
 }
@@ -73,7 +67,7 @@ export const getTransitionThumbnail = ({
   const {
     props: { src: srcGenerate, srcSet },
   } = getImageProps({
-    src: url || src || '',
+    src: url ?? src ?? '',
     alt: 'img',
     width: !fill ? width : undefined,
     height: !fill ? height : undefined,
@@ -98,9 +92,9 @@ export const getDelay = ({
   if (!element) return 0;
   const rect = element.getBoundingClientRect();
   if (rect.top <= window.innerHeight && rect.top >= 0) {
-    return (delayEnter || 0) + TIME_WAIT_LOADED_TRIGGER / 1000;
+    return (delayEnter ?? 0) + TIME_WAIT_LOADED_TRIGGER / 1000;
   }
-  return delayTrigger || 0;
+  return delayTrigger ?? 0;
 };
 
 export const calcThreshold = ({
@@ -110,8 +104,8 @@ export const calcThreshold = ({
   element: HTMLElement;
   threshold?: number;
 }): number => {
-  let inputThreshold = threshold || 0;
-  if (inputThreshold === 0 && element) {
+  let inputThreshold = threshold ?? 0;
+  if (inputThreshold === 0 && element instanceof HTMLElement) {
     const { height, top } = element.getBoundingClientRect();
     if (top >= window.innerHeight) {
       inputThreshold = MathMap(height / window.innerHeight, 0, 100, 30, 0);
@@ -131,21 +125,11 @@ export function shuffle(array: (string | number | HTMLElement)[]): void {
     currentIndex--;
 
     // And swap it with the current element.
+    // Using destructuring assignment for efficient array element swapping
     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 }
 
 export const splitAnimate = (refContent: HTMLElement, callback: () => void): void => {
-  const rect = refContent.getBoundingClientRect();
-  refContent.style.visibility = 'hidden';
-  if (rect) {
-    const delay = (rect.top / window.innerHeight) * 100;
-    setTimeout(
-      () => {
-        callback();
-        refContent.style.visibility = 'visible';
-      },
-      Math.max(0, Math.min(delay, 2000))
-    );
-  }
+  requestAnimationFrame(callback);
 };

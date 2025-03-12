@@ -9,7 +9,6 @@ import React, { useLayoutEffect, useRef } from 'react';
 
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 import { useEffectContext } from '@/animation/contexts/EffectContext';
-import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
 import s from './styles.module.scss';
 
@@ -23,7 +22,6 @@ export default function PageLoader(): React.ReactElement {
   const pathName = usePathname();
   const { pagePlay, pageEnter } = useEffectContext();
   const { assetsProgress, registerAssets, unRegisterAssets, resetAssets } = useAssetsContext();
-  const { routerPrefetch } = useRouterEffect();
 
   useGSAP(() => {
     refQT.current = gsap.quickTo(refAnimate.current, 'value', {
@@ -33,7 +31,7 @@ export default function PageLoader(): React.ReactElement {
         const po = Math.round(refAnimate.current.value);
 
         if (refPo.current) {
-          refPo.current.textContent = `PO: ${po}%`;
+          refPo.current.textContent = `PO: ${po.toString()}%`;
         }
         if (po >= 100 && !isLoaded.value) {
           isLoaded.value = true;
@@ -46,30 +44,30 @@ export default function PageLoader(): React.ReactElement {
         }
       },
     });
-  }, [pagePlay, pageEnter]);
+  });
 
   useSignalEffect(() => {
     const po = Math.round(assetsProgress.value);
-    refQT.current && !isLoaded.peek() && refQT.current(po);
+    if (refQT.current && !isLoaded.peek()) {
+      refQT.current(po);
+    }
   });
 
   useLayoutEffect(() => {
     registerAssets();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.onpopstate = (window.history as any).onpushstate = function (): void {
-      routerPrefetch({ pathName: window.location.pathname });
-    };
 
-    Promise.all([document.fonts.ready]).then(() => {
-      unRegisterAssets();
-    });
+    Promise.all([document.fonts.ready])
+      .then(() => {
+        unRegisterAssets();
+      })
+      .catch(() => {
+        unRegisterAssets();
+      });
 
-    return () => {
+    return (): void => {
       resetAssets();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.onpopstate = (window.history as any).onpushstate = null;
     };
-  }, [pathName, registerAssets, unRegisterAssets, resetAssets, routerPrefetch]);
+  }, [pathName]);
 
   return (
     <div className={cn(s.pageLoader)} ref={refWrap}>
