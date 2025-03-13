@@ -1,21 +1,24 @@
-import { Signal, useSignal } from '@preact/signals-react';
-import { MutableRefObject, useEffect, useRef } from 'react';
+'use client';
+
+import type { Signal } from '@preact/signals-react';
+import { useSignal } from '@preact/signals-react';
+import type { RefObject } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 export function useIsInViewport({
   ref,
   options,
 }: {
-  ref: MutableRefObject<
-    HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | HTMLVideoElement | null
-  >;
+  ref: RefObject<HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | HTMLVideoElement | null>;
   options?: IntersectionObserverInit;
 }): { visible: Signal<boolean>; kill: () => void } {
   const visible = useSignal<boolean>(false);
-  const refobserver = useRef<IntersectionObserver>();
+  const tntersectionObserver = useRef<IntersectionObserver>(null);
 
-  useEffect(() => {
-    refobserver.current = new IntersectionObserver(
+  useLayoutEffect(() => {
+    tntersectionObserver.current = new IntersectionObserver(
       ([entry]) => {
+        // eslint-disable-next-line react-compiler/react-compiler
         visible.value = entry.isIntersecting;
       },
       {
@@ -24,13 +27,13 @@ export function useIsInViewport({
       }
     );
 
-    ref.current && refobserver.current?.observe(ref.current);
+    ref.current && tntersectionObserver.current.observe(ref.current);
     return kill;
   }, []);
 
   const kill = (): void => {
-    ref?.current && refobserver.current?.unobserve(ref.current);
-    refobserver.current?.disconnect();
+    ref.current && tntersectionObserver.current?.unobserve(ref.current);
+    tntersectionObserver.current?.disconnect();
   };
 
   return { visible, kill };

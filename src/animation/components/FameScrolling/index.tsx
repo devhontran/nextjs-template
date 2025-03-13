@@ -3,7 +3,8 @@ import { MathMap } from '@Utils/mathUtils';
 import classNames from 'classnames';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { ReactElement, useRef } from 'react';
+import type { ReactElement } from 'react';
+import { useRef } from 'react';
 
 import { fameCurrent } from '@/animation/components/FameScrolling/useFameScrollingStore';
 
@@ -60,11 +61,11 @@ export default function FameScrolling({
         if (frame > totalFrames) return;
         for (let i = frame; i < frame + willLoad; i++) {
           if (i > totalFrames) return;
-          if (refDom.current.currentUrlFrame && !refDom.current.images[i]) {
-            refDom.current.images[i] = {
-              image: document.createElement('img'),
-              frame: i,
-            };
+          if (
+            refDom.current.currentUrlFrame &&
+            refDom.current.images[i] instanceof HTMLImageElement
+          ) {
+            refDom.current.images[i] = { image: document.createElement('img'), frame: i };
             refDom.current.images[i].image.src = refDom.current.currentUrlFrame.replace(
               '%d',
               Math.floor(i).toString()
@@ -80,8 +81,8 @@ export default function FameScrolling({
           refDom.current.ctx?.clearRect(
             0,
             0,
-            refDom.current.canvas?.width || window.innerWidth,
-            refDom.current.canvas?.height || window.innerHeight
+            refDom.current.canvas?.width ?? window.innerWidth,
+            refDom.current.canvas?.height ?? window.innerHeight
           );
           refDom.current.ctx?.drawImage(
             image as CanvasImageSource,
@@ -93,7 +94,7 @@ export default function FameScrolling({
         }
       };
 
-      const loadFrame = async (frame: number, onLoaded?: () => void | null): Promise<void> => {
+      const loadFrame = (frame: number, onLoaded?: () => void): void => {
         if (!refDom.current.currentUrlFrame) {
           refDom.current.currentUrlFrame = urlFrame;
         }
@@ -106,7 +107,7 @@ export default function FameScrolling({
               drawFrame(refDom.current.images[frame].image);
             }
           } else {
-            onLoaded && onLoaded();
+            onLoaded();
           }
         };
       };
@@ -145,12 +146,12 @@ export default function FameScrolling({
         }
       };
 
-      const runCanvas = async (): Promise<void> => {
+      const runCanvas = (): void => {
         if (!refContent.current || !refCanavs.current) return;
 
-        const rect: DOMRect | undefined = refContent.current?.getBoundingClientRect();
-        refCanavs.current.width = width || rect?.width || window.innerWidth;
-        refCanavs.current.height = height || rect?.height || window.innerHeight;
+        const rect: DOMRect | undefined = refContent.current.getBoundingClientRect();
+        refCanavs.current.width = width || rect.width || window.innerWidth;
+        refCanavs.current.height = height || rect.height || window.innerHeight;
         refDom.current.ctx = refCanavs.current.getContext('2d');
 
         runFrame();
@@ -165,7 +166,7 @@ export default function FameScrolling({
         trigger: refContent.current,
         start: 'center center',
         pin: true,
-        end: () => `${MathMap(totalFrames, 0, 15, 0, window.innerHeight)}px center`,
+        end: () => `${MathMap(totalFrames, 0, 15, 0, window.innerHeight).toString()}px center`,
         onUpdate: (self: ScrollTrigger) => {
           refDom.current.progress = self.progress;
           runFrame();
@@ -174,7 +175,7 @@ export default function FameScrolling({
 
       ScrollTrigger.refresh();
     },
-    { dependencies: [refContent.current] }
+    { dependencies: [refContent] }
   );
 
   return (

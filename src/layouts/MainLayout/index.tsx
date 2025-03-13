@@ -1,5 +1,6 @@
 import Header from '@Layouts/Header';
-import React, { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import React from 'react';
 
 import Animation from '@/animation';
 import PageSwitch from '@/animation/components/PageSwitch';

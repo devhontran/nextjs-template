@@ -1,4 +1,4 @@
-export type SvgIconColor = {
+export interface SvgIconColor {
   fill?: string;
   stroke?: string;
-};
+}

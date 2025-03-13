@@ -8,7 +8,7 @@ import Services from './Services';
 import s from './styles.module.scss';
 import Works from './Works';
 
-export default function HomePage(): JSX.Element {
+export default function HomePage(): React.ReactElement {
   return (
     <section className={s.landingPage}>
       <Works />

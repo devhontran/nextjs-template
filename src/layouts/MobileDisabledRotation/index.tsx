@@ -1,25 +1,21 @@
 'use client';
 import gsap from 'gsap';
+import Image from 'next/image';
+import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
-
-import ImagePreload from '@/components/ImagePreload';
 
 import s from './styles.module.scss';
 
-export default function MobileDisabledRotation(): JSX.Element {
+export default function MobileDisabledRotation(): ReactElement {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleOrientationChange = (): void => {
       let angle;
-      if (
-        typeof screen.orientation !== 'undefined' &&
-        typeof screen.orientation.angle !== 'undefined'
-      ) {
+      if (typeof screen.orientation.angle !== 'undefined') {
         angle = screen.orientation.angle;
-      } else {
-        angle = window.orientation;
       }
+
       const isVertical = angle === 90 || angle === 270 || angle === -90;
 
       if (!isVertical || window.innerWidth >= 1024) {
@@ -46,7 +42,7 @@ export default function MobileDisabledRotation(): JSX.Element {
     };
     handleOrientationChange();
     window.addEventListener('orientationchange', handleOrientationChange);
-    return () => {
+    return (): void => {
       window.removeEventListener('orientationchange', handleOrientationChange);
     };
   }, []);
@@ -56,7 +52,13 @@ export default function MobileDisabledRotation(): JSX.Element {
       <div className={s.inner}>
         <div className={s.content}>
           <div className={s.shake_phone}>
-            <ImagePreload src={'/icons/phone-drag.svg'} width={64} height={64} alt="phone-drag" />
+            <Image
+              unoptimized
+              src={'/icons/phone-drag.svg'}
+              width={64}
+              height={64}
+              alt="phone-drag"
+            />
           </div>
         </div>
       </div>

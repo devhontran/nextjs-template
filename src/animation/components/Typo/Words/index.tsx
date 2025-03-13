@@ -1,12 +1,13 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
+import cn from 'classnames';
 import gsap from 'gsap';
-import React, { PropsWithChildren, ReactElement, useRef } from 'react';
-import SplitType from 'split-type';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useRef } from 'react';
+import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
-import { IAnimationProps } from '@/types/animation';
+import type { IAnimationProps } from '@/types/animation';
 
 import s from './styles.module.scss';
 
@@ -18,21 +19,23 @@ export enum MotionWordsType {
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
   type?: MotionWordsType;
+  className?: string;
 }
 
 export default function MotionChars({
   children,
   motion,
   type,
+  className,
 }: ParagraphLineMaskProps): ReactElement {
-  const refContent = useRef<IAnimationElement | null>(null);
+  const refContent = useRef<HTMLDivElement>(null);
 
-  const { contextSafe } = useGSAP();
+  const animate = (gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null): void => {
+    if (!refContent.current) return;
 
-  const animate = contextSafe((gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null) => {
     let fromTweenVars: gsap.TweenVars = {};
     let toTweenVars: gsap.TweenVars = {};
-    refContent.current?.classList.add(s.words);
+    refContent.current.classList.add(s.words);
 
     switch (type) {
       case MotionWordsType.fade_slide_left:
@@ -51,14 +54,14 @@ export default function MotionChars({
         toTweenVars = { yPercent: 0, stagger: 0.015, duration: 0.8, ease: 'power3.out' };
     }
 
-    textSplitTypes?.words &&
+    if (textSplitTypes?.words) {
       gsap.fromTo(textSplitTypes.words, fromTweenVars, {
         ...toTweenVars,
         ...gsapWars,
         ...motion?.to,
       });
-  });
-
+    }
+  };
   useAnimateTypo({
     refContent,
     types: ['words'],
@@ -66,9 +69,9 @@ export default function MotionChars({
     animate,
   });
 
-  if (!React.isValidElement(children)) {
-    return <div>Error: Invalid children element</div>;
-  }
-
-  return React.cloneElement(children, { ...{ ref: refContent } });
+  return (
+    <div ref={refContent} className={cn(s.words, className)}>
+      {children}
+    </div>
+  );
 }

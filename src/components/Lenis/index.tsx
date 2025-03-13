@@ -1,37 +1,37 @@
 'use client';
 
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Lenis from 'lenis';
-import { ReactLenis, useLenis } from 'lenis/react';
-import React, { PropsWithChildren, useLayoutEffect, useRef } from 'react';
+import type { LenisRef } from 'lenis/react';
+import { ReactLenis } from 'lenis/react';
+import type { PropsWithChildren } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
-interface ISmoothScroller extends PropsWithChildren {}
-
-export default function LenisScroller({ children }: ISmoothScroller): React.ReactElement {
-  const lenisRef = useRef<{
-    wrapper?: HTMLElement;
-    content?: HTMLElement;
-    lenis?: Lenis;
-  }>({});
+export default function LenisScroller({ children }: PropsWithChildren): React.ReactElement {
+  const lenisRef = useRef<LenisRef>(null);
 
   useLayoutEffect(() => {
     const update = (time: number): void => {
       lenisRef.current?.lenis?.raf(time * 1000);
+      if (lenisRef.current?.lenis && !window.lenis) {
+        window.lenis = lenisRef.current;
+      }
     };
 
-    gsap.ticker.lagSmoothing(0);
     gsap.ticker.add(update);
 
-    return () => {
+    return (): void => {
       gsap.ticker.remove(update);
     };
   }, []);
 
-  useLenis(ScrollTrigger.update);
-
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false}>
+    <ReactLenis
+      root
+      ref={lenisRef}
+      options={{
+        autoRaf: false,
+      }}
+    >
       {children}
     </ReactLenis>
   );

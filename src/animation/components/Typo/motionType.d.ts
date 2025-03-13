@@ -1,4 +1,4 @@
-import SplitType from 'split-type';
+import type SplitType from 'split-type';
 
 interface IPropMotionInit {
   splitText: SplitType;

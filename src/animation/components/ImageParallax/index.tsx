@@ -3,8 +3,9 @@
 import { useGSAP } from '@gsap/react';
 import classNames from 'classnames';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import { PropsWithChildren, ReactElement, useRef } from 'react';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useRef } from 'react';
 
 import s from './styles.module.scss';
 
@@ -14,12 +15,7 @@ type Props = PropsWithChildren & {
   className?: string;
 };
 
-const MotionImageParallax = ({
-  children,
-  speed,
-  className,
-  scale: scaleInput,
-}: Props): ReactElement => {
+const ImageParallax = ({ children, speed, className, scale: scaleInput }: Props): ReactElement => {
   const refWrap = useRef<HTMLDivElement>(null);
   const refEl = useRef<HTMLDivElement>(null);
 
@@ -55,6 +51,4 @@ const MotionImageParallax = ({
   );
 };
 
-MotionImageParallax.displayName = 'MotionImageParallax';
-
-export default MotionImageParallax;
+export default ImageParallax;

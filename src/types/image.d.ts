@@ -1,6 +1,6 @@
-type PhotoSchema = {
+interface PhotoSchema {
   id;
-};
+}
 
 export interface IImageGenerative {
   url?: string;

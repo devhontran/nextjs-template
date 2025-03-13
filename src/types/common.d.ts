@@ -6,7 +6,8 @@ type IAnimationElement =
   | HTMLHeadElement
   | HTMLLinkElement
   | HTMLButtonElement
-  | HTMLHeadingElement;
+  | HTMLHeadingElement
+  | null;
 
 interface ISliderItem {
   urlVid: string;

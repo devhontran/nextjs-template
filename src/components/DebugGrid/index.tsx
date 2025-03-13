@@ -4,65 +4,59 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import s from './styles.module.scss';
 
-export default function DebugGrid(): React.ReactElement {
-  const [isGird, setIsGrid] = useState(false);
-  const handleKeyDown = useCallback(
-    (ev: KeyboardEvent) => {
-      const key = ev.which || ev.keyCode;
-      const isShift = !!ev.shiftKey;
-      if (isShift && key === 71) {
-        localStorage.setItem('isGrid', String(!isGird));
-        setIsGrid(!isGird);
-      }
-    },
-    [isGird]
-  );
+// Custom hook to manage grid state
+const useGridToggle = (): { isGrid: boolean } => {
+  const [isGrid, setIsGrid] = useState(false);
 
+  const toggleGrid = useCallback(() => {
+    const newState = !isGrid;
+    localStorage.setItem('isGrid', String(newState));
+    setIsGrid(newState);
+  }, [isGrid]);
+
+  // Initialize from localStorage
   useEffect(() => {
     const localIsGrid = localStorage.getItem('isGrid');
-    if (localIsGrid === 'true') {
+    if (localIsGrid === 'true' && !isGrid) {
       setIsGrid(true);
     }
+  }, []);
+
+  // Handle keyboard shortcut (Shift+G)
+  useEffect(() => {
+    const handleKeyDown = (ev: KeyboardEvent): void => {
+      // Use ev.key instead of deprecated which/keyCode
+      if (ev.shiftKey && ev.key === 'g') {
+        toggleGrid();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => {
+    return (): void => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleKeyDown, isGird]);
+  }, [toggleGrid]);
+
+  return { isGrid };
+};
+
+// Grid column component for DRY code
+const GridColumn = (): React.ReactElement => (
+  <div className="col-span-1">
+    <div className={s.grid_col} />
+  </div>
+);
+
+export default function DebugGrid(): React.ReactElement {
+  const { isGrid } = useGridToggle();
 
   return (
-    <div className={cn(s.gridDebug, isGird ? '' : 'hidden')}>
+    <div className={cn(s.gridDebug, !isGrid && 'hidden')}>
       <div className={cn('container')}>
         <div className="grid grid-cols-10 gap-24">
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
-          <div className="col-span-1">
-            <div className={s.grid_col} />
-          </div>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <GridColumn key={`grid-column-${index.toString()}`} />
+          ))}
         </div>
       </div>
     </div>

@@ -9,7 +9,6 @@ import React, { useLayoutEffect, useRef } from 'react';
 
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 import { useEffectContext } from '@/animation/contexts/EffectContext';
-import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
 import s from './styles.module.scss';
 
@@ -17,13 +16,13 @@ export default function PageLoader(): React.ReactElement {
   const refWrap = useRef<HTMLDivElement>(null);
   const refPo = useRef<HTMLDivElement>(null);
   const refAnimate = useRef({ value: 0 });
-  const refQT = useRef<gsap.QuickToFunc>();
+  const refQT = useRef<gsap.QuickToFunc>(null);
   const isLoaded = useSignal<boolean>(false);
 
   const pathName = usePathname();
   const { pagePlay, pageEnter } = useEffectContext();
   const { assetsProgress, registerAssets, unRegisterAssets, resetAssets } = useAssetsContext();
-  const { routerPrefetch } = useRouterEffect();
+
   useGSAP(() => {
     refQT.current = gsap.quickTo(refAnimate.current, 'value', {
       ease: 'power3',
@@ -32,16 +31,13 @@ export default function PageLoader(): React.ReactElement {
         const po = Math.round(refAnimate.current.value);
 
         if (refPo.current) {
-          refPo.current.textContent = `PO: ${po}%`;
+          refPo.current.textContent = `PO: ${po.toString()}%`;
         }
         if (po >= 100 && !isLoaded.value) {
+          // eslint-disable-next-line react-compiler/react-compiler
           isLoaded.value = true;
           pagePlay();
-          gsap.to(refWrap.current, {
-            opacity: 0,
-            pointerEvents: 'none',
-            onComplete: pageEnter,
-          });
+          gsap.to(refWrap.current, { opacity: 0, pointerEvents: 'none', onComplete: pageEnter });
         }
       },
     });
@@ -49,25 +45,24 @@ export default function PageLoader(): React.ReactElement {
 
   useSignalEffect(() => {
     const po = Math.round(assetsProgress.value);
-    refQT.current && !isLoaded.peek() && refQT.current(po);
+    if (!isLoaded.peek()) {
+      refQT.current?.(po);
+    }
   });
 
   useLayoutEffect(() => {
     registerAssets();
-    window.lenis?.lenis?.scrollTo(0, { force: true, immediate: true, lock: true });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.onpopstate = (window.history as any).onpushstate = function (): void {
-      routerPrefetch({ pathName: window.location.pathname });
-    };
 
-    Promise.all([document.fonts.ready]).then(() => {
-      unRegisterAssets();
-    });
+    Promise.all([document.fonts.ready])
+      .then(() => {
+        unRegisterAssets();
+      })
+      .catch(() => {
+        unRegisterAssets();
+      });
 
-    return () => {
+    return (): void => {
       resetAssets();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.onpopstate = (window.history as any).onpushstate = null;
     };
   }, [pathName]);
 

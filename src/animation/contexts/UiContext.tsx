@@ -1,10 +1,12 @@
 'use client';
 import { useGSAP } from '@gsap/react';
-import { Signal, useComputed, useSignal } from '@preact/signals-react';
+import type { Signal } from '@preact/signals-react';
+import { useComputed, useSignal } from '@preact/signals-react';
 import { debounce } from '@Utils/uiHelper';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { createContext, ReactElement, ReactNode, useContext } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { createContext, use } from 'react';
 
 interface UiContextValue {
   isMobile: Signal<boolean>;
@@ -34,6 +36,7 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
     gsap.registerPlugin(ScrollTrigger);
 
     const listener = debounce((): void => {
+      // eslint-disable-next-line react-compiler/react-compiler
       width.value = window.innerWidth || document.body.clientWidth || 0;
       height.value = window.innerHeight || document.body.clientHeight || 0;
       scrollHeight.value = document.body.scrollHeight;
@@ -43,21 +46,24 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
 
-    return () => {
+    return (): void => {
       resizeObserver.unobserve(document.body);
       resizeObserver.disconnect();
+      width.value = 0;
+      height.value = 0;
+      scrollHeight.value = 0;
     };
   });
 
   return (
-    <UiContext.Provider value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}>
+    <UiContext value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}>
       {children}
-    </UiContext.Provider>
+    </UiContext>
   );
 }
 
 export const useUiContext = (): UiContextValue => {
-  const context = useContext(UiContext);
+  const context = use(UiContext);
   if (!context) {
     throw new Error('useUiContext must be used within UiProvider');
   }

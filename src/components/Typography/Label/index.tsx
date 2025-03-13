@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import { forwardRef, PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
-import { TypographyColor } from '..';
+import type { TypographyColor } from '..';
 import styles from './styles.module.scss';
 
 export interface TypographyLabelProps extends PropsWithChildren {
@@ -11,29 +11,23 @@ export interface TypographyLabelProps extends PropsWithChildren {
   className?: string;
 }
 
-const TypographyLabel = forwardRef<HTMLHeadingElement, TypographyLabelProps>(
-  (props: TypographyLabelProps, ref) => {
-    const {
-      color = 'white',
-      size = 16,
-      tag: Tag = 'h6',
-      className,
-      children,
-      ...restProps
-    } = props;
-    const labelClassNames = cn(
-      styles.label,
-      color && styles[`label__${color}`],
-      styles[`label__${size}`],
-      className
-    );
-    return (
-      <Tag {...restProps} ref={ref} className={labelClassNames}>
-        {children}
-      </Tag>
-    );
-  }
-);
+const TypographyLabel = ({
+  ref,
+  ...props
+}: TypographyLabelProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
+  const { color = 'white', size = 16, tag: Tag = 'h6', className, children, ...restProps } = props;
+  const labelClassNames = cn(
+    styles.label,
+    styles[`label__${color}`],
+    styles[`label__${size.toString()}`],
+    className
+  );
+  return (
+    <Tag {...restProps} ref={ref} className={labelClassNames}>
+      {children}
+    </Tag>
+  );
+};
 
 TypographyLabel.displayName = 'TypographyLabel';
 

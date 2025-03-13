@@ -86,25 +86,6 @@ const GetOffsetThreeJs = ({ left, top, width, height, winSize }: IGetOffsetThree
   };
 };
 
-//
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const shuffleArray = (array: any[]): any[] => {
-  let currentIndex = array.length,
-    randomIndex;
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
-};
-
 export const randBool = (): boolean => {
   const a = new Uint8Array(1);
   crypto.getRandomValues(a);
@@ -142,49 +123,6 @@ export const cyrb128 = (str: string): number[] => {
   h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
   h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
   return [(h1 ^ h2 ^ h3 ^ h4) >>> 0, (h2 ^ h1) >>> 0, (h3 ^ h1) >>> 0, (h4 ^ h1) >>> 0];
-};
-
-function sfc32(_a: number, _b: number, _c: number, _d: number): number {
-  let a = _a;
-  let b = _b;
-  let c = _c;
-  let d = _d;
-
-  a >>>= 0;
-  b >>>= 0;
-  c >>>= 0;
-  d >>>= 0;
-  let t = (a + b) | 0;
-  a = b ^ (b >>> 9);
-  b = (c + (c << 3)) | 0;
-  c = (c << 21) | (c >>> 11);
-  d = (d + 1) | 0;
-  t = (t + d) | 0;
-  c = (c + t) | 0;
-  return (t >>> 0) / 4294967296;
-}
-
-// return random value from [l -> r]
-export const consistentRand = (seed: string | number, l: number, r: number): number => {
-  const sfc = cyrb128(seed.toString());
-  const rand = sfc32(sfc[0], sfc[1], sfc[2], sfc[3]);
-  return l + rand * (r - l);
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getRandomItem = (listP: any[], seed: string): number => {
-  const pref = [];
-  for (const x of listP) pref.push(x);
-  for (let i = 1; i < listP.length; i++) {
-    pref[i] += pref[i - 1];
-  }
-  for (let i = 0; i < pref.length; i++) pref[i] /= pref[pref.length - 1];
-  // get random value from 0->1
-  const rand = consistentRand(seed, 0, 1);
-  for (let i = 0; i < pref.length; i++) {
-    if (rand < pref[i]) return i;
-  }
-  return -1;
 };
 
 export const randBoolSeed = (seed: number): boolean => {

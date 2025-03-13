@@ -3,7 +3,8 @@
 import { MathMap } from '@Utils/mathUtils';
 import classNames from 'classnames';
 import { useLenis } from 'lenis/react';
-import { PropsWithChildren, ReactElement, useRef } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useRef } from 'react';
 
 import { useEffectContext } from '@/animation/contexts/EffectContext';
 import { useUiContext } from '@/animation/contexts/UiContext';
@@ -49,7 +50,7 @@ const MotionParallaxBox = ({
     }
 
     if (innerRef.current)
-      innerRef.current.style.transform = `translate3d(0, ${yTran * speed}px, 0)`;
+      innerRef.current.style.transform = `translate3d(0, ${(yTran * speed).toString()}px, 0)`;
   });
   return (
     <div
@@ -62,7 +63,4 @@ const MotionParallaxBox = ({
     </div>
   );
 };
-
-MotionParallaxBox.displayName = 'MotionParallaxBox';
-
 export default MotionParallaxBox;
