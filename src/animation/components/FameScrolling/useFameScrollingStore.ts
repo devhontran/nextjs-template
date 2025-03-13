@@ -15,7 +15,6 @@ export default function useAnimationOnFame({
   fameOuts: number[];
 }): void {
   useSignalEffect(() => {
-    if (!refContent.current) return;
     const el = refContent.current;
 
     const fame = fameCurrent.value;

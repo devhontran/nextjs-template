@@ -14,10 +14,8 @@ export default function MobileDisabledRotation(): ReactElement {
       let angle;
       if (typeof screen.orientation.angle !== 'undefined') {
         angle = screen.orientation.angle;
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        angle = (window as any).orientation;
       }
+
       const isVertical = angle === 90 || angle === 270 || angle === -90;
 
       if (!isVertical || window.innerWidth >= 1024) {

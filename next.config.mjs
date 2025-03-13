@@ -6,7 +6,12 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-    forceSwcTransforms: true,
+     turbo: {
+      resolveAlias: {
+        underscore: 'lodash',
+      },
+      resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
+    },
   },
    images: {
     minimumCacheTTL: 3600,

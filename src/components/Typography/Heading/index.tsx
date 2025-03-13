@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
 import type { TypographyColor } from '..';
 import styles from './styles.module.scss';
@@ -15,12 +15,12 @@ export interface TypographyHeadingProps extends PropsWithChildren {
 const TypographyHeading = ({
   ref,
   ...props
-}: TypographyHeadingProps & { ref?: React.RefObject<HTMLHeadingElement | null> }) => {
+}: TypographyHeadingProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
   const { color = 'white', size = 80, tag: Tag = 'h1', className, children, ...restProps } = props;
   const headingClassNames = cn(
     styles.heading,
-    color && styles[`heading__${color}`],
-    styles[`heading__${size}`],
+    styles[`heading__${color}`],
+    styles[`heading__${size.toString()}`],
     className
   );
   return (

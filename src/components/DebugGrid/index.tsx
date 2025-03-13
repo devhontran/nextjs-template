@@ -17,7 +17,7 @@ const useGridToggle = (): { isGrid: boolean } => {
   // Initialize from localStorage
   useEffect(() => {
     const localIsGrid = localStorage.getItem('isGrid');
-    if (localIsGrid === 'true') {
+    if (localIsGrid === 'true' && !isGrid) {
       setIsGrid(true);
     }
   }, []);
@@ -55,7 +55,7 @@ export default function DebugGrid(): React.ReactElement {
       <div className={cn('container')}>
         <div className="grid grid-cols-10 gap-24">
           {Array.from({ length: 10 }).map((_, index) => (
-            <GridColumn key={index} />
+            <GridColumn key={`grid-column-${index.toString()}`} />
           ))}
         </div>
       </div>

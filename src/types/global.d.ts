@@ -1,4 +1,4 @@
-import type Lenis from 'lenis';
+import type { LenisRef } from 'lenis/react';
 
 declare global {
   interface Window {
@@ -6,6 +6,6 @@ declare global {
     opera?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     grecaptcha?: any;
-    lenis?: { wrapper?: HTMLElement; content?: HTMLElement; lenis?: Lenis };
+    lenis?: LenisRef;
   }
 }

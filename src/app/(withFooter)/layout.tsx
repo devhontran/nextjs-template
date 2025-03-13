@@ -4,6 +4,6 @@ import WithFooter from '@/layouts/WithFooter';
 
 type Props = PropsWithChildren;
 
-export default async function Layout({ children }: Props): Promise<React.ReactElement> {
+export default function Layout({ children }: Props): React.ReactElement {
   return <WithFooter>{children}</WithFooter>;
 }

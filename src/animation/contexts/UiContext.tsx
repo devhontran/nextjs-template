@@ -45,9 +45,12 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
     const resizeObserver = new ResizeObserver(listener);
     resizeObserver.observe(document.body);
 
-    return () => {
+    return (): void => {
       resizeObserver.unobserve(document.body);
       resizeObserver.disconnect();
+      width.value = 0;
+      height.value = 0;
+      scrollHeight.value = 0;
     };
   });
 

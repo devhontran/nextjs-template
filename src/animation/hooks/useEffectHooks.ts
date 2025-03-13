@@ -39,11 +39,6 @@ export function usePageIdle(onIdle: () => void): void {
   });
 }
 
-export function usePageEffect(callback: () => void): void {
-  const { routerState } = useEffectContext();
-  routerState.value && callback();
-}
-
 export function usePageEffectIn(callback: () => void): void {
   const { isPageIdle } = useEffectContext();
   usePageLeave(() => {
@@ -54,6 +49,8 @@ export function usePageEffectIn(callback: () => void): void {
 export function usePageEffectOut(callback: () => void): void {
   const { isPageIdle } = useEffectContext();
   useIsAssetsLoaded(() => {
-    !isPageIdle.peek() && callback();
+    if (!isPageIdle.peek()) {
+      callback();
+    }
   });
 }

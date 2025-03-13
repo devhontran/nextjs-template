@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 import PageEffect from './components/PageEffect';
 import PageLoader from './components/PageLoader';
@@ -6,9 +6,7 @@ import { AssetsProvider } from './contexts/AssetsContext';
 import { EffectProvider } from './contexts/EffectContext';
 import { UiProvider } from './contexts/UiContext';
 
-interface Props extends PropsWithChildren {}
-
-export default function Animation({ children }: Props): React.ReactElement {
+export default function Animation({ children }: PropsWithChildren): ReactElement {
   return (
     <UiProvider>
       <EffectProvider>

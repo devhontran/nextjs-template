@@ -1,14 +1,14 @@
 'use client';
 
 import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
-import type { MutableRefObject } from 'react';
+import type { RefObject } from 'react';
 import { useCallback, useLayoutEffect } from 'react';
 import SplitType from 'split-type';
 
 import type { IAnimationProps } from '@/types/animation';
 
 interface IAnimationTypo {
-  refContent: MutableRefObject<IAnimationElement | null>;
+  refContent: RefObject<IAnimationElement | null>;
   types: ('lines' | 'words' | 'chars')[];
   motion?: IAnimationProps;
   animate: (gsapWars: gsap.TweenVars, splitType: SplitType | null) => void;

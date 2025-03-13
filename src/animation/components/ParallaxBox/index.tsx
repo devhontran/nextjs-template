@@ -50,7 +50,7 @@ const MotionParallaxBox = ({
     }
 
     if (innerRef.current)
-      innerRef.current.style.transform = `translate3d(0, ${yTran * speed}px, 0)`;
+      innerRef.current.style.transform = `translate3d(0, ${(yTran * speed).toString()}px, 0)`;
   });
   return (
     <div
@@ -63,7 +63,4 @@ const MotionParallaxBox = ({
     </div>
   );
 };
-
-MotionParallaxBox.displayName = 'MotionParallaxBox';
-
 export default MotionParallaxBox;

@@ -122,6 +122,8 @@ const config = tseslint.config(
       'no-param-reassign': 'error',
       'security/detect-object-injection': 'off',
       'tailwindcss/no-custom-classname': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@eslint-react/no-array-index-key': 'error',
     },
   },
 

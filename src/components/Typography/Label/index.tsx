@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
 import type { TypographyColor } from '..';
 import styles from './styles.module.scss';
@@ -14,12 +14,12 @@ export interface TypographyLabelProps extends PropsWithChildren {
 const TypographyLabel = ({
   ref,
   ...props
-}: TypographyLabelProps & { ref?: React.RefObject<HTMLHeadingElement | null> }) => {
+}: TypographyLabelProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
   const { color = 'white', size = 16, tag: Tag = 'h6', className, children, ...restProps } = props;
   const labelClassNames = cn(
     styles.label,
-    color && styles[`label__${color}`],
-    styles[`label__${size}`],
+    styles[`label__${color}`],
+    styles[`label__${size.toString()}`],
     className
   );
   return (

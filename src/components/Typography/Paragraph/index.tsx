@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 import type { TypographyColor } from '..';
 import styles from './styles.module.scss';
@@ -14,12 +14,14 @@ export interface TypographyParagraphProps extends PropsWithChildren {
 const TypographyParagraph = ({
   ref,
   ...props
-}: TypographyParagraphProps & { ref?: React.RefObject<HTMLParagraphElement | null> }) => {
+}: TypographyParagraphProps & {
+  ref?: React.RefObject<HTMLParagraphElement | null>;
+}): ReactElement => {
   const { color = 'white', size = 24, tag: Tag = 'p', className, children, ...restProps } = props;
   const paragraphClassNames = cn(
     styles.paragraph,
-    color && styles[`paragraph__${color}`],
-    styles[`paragraph__${size}`],
+    styles[`paragraph__${color}`],
+    styles[`paragraph__${size.toString()}`],
     className
   );
   return (

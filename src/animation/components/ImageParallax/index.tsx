@@ -15,12 +15,7 @@ type Props = PropsWithChildren & {
   className?: string;
 };
 
-const MotionImageParallax = ({
-  children,
-  speed,
-  className,
-  scale: scaleInput,
-}: Props): ReactElement => {
+const ImageParallax = ({ children, speed, className, scale: scaleInput }: Props): ReactElement => {
   const refWrap = useRef<HTMLDivElement>(null);
   const refEl = useRef<HTMLDivElement>(null);
 
@@ -56,6 +51,4 @@ const MotionImageParallax = ({
   );
 };
 
-MotionImageParallax.displayName = 'MotionImageParallax';
-
-export default MotionImageParallax;
+export default ImageParallax;

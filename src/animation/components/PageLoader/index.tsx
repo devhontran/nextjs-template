@@ -16,7 +16,7 @@ export default function PageLoader(): React.ReactElement {
   const refWrap = useRef<HTMLDivElement>(null);
   const refPo = useRef<HTMLDivElement>(null);
   const refAnimate = useRef({ value: 0 });
-  const refQT = useRef<gsap.QuickToFunc>();
+  const refQT = useRef<gsap.QuickToFunc>(null);
   const isLoaded = useSignal<boolean>(false);
 
   const pathName = usePathname();
@@ -48,8 +48,8 @@ export default function PageLoader(): React.ReactElement {
 
   useSignalEffect(() => {
     const po = Math.round(assetsProgress.value);
-    if (refQT.current && !isLoaded.peek()) {
-      refQT.current(po);
+    if (!isLoaded.peek()) {
+      refQT.current?.(po);
     }
   });
 
