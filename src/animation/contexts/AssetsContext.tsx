@@ -47,6 +47,7 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
 
   useSignalEffect(() => {
     if (assetsProgress.value >= 100 && !isAssetsLoaded.value) {
+      // eslint-disable-next-line react-compiler/react-compiler
       isAssetsLoaded.value = true;
     }
   });

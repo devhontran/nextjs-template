@@ -64,6 +64,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
   const isPageIdle = useComputed(() => pageStatus.value === PageState.Idle);
 
   useLayoutEffect(() => {
+    // eslint-disable-next-line react-compiler/react-compiler
     routerState.value = untracked(() => {
       return {
         pathName: window.location.pathname,

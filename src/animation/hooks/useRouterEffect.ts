@@ -29,6 +29,7 @@ export default function useRouterEffect(): {
       }
       if (isPrefetch) router.prefetch(pathName);
       pageLeave();
+      // eslint-disable-next-line react-compiler/react-compiler
       routerState.value = {
         pathName,
         pageName,

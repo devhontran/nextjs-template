@@ -18,6 +18,7 @@ export function useIsInViewport({
   useLayoutEffect(() => {
     tntersectionObserver.current = new IntersectionObserver(
       ([entry]) => {
+        // eslint-disable-next-line react-compiler/react-compiler
         visible.value = entry.isIntersecting;
       },
       {

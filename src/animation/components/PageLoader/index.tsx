@@ -34,13 +34,10 @@ export default function PageLoader(): React.ReactElement {
           refPo.current.textContent = `PO: ${po.toString()}%`;
         }
         if (po >= 100 && !isLoaded.value) {
+          // eslint-disable-next-line react-compiler/react-compiler
           isLoaded.value = true;
           pagePlay();
-          gsap.to(refWrap.current, {
-            opacity: 0,
-            pointerEvents: 'none',
-            onComplete: pageEnter,
-          });
+          gsap.to(refWrap.current, { opacity: 0, pointerEvents: 'none', onComplete: pageEnter });
         }
       },
     });

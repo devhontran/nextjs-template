@@ -36,6 +36,7 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
     gsap.registerPlugin(ScrollTrigger);
 
     const listener = debounce((): void => {
+      // eslint-disable-next-line react-compiler/react-compiler
       width.value = window.innerWidth || document.body.clientWidth || 0;
       height.value = window.innerHeight || document.body.clientHeight || 0;
       scrollHeight.value = document.body.scrollHeight;

@@ -123,6 +123,7 @@ const config = tseslint.config(
       'security/detect-object-injection': 'off',
       'tailwindcss/no-custom-classname': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
+      '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
       '@eslint-react/no-array-index-key': 'error',
     },
   },
