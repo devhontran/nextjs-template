@@ -1,0 +1,18 @@
+.heading {
+  font-size: 100px;
+  line-height: 1.2;
+}
+
+.text {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.content {
+  max-width: 520px;
+  text-align: left;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 250px;
+  position: absolute;
+}

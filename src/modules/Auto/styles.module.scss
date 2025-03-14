@@ -1,0 +1,8 @@
+.container {
+  position: relative;
+  display: grid;
+  > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
