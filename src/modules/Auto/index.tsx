@@ -12,9 +12,11 @@ import s from './styles.module.scss';
 import { useVideoContent, VideoContentProvider } from './VideoContentContext';
 
 function Auto(): React.ReactElement {
-  const { isPlaying, gotoSection } = useVideoContent();
+  const { isPlaying, gotoSection, limit } = useVideoContent();
   useGSAP(() => {
     gsap.registerPlugin(Observer);
+    limit.value = 3;
+
     Observer.create({
       type: 'wheel,touch,pointer',
       wheelSpeed: -1,

@@ -10,6 +10,7 @@ interface VideoContentContextProps {
   videoIndex: Signal<number>;
   videoIndexPrev: Signal<number>;
   gotoSection: (index: number) => void;
+  limit: Signal<number>;
 }
 
 export const VideoContentContext = createContext<VideoContentContextProps | null>(null);
@@ -24,11 +25,18 @@ export const VideoContentProvider = ({ children }: PropsWithChildren): ReactElem
   const isPlaying = useSignal(false);
   const videoIndex = useSignal(0);
   const videoIndexPrev = useSignal(0);
+  const limit = useSignal(0);
 
   const gotoSection = (index: number): void => {
     // eslint-disable-next-line react-compiler/react-compiler
     videoIndexPrev.value = videoIndex.value;
     videoIndex.value += index;
+
+    if (videoIndex.value < 0) {
+      videoIndex.value = limit.peek() - 1;
+    } else if (videoIndex.value >= limit.peek()) {
+      videoIndex.value = 0;
+    }
   };
 
   const contextValue = {
@@ -36,6 +44,7 @@ export const VideoContentProvider = ({ children }: PropsWithChildren): ReactElem
     videoIndex,
     videoIndexPrev,
     gotoSection,
+    limit,
   };
 
   return <VideoContentContext value={contextValue}>{children}</VideoContentContext>;

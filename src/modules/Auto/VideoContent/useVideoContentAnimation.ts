@@ -22,6 +22,7 @@ export const useVideoContentAnimation = ({
       refVideoControls.current.play();
     } else if (videoIndexPrev.peek() === index) {
       refVideoControls.current.pause();
+      animationOut();
     }
   });
 
@@ -30,8 +31,6 @@ export const useVideoContentAnimation = ({
 
     if (videoIndex.value === index) {
       animationIn();
-    } else if (videoIndexPrev.peek() === index) {
-      animationOut();
     }
   });
 };

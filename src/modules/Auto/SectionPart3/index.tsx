@@ -43,8 +43,6 @@ export default function SectionPart3({ index }: { index: number }): React.ReactE
         }
       );
     }
-
-    refVideoControls.current.play();
   };
   const animationOut = (): void => {
     const fades = refContent.current?.querySelectorAll('.js-fade');
@@ -57,7 +55,6 @@ export default function SectionPart3({ index }: { index: number }): React.ReactE
         stagger: 0.015,
       });
     }
-    refVideoControls.current.pause();
   };
 
   useVideoContentAnimation({
