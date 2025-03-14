@@ -9,7 +9,7 @@ import s from './styles.module.scss';
 
 export default function Header(): React.ReactElement {
   return (
-    <header className={`${s.header} js-header`}>
+    <header className={s.header}>
       <div className="container">
         <div className={`${s.header_container} grid grid-cols-10 items-end justify-between gap-24`}>
           <div className={`${s.header_logo} col-span-1`}>
