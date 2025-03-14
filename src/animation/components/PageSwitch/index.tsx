@@ -129,7 +129,9 @@ export default function PageSwitch({
 
   useLayoutEffect(() => {
     const pageTransition = (): void => {
-      refContentNew.current && gsap.set(refContentNew.current, { x: '25vw', scale: 0.5 });
+      if (refContentNew.current) {
+        gsap.set(refContentNew.current, { x: '25vw', scale: 0.5 });
+      }
     };
 
     if (window.navigation) {

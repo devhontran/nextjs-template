@@ -27,13 +27,17 @@ export function useIsInViewport({
       }
     );
 
-    ref.current && tntersectionObserver.current.observe(ref.current);
+    if (ref.current) {
+      tntersectionObserver.current.observe(ref.current);
+    }
     return kill;
   }, []);
 
   const kill = (): void => {
-    ref.current && tntersectionObserver.current?.unobserve(ref.current);
-    tntersectionObserver.current?.disconnect();
+    if (ref.current) {
+      tntersectionObserver.current?.unobserve(ref.current);
+      tntersectionObserver.current?.disconnect();
+    }
   };
 
   return { visible, kill };

@@ -49,8 +49,9 @@ const MotionParallaxBox = ({
       yTran = Math.max(yTran, max);
     }
 
-    if (innerRef.current)
+    if (innerRef.current) {
       innerRef.current.style.transform = `translate3d(0, ${(yTran * speed).toString()}px, 0)`;
+    }
   });
   return (
     <div

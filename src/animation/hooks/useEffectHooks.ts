@@ -42,7 +42,9 @@ export function usePageIdle(onIdle: () => void): void {
 export function usePageEffectIn(callback: () => void): void {
   const { isPageIdle } = useEffectContext();
   usePageLeave(() => {
-    !isPageIdle.peek() && callback();
+    if (!isPageIdle.peek()) {
+      callback();
+    }
   });
 }
 
