@@ -1,4 +1,4 @@
-import s from './styles.module.scss';
+import s from './BackToTop.module.scss';
 
 export default function BackToTop(): React.ReactElement {
   return (

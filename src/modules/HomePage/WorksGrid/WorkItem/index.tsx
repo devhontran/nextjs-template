@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import ImagePlaceHolder from '@/components/ImagePlaceHolder';
+import ImagePlaceHolder from '@/components/ImagePlaceholder';
 import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
 
 import Tags from '../../Tags';

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
 
-import s from './styles.module.scss';
+import s from './MobileDisabledRotation.module.scss';
 
 export default function MobileDisabledRotation(): ReactElement {
   const wrapperRef = useRef<HTMLDivElement>(null);

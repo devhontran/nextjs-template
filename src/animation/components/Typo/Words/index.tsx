@@ -11,7 +11,7 @@ import type { MotionCharsTarget } from '@/enum/motion';
 import { MotionWordsType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
 
-import s from './styles.module.scss';
+import s from './Words.module.scss';
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;

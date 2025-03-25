@@ -2,7 +2,7 @@ import cn from 'classnames';
 import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
 import type { TypographyColor } from '..';
-import styles from './styles.module.scss';
+import styles from './Heading.module.scss';
 
 export interface TypographyHeadingProps extends PropsWithChildren {
   color?: TypographyColor;

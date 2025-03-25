@@ -8,7 +8,7 @@ import { useRef } from 'react';
 
 import { fameCurrent } from '@/animation/components/FameScrolling/useFameScrollingStore';
 
-import s from './styles.module.scss';
+import s from './FameScrolling.module.scss';
 
 interface IProps {
   className?: string;

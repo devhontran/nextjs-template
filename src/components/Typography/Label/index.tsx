@@ -2,7 +2,7 @@ import cn from 'classnames';
 import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
 import type { TypographyColor } from '..';
-import styles from './styles.module.scss';
+import styles from './Label.module.scss';
 
 export interface TypographyLabelProps extends PropsWithChildren {
   color?: TypographyColor;

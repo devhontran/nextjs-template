@@ -7,7 +7,7 @@ import { useLayoutEffect } from 'react';
 
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 
-import s from './style.module.scss';
+import s from './ImagePlaceholder.module.scss';
 
 const ImagePlaceHolder = ({
   ref,

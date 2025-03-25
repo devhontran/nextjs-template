@@ -10,7 +10,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 import { useEffectContext } from '@/animation/contexts/EffectContext';
 
-import s from './styles.module.scss';
+import s from './PageLoader.module.scss';
 
 export default function PageLoader(): React.ReactElement {
   const refWrap = useRef<HTMLDivElement>(null);

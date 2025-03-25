@@ -5,7 +5,7 @@ import React from 'react';
 
 import LinkEffect from '@/components/LinkEffect';
 
-import s from './styles.module.scss';
+import s from './Header.module.scss';
 
 export default function Header(): React.ReactElement {
   return (

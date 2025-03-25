@@ -8,7 +8,7 @@ import { useEffectContext } from '@/animation/contexts/EffectContext';
 import { usePageEffectIn, usePageEffectOut } from '@/animation/hooks/useEffectHooks';
 import useRouterEffect from '@/animation/hooks/useRouterEffect';
 
-import s from './styles.module.scss';
+import s from './PageEffect.module.scss';
 
 export default function PageEffect(): React.ReactElement {
   const refContent = useRef<HTMLDivElement>(null);

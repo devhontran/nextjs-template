@@ -2,7 +2,7 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import s from './styles.module.scss';
+import s from './DebugGrid.module.scss';
 
 // Custom hook to manage grid state
 const useGridToggle = (): { isGrid: boolean } => {

@@ -9,7 +9,7 @@ import { useRef } from 'react';
 import { useEffectContext } from '@/animation/contexts/EffectContext';
 import { useUiContext } from '@/animation/contexts/UiContext';
 
-import s from './styles.module.scss';
+import s from './ParallaxBox.module.scss';
 
 type Props = PropsWithChildren & {
   speed: number;

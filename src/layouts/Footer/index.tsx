@@ -6,7 +6,7 @@ import React from 'react';
 
 import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
 
-import s from './styles.module.scss';
+import s from './Footer.module.scss';
 
 export default function Footer(): React.ReactElement {
   return (

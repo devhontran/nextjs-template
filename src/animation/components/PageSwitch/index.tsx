@@ -10,7 +10,7 @@ import { usePageEffectIn, usePageEffectOut } from '@/animation/hooks/useEffectHo
 import useRouterEffect from '@/animation/hooks/useRouterEffect';
 import { pageScrollTop } from '@/utils/uiHelper';
 
-import s from './styles.module.scss';
+import s from './PageSwitch.module.scss';
 
 export const preRenderOldContent = signal<boolean>(false);
 export const historyScrollTop = signal<number>(0);

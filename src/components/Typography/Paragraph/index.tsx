@@ -2,7 +2,7 @@ import cn from 'classnames';
 import type { PropsWithChildren, ReactElement } from 'react';
 
 import type { TypographyColor } from '..';
-import styles from './styles.module.scss';
+import styles from './Paragraph.module.scss';
 
 export interface TypographyParagraphProps extends PropsWithChildren {
   color?: TypographyColor;
