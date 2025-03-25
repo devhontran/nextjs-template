@@ -35,13 +35,13 @@ export default function MotionLines({
     let toTweenVars: gsap.TweenVars = {};
     let fromTweenVars: gsap.TweenVars = {};
     switch (type) {
-      case MotionLinesType.fade:
+      case MotionLinesType.FADE:
         refContent.current.classList.add(s.lineFade);
         fromTweenVars = { yPercent: 100, opacity: 0 };
         toTweenVars = { yPercent: 0, opacity: 1 };
         break;
 
-      case MotionLinesType.mask:
+      case MotionLinesType.MASK:
       default:
         toTweenVars = { yPercent: 0 };
         refContent.current.classList.add(s.lineMask);

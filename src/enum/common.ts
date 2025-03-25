@@ -1,13 +1,13 @@
 export enum MotionDirection {
-  top = 'top',
-  left = 'left',
-  right = 'right',
-  bottom = 'bottom',
+  TOP = 'top',
+  LEFT = 'left',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
 }
 
 export enum PageState {
-  Enter = 'enter',
-  Leave = 'leave',
-  Idle = 'idle',
-  Play = 'play',
+  ENTER = 'enter',
+  LEAVE = 'leave',
+  IDLE = 'idle',
+  PLAY = 'play',
 }

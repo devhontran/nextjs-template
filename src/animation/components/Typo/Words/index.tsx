@@ -37,7 +37,7 @@ export default function MotionChars({
     refContent.current.classList.add(s.words);
 
     switch (type) {
-      case MotionWordsType.fade_slide_left:
+      case MotionWordsType.FADE_SLIDE_LEFT:
         fromTweenVars = { xPercent: 100, opacity: 0 };
         toTweenVars = {
           xPercent: 0,
@@ -47,7 +47,7 @@ export default function MotionChars({
           ease: 'power3.inOut',
         };
         break;
-      case MotionWordsType.mask:
+      case MotionWordsType.MASK:
       default:
         fromTweenVars = { yPercent: 100 };
         toTweenVars = { yPercent: 0, stagger: 0.015, duration: 0.8, ease: 'power3.out' };

@@ -1,29 +1,39 @@
 export enum MotionCharsType {
-  mask = 'mask',
-  mask_top = 'mask_top',
-  mask_random = 'mask_random',
-  solidBox = 'solidBox',
-  scale = 'scale',
-  typing = 'typing',
+  MASK = 'mask',
+  MASK_TOP = 'mask_top',
+  MASK_RANDOM = 'mask_random',
+  SOLID_BOX = 'solid_box',
+  SCALE = 'scale',
+  TYPING = 'typing',
 }
 
 export enum MotionLinesType {
-  fade = 'fade',
-  mask = 'mask',
+  FADE = 'fade',
+  MASK = 'mask',
 }
 
 export enum MotionWordsType {
-  mask = 'mask',
-  fade_slide_left = 'fade_slide_left',
+  MASK = 'mask',
+  FADE_SLIDE_LEFT = 'fade_slide_left',
+  FADE_SLIDE_RIGHT = 'fade_slide_right',
+  FADE_SLIDE_UP = 'fade_slide_up',
+  FADE_SLIDE_DOWN = 'fade_slide_down',
+  SCALE_FADE = 'scale_fade',
 }
 
 export enum MotionMaskBoxType {
-  BOTTOM = 'BOTTOM',
-  BOTTOM_CENTER = 'BOTTOM_CENTER',
+  BOTTOM = 'bottom',
+  BOTTOM_CENTER = 'bottom_center',
+  TOP = 'top',
+  TOP_CENTER = 'top_center',
+  LEFT = 'left',
+  RIGHT = 'right',
+  CENTER = 'center',
 }
 
 export enum MotionCharsTarget {
-  div = 'div',
-  p = 'p',
-  span = 'span',
+  DIV = 'div',
+  PARAGRAPH = 'p',
+  SPAN = 'span',
+  HEADING = 'h1',
 }

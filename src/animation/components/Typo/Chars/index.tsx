@@ -36,20 +36,20 @@ export default function MotionChars({
     let toTweenVars: gsap.TweenVars = {};
 
     switch (type) {
-      case MotionCharsType.solidBox:
+      case MotionCharsType.SOLID_BOX:
         break;
 
-      case MotionCharsType.scale:
+      case MotionCharsType.SCALE:
         fromTweenVars = { scale: 0 };
         toTweenVars = { scale: 1 };
         break;
 
-      case MotionCharsType.typing:
+      case MotionCharsType.TYPING:
         fromTweenVars = { opacity: 0 };
         toTweenVars = { opacity: 1 };
         break;
 
-      case MotionCharsType.mask_random:
+      case MotionCharsType.MASK_RANDOM:
         if (textSplitTypes?.chars?.length) {
           textSplitTypes.chars.forEach((char) => {
             gsap.set(char, { yPercent: Math.random() < 0.5 ? -100 : 100 });
@@ -58,7 +58,7 @@ export default function MotionChars({
         toTweenVars = { yPercent: 0 };
         break;
 
-      case MotionCharsType.mask_top:
+      case MotionCharsType.MASK_TOP:
         fromTweenVars = { yPercent: -100 };
         toTweenVars = { yPercent: 0 };
         break;

@@ -27,7 +27,7 @@ interface EffectContextValue {
 const EffectContext = createContext<EffectContextValue | null>(null);
 
 export function EffectProvider({ children }: { children: ReactNode }): ReactElement {
-  const pageStatus = useSignal(PageState.Idle);
+  const pageStatus = useSignal(PageState.IDLE);
   const routerState = useSignal<RouterState>({
     pathName: '/',
     pageName: 'Home',
@@ -35,28 +35,28 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
   });
 
   const pageLeave = (): void => {
-    pageStatus.value = PageState.Leave;
+    pageStatus.value = PageState.LEAVE;
   };
 
   const pageEnter = (): void => {
-    pageStatus.value = PageState.Enter;
+    pageStatus.value = PageState.ENTER;
   };
 
   const pagePlay = (): void => {
-    pageStatus.value = PageState.Play;
+    pageStatus.value = PageState.PLAY;
   };
 
   const pageIdle = (): void => {
-    pageStatus.value = PageState.Idle;
+    pageStatus.value = PageState.IDLE;
   };
 
-  const isPageEnter = useComputed(() => pageStatus.value === PageState.Enter);
+  const isPageEnter = useComputed(() => pageStatus.value === PageState.ENTER);
 
-  const isPageLeave = useComputed(() => pageStatus.value === PageState.Leave);
+  const isPageLeave = useComputed(() => pageStatus.value === PageState.LEAVE);
 
-  const isPagePlay = useComputed(() => pageStatus.value === PageState.Play);
+  const isPagePlay = useComputed(() => pageStatus.value === PageState.PLAY);
 
-  const isPageIdle = useComputed(() => pageStatus.value === PageState.Idle);
+  const isPageIdle = useComputed(() => pageStatus.value === PageState.IDLE);
 
   useLayoutEffect(() => {
     // eslint-disable-next-line react-compiler/react-compiler

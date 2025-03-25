@@ -8,7 +8,7 @@ import { useIsAssetsLoaded } from './useIsAssetsLoaded';
 export function usePageEnter(onEnter: () => void): void {
   const { pageStatus } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.Enter) {
+    if (pageStatus.value === PageState.ENTER) {
       onEnter();
     }
   });
@@ -17,7 +17,7 @@ export function usePageEnter(onEnter: () => void): void {
 export function usePageLeave(onLeave: () => void): void {
   const { pageStatus } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.Leave) {
+    if (pageStatus.value === PageState.LEAVE) {
       onLeave();
     }
   });
@@ -26,7 +26,7 @@ export function usePageLeave(onLeave: () => void): void {
 export function usePagePlay(onPlay: () => void): void {
   const { pageStatus } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.Play) {
+    if (pageStatus.value === PageState.PLAY) {
       requestAnimationFrame(onPlay);
     }
   });
@@ -35,7 +35,7 @@ export function usePagePlay(onPlay: () => void): void {
 export function usePageIdle(onIdle: () => void): void {
   const { pageStatus } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.Idle) {
+    if (pageStatus.value === PageState.IDLE) {
       onIdle();
     }
   });
