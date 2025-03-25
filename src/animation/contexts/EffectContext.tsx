@@ -4,12 +4,7 @@ import { untracked, useComputed, useSignal } from '@preact/signals-react';
 import type { ReactElement, ReactNode } from 'react';
 import { createContext, use, useLayoutEffect } from 'react';
 
-export enum PageState {
-  Enter = 'enter',
-  Leave = 'leave',
-  Idle = 'idle',
-  Play = 'play',
-}
+import { PageState } from '@/enum/common';
 
 interface RouterState {
   pathName: string;

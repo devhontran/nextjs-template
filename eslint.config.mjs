@@ -113,7 +113,9 @@ const config = tseslint.config(
       'react-hooks/exhaustive-deps': 'off',
       'react-compiler/react-compiler': 'error',
       'import-x/no-unresolved': ['error', { ignore: ['geist'] }],
-     
+      '@typescript-eslint/restrict-template-expressions': ['off', {
+        allowNumber: true,
+      }],
       'prettier/prettier': 'error',
       'simpleImportSort/imports': 'error',
       'simpleImportSort/exports': 'error',

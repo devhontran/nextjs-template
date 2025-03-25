@@ -5,16 +5,12 @@ import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
 
 import useAnimate from '@/animation/hooks/useAnimate';
+import { MotionMaskBoxType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
-
-export enum MaskBoxType {
-  BOTTOM = 'BOTTOM',
-  BOTTOM_CENTER = 'BOTTOM_CENTER',
-}
 
 interface IMaskBox extends PropsWithChildren {
   motion?: IAnimationProps;
-  direction?: MaskBoxType;
+  direction?: MotionMaskBoxType;
 }
 
 export default function MotionMaskBox({ children, motion, direction }: IMaskBox): ReactElement {
@@ -25,11 +21,11 @@ export default function MotionMaskBox({ children, motion, direction }: IMaskBox)
     let clipPathForm = 'inset(0%)';
 
     switch (direction) {
-      case MaskBoxType.BOTTOM:
+      case MotionMaskBoxType.BOTTOM:
         clipPathTo = 'inset(0% 0% 0% 0%)';
         clipPathForm = 'inset(100% 0% 0% 0%)';
         break;
-      case MaskBoxType.BOTTOM_CENTER:
+      case MotionMaskBoxType.BOTTOM_CENTER:
         clipPathTo = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
         clipPathForm = 'polygon(50% 100%, 50% 100%, 50% 100%, 50% 100%)';
         break;

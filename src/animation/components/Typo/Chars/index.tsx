@@ -7,22 +7,17 @@ import { useRef } from 'react';
 import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
+import type { MotionCharsTarget } from '@/enum/motion';
+import { MotionCharsType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
 
 import s from './styles.module.scss';
-export enum MotionCharsType {
-  mask = 'mask',
-  mask_top = 'mask_top',
-  mask_random = 'mask_random',
-  solidBox = 'solidBox',
-  scale = 'scale',
-  typing = 'typing',
-}
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
   type?: MotionCharsType;
   className?: string;
+  target?: MotionCharsTarget;
 }
 
 export default function MotionChars({
@@ -30,6 +25,7 @@ export default function MotionChars({
   motion,
   type,
   className,
+  target,
 }: ParagraphLineMaskProps): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
@@ -90,6 +86,7 @@ export default function MotionChars({
     refContent,
     motion,
     animate,
+    target,
   });
   return (
     <div ref={refContent} className={cn(s.chars, className)}>

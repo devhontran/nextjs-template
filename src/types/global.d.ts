@@ -19,7 +19,7 @@ declare global {
     opera?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     grecaptcha?: any;
-    lenis?: LenisRef;
+    lenis?: LenisRef | null;
     navigation?: Navigation;
   }
 }

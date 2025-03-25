@@ -1,8 +1,8 @@
 {
-  "name": "devhontran",
+  "name": "hontran.dev",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

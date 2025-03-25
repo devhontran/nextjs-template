@@ -11,8 +11,9 @@ import s from './style.module.scss';
 
 const ImagePlaceHolder = ({
   ref,
+  isFull,
   ...props
-}: ImageProps & { ref?: React.RefObject<HTMLDivElement> }): ReactElement => {
+}: ImageProps & { ref?: React.RefObject<HTMLDivElement>; isFull?: boolean }): ReactElement => {
   const { className, width, height, alt, src } = props;
   const { registerAssets, unRegisterAssets } = useAssetsContext();
 
@@ -43,7 +44,8 @@ const ImagePlaceHolder = ({
           (e.target as HTMLImageElement).classList.add(s.isLoaded);
         }}
         alt={alt}
-        sizes="100vws"
+        sizes={isFull ? '100vw' : `(min-width: ${width}px) ${width}px, 100vw`}
+        quality={100}
         className={`${className ?? ''} ${s.imagePlaceholder__original}`}
       />
     </div>

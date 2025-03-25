@@ -17,10 +17,10 @@ export default function RootLayout({
 }): React.ReactElement {
   return (
     <html lang="en">
-      {/* <head>
+      <head>
         <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration = 'manual'` }} />
         <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
-      </head> */}
+      </head>
       <body>
         <MainLayout>{children}</MainLayout>
       </body>

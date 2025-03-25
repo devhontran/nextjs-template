@@ -48,7 +48,5 @@ export default function useAnimate({ refContent, motion, animate }: IMotionProps
     });
   }, [getGsapWars, animate]);
 
-  useLayoutEffect(() => {
-    requestAnimationFrame(initAnimation);
-  }, [initAnimation]);
+  useLayoutEffect(initAnimation, [initAnimation]);
 }

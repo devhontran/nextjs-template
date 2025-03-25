@@ -7,19 +7,17 @@ import { useRef } from 'react';
 import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
+import type { MotionCharsTarget } from '@/enum/motion';
+import { MotionLinesType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
 
-import s from './styles.module.scss';
-
-export enum MotionLinesType {
-  mask = 'mask',
-  fade = 'fade',
-}
+import s from './Lines.module.scss';
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
   type?: MotionLinesType;
   className?: string;
+  target?: MotionCharsTarget;
 }
 
 export default function MotionLines({
@@ -27,6 +25,7 @@ export default function MotionLines({
   motion,
   type,
   className,
+  target,
 }: ParagraphLineMaskProps): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
@@ -48,10 +47,13 @@ export default function MotionLines({
         refContent.current.classList.add(s.lineMask);
         if (textSplitTypes?.lines?.length) {
           textSplitTypes.lines.forEach((line) => {
-            const div = document.createElement('div');
-            div.appendChild(line);
-            div.classList.add('line__mask');
-            refContent.current?.appendChild(div);
+            const parent = line.parentElement;
+            if (parent) {
+              const div = document.createElement('div');
+              div.appendChild(line);
+              div.classList.add('line__mask');
+              parent.appendChild(div);
+            }
           });
         }
         fromTweenVars = { yPercent: 100 };
@@ -72,6 +74,7 @@ export default function MotionLines({
     types: ['lines'],
     motion,
     animate,
+    target,
   });
 
   return (

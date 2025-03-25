@@ -1,9 +1,21 @@
 import Link from 'next/link';
+import { useRef } from 'react';
 
+import { useLinesMask } from '@/animation/components/Typo/Lines/useLinesMask';
+import { usePageEnter } from '@/animation/hooks/useEffectHooks';
 import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
 
 import s from './styles.module.scss';
 export default function About(): React.ReactElement {
+  const refContent = useRef<HTMLDivElement>(null);
+
+  const { motionIn } = useLinesMask({
+    refContent,
+  });
+
+  usePageEnter(() => {
+    motionIn();
+  });
   return (
     <div className={s.about}>
       <div className="container">
@@ -39,7 +51,7 @@ export default function About(): React.ReactElement {
               {`I'm a creative developer and founder at hontran.dev, based in HCM City,`}
               <span className="yellow">Vietnam.</span>
             </TypographyHeading>
-            <div className={s.contact}>
+            <div className={s.contact} ref={refContent}>
               <Link className={s.btnContact} href={'mailto:dev.hontran@gmail.com'}>
                 Contact Me
               </Link>

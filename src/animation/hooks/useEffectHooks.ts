@@ -1,6 +1,8 @@
 import { useSignalEffect } from '@preact/signals-react';
 
-import { PageState, useEffectContext } from '../contexts/EffectContext';
+import { PageState } from '@/enum/common';
+
+import { useEffectContext } from '../contexts/EffectContext';
 import { useIsAssetsLoaded } from './useIsAssetsLoaded';
 
 export function usePageEnter(onEnter: () => void): void {
