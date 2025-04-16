@@ -15,7 +15,7 @@ const nextConfig = {
   },
    images: {
     minimumCacheTTL: 3600,
-    domains: ['admin.uncommonstudio.com.au', 'images.unsplash.com', 'picsum.photos'],
+    domains: ['images.unsplash.com', 'picsum.photos'],
     remotePatterns: [
       {
         protocol: 'http',
