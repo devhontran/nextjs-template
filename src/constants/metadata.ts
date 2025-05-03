@@ -1,6 +1,7 @@
-import { APP_DESCRIPTION, APP_NAME, APP_TITLE_TEMPLATE, DOMAIN_URL } from '@Constants/common';
-import { isProduction } from '@Utils/utils';
 import type { Metadata } from 'next';
+
+import { APP_DESCRIPTION, APP_NAME, APP_TITLE_TEMPLATE, DOMAIN_URL } from '@/constants/common';
+import { isProduction } from '@/utils/utils';
 
 export const metadata: Metadata = isProduction()
   ? {}

@@ -1,12 +1,12 @@
 'use client';
 
-import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import type { RefObject } from 'react';
 import { useCallback, useLayoutEffect } from 'react';
 import SplitType from 'split-type';
 
 import type { MotionCharsTarget } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
+import { calcThreshold, getDelay, splitAnimate } from '@/utils/uiHelper';
 
 interface IAnimationTypo {
   refContent: RefObject<IAnimationElement | null>;

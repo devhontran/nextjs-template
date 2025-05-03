@@ -1,7 +1,8 @@
 import { signal, useSignal, useSignalEffect } from '@preact/signals-react';
-import { MathMap } from '@Utils/mathUtils';
 import { gsap } from 'gsap';
 import { useRef } from 'react';
+
+import { MathMap } from '@/utils/mathUtils';
 
 export const fameCurrent = signal<number>(0);
 

@@ -1,5 +1,4 @@
 import { useGSAP } from '@gsap/react';
-import { MathMap } from '@Utils/mathUtils';
 import classNames from 'classnames';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -7,6 +6,7 @@ import type { ReactElement } from 'react';
 import { useRef } from 'react';
 
 import { fameCurrent } from '@/animation/components/FameScrolling/useFameScrollingStore';
+import { MathMap } from '@/utils/mathUtils';
 
 import s from './FameScrolling.module.scss';
 

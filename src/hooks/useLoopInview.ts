@@ -1,7 +1,8 @@
-import { useIsInViewport } from '@Hooks/useIsInViewport';
 import { useSignalEffect } from '@preact/signals-react';
 import { gsap } from 'gsap';
 import type { RefObject } from 'react';
+
+import { useIsInViewport } from '@/hooks/useIsInViewport';
 
 interface IUseLoopInView {
   looper: () => void;

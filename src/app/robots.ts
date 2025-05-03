@@ -1,6 +1,7 @@
-import { DOMAIN_URL } from '@Constants/common';
-import { isProduction } from '@Utils/utils';
 import type { MetadataRoute } from 'next';
+
+import { DOMAIN_URL } from '@/constants/common';
+import { isProduction } from '@/utils/utils';
 
 export default function robots(): MetadataRoute.Robots {
   if (!isProduction())

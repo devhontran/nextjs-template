@@ -2,11 +2,12 @@
 import { useGSAP } from '@gsap/react';
 import type { Signal } from '@preact/signals-react';
 import { useComputed, useSignal } from '@preact/signals-react';
-import { debounce } from '@Utils/uiHelper';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { ReactElement, ReactNode } from 'react';
 import { createContext, use } from 'react';
+
+import { debounce } from '@/utils/uiHelper';
 
 interface UiContextValue {
   isMobile: Signal<boolean>;

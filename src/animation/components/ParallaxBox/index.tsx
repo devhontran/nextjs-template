@@ -1,6 +1,5 @@
 'use client';
 
-import { MathMap } from '@Utils/mathUtils';
 import classNames from 'classnames';
 import { useLenis } from 'lenis/react';
 import type { PropsWithChildren, ReactElement } from 'react';
@@ -8,6 +7,7 @@ import { useRef } from 'react';
 
 import { useEffectContext } from '@/animation/contexts/EffectContext';
 import { useUiContext } from '@/animation/contexts/UiContext';
+import { MathMap } from '@/utils/mathUtils';
 
 import s from './ParallaxBox.module.scss';
 

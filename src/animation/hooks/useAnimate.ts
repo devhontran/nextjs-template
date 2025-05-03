@@ -1,9 +1,9 @@
 'use client';
 
-import { calcThreshold, getDelay, splitAnimate } from '@Utils/uiHelper';
 import { useCallback, useLayoutEffect } from 'react';
 
 import type { IAnimationProps } from '@/types/animation';
+import { calcThreshold, getDelay, splitAnimate } from '@/utils/uiHelper';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;

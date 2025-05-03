@@ -1,11 +1,11 @@
 'use client';
 
-import { TIME_WAIT_LOADED_TRIGGER } from '@Constants/animation';
-import { MathMap } from '@Utils/mathUtils';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { getImageProps } from 'next/image';
 
+import { TIME_WAIT_LOADED_TRIGGER } from '@/constants/animation';
 import type { IImageGenerative } from '@/types/image';
+import { MathMap } from '@/utils/mathUtils';
 
 export const pageScrollTop = (): number => {
   return window.scrollY || document.documentElement.scrollTop || 0;
