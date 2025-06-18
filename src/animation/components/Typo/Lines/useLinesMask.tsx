@@ -1,78 +1,126 @@
+'use client';
+
 import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 import type { RefObject } from 'react';
 import { useLayoutEffect, useRef } from 'react';
-import SplitType from 'split-type';
+
+import { isFontReady } from '@/utils/uiHelper';
 
 import s from './Lines.module.scss';
 
 export const useLinesMask = ({
   refContent,
-  isTriggerMotion = true,
+  isTriggerMotion,
+  isInitEffect,
+  isBlock,
+  fixClip,
 }: {
   refContent: RefObject<HTMLDivElement | null>;
   isTriggerMotion?: boolean;
-}): { motionIn: (to?: gsap.TweenVars) => void; motionOut: (to?: gsap.TweenVars) => void } => {
-  const textSplitTypes = useRef<SplitType>(null);
+  isInitEffect?: boolean;
+  isBlock?: boolean;
+  fixClip?: boolean;
+}): IMotionTypoFunctions & { motionOutLines: (twVarsCustom?: gsap.TweenVars) => void } => {
+  const refSplitText = useRef<SplitText | null>(null);
+  const twVars = {
+    duration: 1.6,
+    stagger: 0.1,
+    ease: 'power3.out',
+  };
 
   useLayoutEffect(() => {
-    if (!refContent.current) return;
-    refContent.current.classList.add(s.lineMask);
+    if (!refContent.current || !isInitEffect) return;
+    motionInit().catch(() => null);
+    return (): void => {
+      textRevert();
+    };
+  }, [refContent, isInitEffect]);
 
-    textSplitTypes.current = new SplitType(refContent.current, {
-      types: 'lines',
-      tagName: 'span',
+  const motionInit = async (): Promise<void> => {
+    gsap.registerPlugin(SplitText);
+
+    if (!refContent.current || !(await isFontReady())) return;
+
+    refContent.current.classList.add(s.lines__3d);
+    const el = isBlock ? refContent.current.children : refContent.current;
+    refContent.current.classList.add('will-change-transform');
+
+    refSplitText.current?.revert();
+    refSplitText.current = new SplitText(el, {
+      type: 'lines',
+      mask: 'lines',
+      linesClass: `line ${fixClip ? 'fix-clip' : ''}`,
+      aria: 'none',
+      onSplit: (splitText: SplitText): void => {
+        if (!isBlock) return;
+        splitText.lines.forEach((line) => {
+          if (line.textContent === '') {
+            line.innerHTML = '&nbsp;';
+          }
+        });
+      },
     });
 
-    textSplitTypes.current.lines?.forEach((line) => {
-      const div = document.createElement('div');
-      const parent = line.parentElement;
-      div.appendChild(line);
-      div.classList.add(s.lineMask__overflow);
-      parent?.appendChild(div);
-    });
-
-    if (isTriggerMotion)
-      gsap.set(textSplitTypes.current.lines, {
+    if (isTriggerMotion && refSplitText.current.lines.length) {
+      gsap.set(refSplitText.current.lines, {
         yPercent: 100,
       });
-  }, [refContent, isTriggerMotion]);
+    }
+  };
 
-  const motionIn = (to?: gsap.TweenVars): void => {
-    if (!refContent.current || !textSplitTypes.current?.lines) return;
+  const motionIn = (twVarsCustom?: gsap.TweenVars): gsap.core.Tween | null => {
+    if (!refContent.current || !refSplitText.current) return null;
 
     gsap.killTweensOf(refContent.current);
-    gsap.set(refContent.current, { opacity: 1, y: 0 });
-    gsap.fromTo(
-      textSplitTypes.current.lines,
+    return gsap.fromTo(
+      refSplitText.current.lines,
       {
+        opacity: 1,
         yPercent: 100,
       },
       {
         yPercent: 0,
-        ease: 'power3.out',
-        stagger: 0.05,
-        ...to,
-        duration: 0.8,
+        ...twVars,
+        ...twVarsCustom,
       }
     );
   };
 
-  const motionOut = (to?: gsap.TweenVars): void => {
+  const motionOut = (twVarsCustom?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.killTweensOf(refContent.current);
     gsap.to(refContent.current, {
       mask: 'none',
-      y: -50,
+      yPercent: -100,
       opacity: 0,
-      ease: 'power3.out',
-      duration: 0.8,
-      ...to,
+      ...twVars,
+      ...twVarsCustom,
     });
   };
 
+  const motionOutLines = (twVarsCustom?: gsap.TweenVars): void => {
+    if (!refContent.current || !refSplitText.current) return;
+
+    gsap.killTweensOf(refSplitText.current.lines);
+    gsap.to(refSplitText.current.lines, {
+      yPercent: -100,
+      ...twVars,
+      ...twVarsCustom,
+    });
+  };
+
+  const textRevert = (): void => {
+    refSplitText.current?.revert();
+    refSplitText.current = null;
+  };
+
   return {
+    motionInit,
     motionIn,
     motionOut,
+    motionOutLines,
+    textRevert,
   };
 };

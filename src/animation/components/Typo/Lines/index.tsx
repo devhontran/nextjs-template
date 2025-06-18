@@ -1,84 +1,94 @@
 'use client';
 
 import cn from 'classnames';
-import gsap from 'gsap';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
-import type SplitType from 'split-type';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
-import type { MotionCharsTarget } from '@/enum/motion';
 import { MotionLinesType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
 
-import s from './Lines.module.scss';
+import { useLines3D } from './useLines3D';
+import { useLinesFade } from './useLinesFade';
+import { useLinesMask } from './useLinesMask';
 
 interface ParagraphLineMaskProps extends PropsWithChildren {
   motion?: IAnimationProps;
   type?: MotionLinesType;
   className?: string;
-  target?: MotionCharsTarget;
+  fixClip?: boolean;
+  isBlock?: boolean;
 }
 
 export default function MotionLines({
   children,
   motion,
-  type,
+  type = MotionLinesType.LINES_MASK,
   className,
-  target,
+  fixClip,
+  isBlock,
 }: ParagraphLineMaskProps): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
-  const animate = (gsapWars: gsap.TweenVars, textSplitTypes: SplitType | null): void => {
-    if (!refContent.current) return;
+  const {
+    motionInit,
+    motionIn,
+    textRevert: textRevertFade,
+  } = useLinesFade({
+    isTriggerMotion: true,
+    refContent,
+    isBlock,
+  });
 
-    let toTweenVars: gsap.TweenVars = {};
-    let fromTweenVars: gsap.TweenVars = {};
-    switch (type) {
-      case MotionLinesType.FADE:
-        refContent.current.classList.add(s.lineFade);
-        fromTweenVars = { yPercent: 100, opacity: 0 };
-        toTweenVars = { yPercent: 0, opacity: 1 };
-        break;
+  const {
+    motionInit: motionInit3D,
+    motionIn: motionIn3D,
+    textRevert: textRevert3D,
+  } = useLines3D({
+    isTriggerMotion: true,
+    refContent,
+    fixClip,
+    isBlock,
+  });
 
-      case MotionLinesType.MASK:
-      default:
-        toTweenVars = { yPercent: 0 };
-        refContent.current.classList.add(s.lineMask);
-        if (textSplitTypes?.lines?.length) {
-          textSplitTypes.lines.forEach((line) => {
-            const parent = line.parentElement;
-            if (parent) {
-              const div = document.createElement('div');
-              div.appendChild(line);
-              div.classList.add('line__mask');
-              parent.appendChild(div);
-            }
-          });
-        }
-        fromTweenVars = { yPercent: 100 };
-        break;
-    }
-
-    if (textSplitTypes?.lines) {
-      gsap.fromTo(textSplitTypes.lines, fromTweenVars, {
-        ...toTweenVars,
-        ...gsapWars,
-        ...motion?.to,
-      });
-    }
-  };
+  const {
+    motionInit: motionInitMask,
+    motionIn: motionInMask,
+    textRevert: textRevertMask,
+  } = useLinesMask({
+    isTriggerMotion: true,
+    refContent,
+    fixClip,
+    isBlock,
+  });
 
   useAnimateTypo({
     refContent,
-    types: ['lines'],
     motion,
-    animate,
-    target,
+    type,
+    animates: {
+      [MotionLinesType.LINES_THREE_D]: {
+        motionInit: motionInit3D,
+        motionIn: motionIn3D,
+      },
+      [MotionLinesType.LINES_MASK]: {
+        motionInit: motionInitMask,
+        motionIn: motionInMask,
+      },
+      [MotionLinesType.LINES_FADE]: {
+        motionInit: motionInit,
+        motionIn: motionIn,
+      },
+    },
+    reverts: {
+      [MotionLinesType.LINES_THREE_D]: textRevert3D,
+      [MotionLinesType.LINES_MASK]: textRevertMask,
+      [MotionLinesType.LINES_FADE]: textRevertFade,
+    },
   });
 
   return (
-    <div ref={refContent} className={cn(s.lines, className)}>
+    <div ref={refContent} className={cn(className)}>
       {children}
     </div>
   );

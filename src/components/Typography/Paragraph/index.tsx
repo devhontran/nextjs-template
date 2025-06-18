@@ -1,36 +1,47 @@
+import type { TextProps } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import cn from 'classnames';
 import type { PropsWithChildren, ReactElement } from 'react';
 
-import type { TypographyColor } from '..';
+import { Color } from '@/enum/typo';
+
 import styles from './Paragraph.module.scss';
 
-export interface TypographyParagraphProps extends PropsWithChildren {
-  color?: TypographyColor;
-  size?: 18 | 20 | 24;
-  tag?: 'p' | 'span' | 'div';
-  className?: string;
+interface ParagraphProps extends TextProps, PropsWithChildren {
+  size?: 12 | 14 | 16 | 18 | 20 | 24 | 32 | 48 | 64 | 84 | 100;
+  as?: 'h5' | 'h6' | 'span' | 'p' | 'div';
 }
 
-const TypographyParagraph = ({
+const Paragraph = ({
   ref,
+  size = 18,
+  children,
+  color = Color.periwinkle_100,
+  fontWeight = 'normal',
+  as = 'div',
   ...props
-}: TypographyParagraphProps & {
+}: ParagraphProps & {
   ref?: React.RefObject<HTMLParagraphElement | null>;
 }): ReactElement => {
-  const { color = 'white', size = 24, tag: Tag = 'p', className, children, ...restProps } = props;
   const paragraphClassNames = cn(
     styles.paragraph,
-    styles[`paragraph__${color}`],
     styles[`paragraph__${size.toString()}`],
-    className
+    props.className
   );
   return (
-    <Tag {...restProps} ref={ref} className={paragraphClassNames}>
+    <Text
+      {...props}
+      color={color}
+      as={as}
+      ref={ref}
+      className={paragraphClassNames}
+      fontWeight={fontWeight}
+    >
       {children}
-    </Tag>
+    </Text>
   );
 };
 
-TypographyParagraph.displayName = 'TypographyParagraph';
+Paragraph.displayName = 'Paragraph';
 
-export default TypographyParagraph;
+export default Paragraph;

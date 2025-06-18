@@ -1,34 +1,42 @@
+import type { TextProps } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import cn from 'classnames';
 import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
-import type { TypographyColor } from '..';
+import { Color } from '@/enum/typo';
+
 import styles from './Label.module.scss';
 
-export interface TypographyLabelProps extends PropsWithChildren {
-  color?: TypographyColor;
-  size?: 12 | 14 | 16 | 18 | 20;
-  tag?: 'h5' | 'h6' | 'span' | 'p' | 'div';
-  className?: string;
+interface LabelProps extends TextProps, PropsWithChildren {
+  size?: 12 | 14 | 16 | 18 | 20 | 24 | 32 | 34 | 48 | 64;
+  as?: 'h5' | 'h6' | 'span' | 'p' | 'div';
 }
 
-const TypographyLabel = ({
+const Label = ({
   ref,
+  size = 16,
+  as = 'div',
+  fontWeight = 'medium',
+  color = Color.periwinkle_100,
+  children,
   ...props
-}: TypographyLabelProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
-  const { color = 'white', size = 16, tag: Tag = 'h6', className, children, ...restProps } = props;
-  const labelClassNames = cn(
-    styles.label,
-    styles[`label__${color}`],
-    styles[`label__${size.toString()}`],
-    className
-  );
+}: LabelProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
+  const labelClassNames = cn(styles.label, styles[`label__${size.toString()}`], props.className);
+
   return (
-    <Tag {...restProps} ref={ref} className={labelClassNames}>
+    <Text
+      {...props}
+      as={as}
+      color={color}
+      ref={ref}
+      className={labelClassNames}
+      fontWeight={fontWeight}
+    >
       {children}
-    </Tag>
+    </Text>
   );
 };
 
-TypographyLabel.displayName = 'TypographyLabel';
+Label.displayName = 'Label';
 
-export default TypographyLabel;
+export default Label;

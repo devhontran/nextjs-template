@@ -1,31 +1,31 @@
 'use client';
 
+import { Box } from '@chakra-ui/react';
 import type { ImageProps } from 'next/image';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
-import { useLayoutEffect } from 'react';
-
-import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 
 import s from './ImagePlaceholder.module.scss';
 
 const ImagePlaceHolder = ({
   ref,
   isFull,
+  borderRadius,
   ...props
-}: ImageProps & { ref?: React.RefObject<HTMLDivElement>; isFull?: boolean }): ReactElement => {
+}: ImageProps & {
+  ref?: React.RefObject<HTMLDivElement | null>;
+  isFull?: boolean;
+  borderRadius?: string;
+}): ReactElement => {
   const { className, width, height, alt, src } = props;
-  const { registerAssets, unRegisterAssets } = useAssetsContext();
-
-  useLayoutEffect(() => {
-    registerAssets();
-    return (): void => {
-      unRegisterAssets();
-    };
-  }, []);
 
   return (
-    <div className={`${s.imagePlaceholder} image-placeholder`} ref={ref}>
+    <Box
+      borderRadius={borderRadius ?? '.4rem'}
+      contain={'content'}
+      className={`${s.imagePlaceholder} image-placeholder`}
+      ref={ref}
+    >
       <Image
         className={className ?? ''}
         src={src}
@@ -33,8 +33,6 @@ const ImagePlaceHolder = ({
         height={50}
         alt={alt}
         loading="eager"
-        onLoad={unRegisterAssets}
-        onError={unRegisterAssets}
       />
       <Image
         src={src}
@@ -48,7 +46,7 @@ const ImagePlaceHolder = ({
         quality={100}
         className={`${className ?? ''} ${s.imagePlaceholder__original}`}
       />
-    </div>
+    </Box>
   );
 };
 

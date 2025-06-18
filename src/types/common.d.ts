@@ -25,3 +25,5 @@ interface ILinkEffect {
   pageName?: string;
   typeEffect?: 'page' | 'work' | 'next';
 }
+
+declare module '@splidejs/react-splide';

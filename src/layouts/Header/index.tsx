@@ -1,31 +1,23 @@
 'use client';
 
-import Image from 'next/image';
-import React from 'react';
+import React, { useRef } from 'react';
 
+import { useHeaderScroller } from '@/animation/hooks/useHeaderScorlling';
 import LinkEffect from '@/components/LinkEffect';
 
 import s from './Header.module.scss';
-
 export default function Header(): React.ReactElement {
+  const refHeader = useRef<HTMLDivElement>(null);
+
+  useHeaderScroller({ refHeader });
+
   return (
-    <header className={s.header}>
+    <header ref={refHeader} className={s.header}>
       <div className="container">
-        <div className={`${s.header_container} grid grid-cols-10 items-end justify-between gap-24`}>
-          <div className={`${s.header_logo} col-span-1`}>
-            <LinkEffect href="/">
-              <Image src="/logo-white.svg" alt="logo" width={40} height={40} />
-            </LinkEffect>
+        <div className={s.header_container}>
+          <div className={s.header_logo}>
+            <LinkEffect href={'/'}>HONTRAN.DEV</LinkEffect>
           </div>
-          <div className={`${s.header_label} col-span-2`}>
-            <LinkEffect href="/about">
-              HONTRAN. <br /> DEV
-            </LinkEffect>
-          </div>
-          <div className={`${s.header_label} col-span-2`}>
-            CREATIVE <br /> DEVELOPER IN SAIGON
-          </div>
-          <div className={`${s.header_label} col-span-2 col-start-8`}>AVAILABLE FOR FREELANCE</div>
         </div>
       </div>
     </header>

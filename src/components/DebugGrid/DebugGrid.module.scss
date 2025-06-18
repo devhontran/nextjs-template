@@ -10,6 +10,13 @@ $color-debug: #ff6b4c;
   transform: translate(-50%, 0);
   z-index: 99999999999;
 
+  &_inner {
+    gap: var(--space-8);
+    @include tablet {
+      gap: var(--space-16);
+    }
+  }
+
   .grid_col {
     background-color: rgba($color-debug, 0.3);
     height: 100vh;
@@ -32,5 +39,9 @@ $color-debug: #ff6b4c;
       position: absolute;
       width: 1px;
     }
+  }
+
+  &.hidden {
+    display: none;
   }
 }

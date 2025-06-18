@@ -3,11 +3,11 @@
 import { useGSAP } from '@gsap/react';
 import classNames from 'classnames';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 
-import s from './ImageParallax.module.scss';
+import s from './styles.module.scss';
 
 type Props = PropsWithChildren & {
   speed: number;
@@ -15,7 +15,12 @@ type Props = PropsWithChildren & {
   className?: string;
 };
 
-const ImageParallax = ({ children, speed, className, scale: scaleInput }: Props): ReactElement => {
+const MotionImageParallax = memo(function MotionImageParallax({
+  children,
+  speed,
+  className,
+  scale: scaleInput,
+}: Props): ReactElement {
   const refWrap = useRef<HTMLDivElement>(null);
   const refEl = useRef<HTMLDivElement>(null);
 
@@ -26,29 +31,38 @@ const ImageParallax = ({ children, speed, className, scale: scaleInput }: Props)
     const offset = Number(speed) || 1;
     const yPercent = Math.round(((scale - 1) / 2) * 100) * offset;
 
-    gsap.fromTo(
+    const tl = gsap.fromTo(
       refEl.current,
       { scale, yPercent },
       {
-        scrollTrigger: {
-          trigger: refWrap.current,
-          scrub: true,
-          once: false,
-          invalidateOnRefresh: true,
-        },
         yPercent: -yPercent,
         ease: 'none',
       }
     );
-  });
+
+    ScrollTrigger.create({
+      trigger: refWrap.current,
+      scrub: true,
+      once: false,
+      invalidateOnRefresh: true,
+      animation: tl,
+    });
+  }, [speed, scaleInput]);
+
+  const containerClassName = useMemo(
+    (): string => classNames(s.imageParallax, className),
+    [className]
+  );
 
   return (
-    <div className={classNames(s.imageParallax, className)} ref={refWrap}>
+    <div className={containerClassName} ref={refWrap}>
       <div className={s.imageParallax_inner} ref={refEl}>
         {children}
       </div>
     </div>
   );
-};
+});
 
-export default ImageParallax;
+MotionImageParallax.displayName = 'MotionImageParallax';
+
+export default MotionImageParallax;

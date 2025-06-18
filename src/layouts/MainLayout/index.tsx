@@ -1,19 +1,19 @@
-import type { PropsWithChildren } from 'react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 import Animation from '@/animation';
-import PageSwitch from '@/animation/components/PageSwitch';
 import DebugGrid from '@/components/DebugGrid';
 import LenisScroller from '@/components/Lenis';
-import Header from '@/layouts/Header';
+import MenuControllerProvider from '@/providers/MenuControllerProvider';
+
+import Header from '../Header';
 export default function MainLayout({ children }: PropsWithChildren): React.ReactElement {
   return (
     <>
       <Animation>
-        <Header />
-        <LenisScroller>
-          <PageSwitch>{children}</PageSwitch>
-        </LenisScroller>
+        <MenuControllerProvider>
+          <Header />
+          <LenisScroller>{children}</LenisScroller>
+        </MenuControllerProvider>
         <DebugGrid />
       </Animation>
       {/*<MobileDisabledRotation />*/}

@@ -1,3 +1,6 @@
+'use client';
+
+import gsap from 'gsap';
 import type { RefObject } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 
@@ -9,7 +12,7 @@ export const useHoverLineMask = ({
 }: {
   refContent: RefObject<HTMLDivElement | null>;
   isMotionTrigger?: boolean;
-}): { onHover: () => void; motionIn: () => void } => {
+}): { onHover: (twVars?: gsap.TweenVars) => void; motionIn: () => void } => {
   const refLines = useRef<HTMLSpanElement[]>([]);
 
   useLayoutEffect(() => {
@@ -29,20 +32,20 @@ export const useHoverLineMask = ({
   const motionIn = (): void => {
     if (!refContent.current) return;
 
-    gsap.set(refContent.current.querySelectorAll('span'), {
+    gsap.to(refContent.current.querySelectorAll('span'), {
       yPercent: -100,
       ease: 'power3.out',
-      duration: 0.8,
+      duration: 1.4,
     });
   };
 
-  const onHover = (): void => {
+  const onHover = (twVars?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.fromTo(
       refContent.current.querySelectorAll('span'),
       { yPercent: 0 },
-      { yPercent: -100, ease: 'power3.out', duration: 0.8 }
+      { yPercent: -100, ease: 'power3.out', duration: 1.4, ...twVars }
     );
   };
 

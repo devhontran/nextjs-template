@@ -2,7 +2,7 @@
 import type { Signal } from '@preact/signals-react';
 import { untracked, useComputed, useSignal } from '@preact/signals-react';
 import type { ReactElement, ReactNode } from 'react';
-import { createContext, use, useLayoutEffect } from 'react';
+import { createContext, use, useLayoutEffect, useMemo } from 'react';
 
 import { PageState } from '@/enum/common';
 
@@ -23,6 +23,7 @@ interface EffectContextValue {
   isPagePlay: Signal<boolean>;
   isPageIdle: Signal<boolean>;
   routerState: Signal<RouterState>;
+  setRouterState: (value: RouterState) => void;
 }
 const EffectContext = createContext<EffectContextValue | null>(null);
 
@@ -69,24 +70,40 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
     });
   }, []);
 
-  return (
-    <EffectContext
-      value={{
-        pageStatus,
-        pageLeave,
-        pageEnter,
-        pagePlay,
-        pageIdle,
-        isPageEnter,
-        isPageLeave,
-        isPagePlay,
-        isPageIdle,
-        routerState,
-      }}
-    >
-      {children}
-    </EffectContext>
+  const setRouterState = (value: RouterState): void => {
+    routerState.value = value;
+  };
+
+  const contextValue = useMemo(
+    () => ({
+      pageStatus,
+      pageLeave,
+      pageEnter,
+      pagePlay,
+      pageIdle,
+      isPageEnter,
+      isPageLeave,
+      isPagePlay,
+      isPageIdle,
+      routerState,
+      setRouterState,
+    }),
+    [
+      pageStatus,
+      pageLeave,
+      pageEnter,
+      pagePlay,
+      pageIdle,
+      isPageEnter,
+      isPageLeave,
+      isPagePlay,
+      isPageIdle,
+      routerState,
+      setRouterState,
+    ]
   );
+
+  return <EffectContext value={contextValue}>{children}</EffectContext>;
 }
 
 export const useEffectContext = (): EffectContextValue => {

@@ -1,6 +1,0 @@
-.parallaxBox {
-  &_inner {
-    will-change: transform;
-    @include with-will-change;
-  }
-}

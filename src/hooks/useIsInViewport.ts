@@ -21,6 +21,7 @@ export function useIsInViewport({
         // eslint-disable-next-line react-compiler/react-compiler
         visible.value = entry.isIntersecting;
       },
+
       {
         ...{ threshold: 0, rootMargin: '0px 0px 0px 0px' },
         ...options,

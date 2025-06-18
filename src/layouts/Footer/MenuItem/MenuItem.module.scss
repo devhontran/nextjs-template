@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  @include tablet {
+    gap: var(--space-24);
+  }
+}
+
+.wrapper_link {
+  overflow: hidden;
+  position: relative;
+  &_label {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 0.1em;
+    &_secondary {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      color: var(--blue);
+    }
+  }
+}
+
+.hover_line {
+  --text-color: var(--blue);
+  color: var(--text-color);
+  display: inline;
+  width: max-content;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background: linear-gradient(var(--text-color) 0 0) calc(100% - var(--p, 0%)) / var(--p, 0%)
+    no-repeat;
+  background-position-y: bottom;
+  background-size: var(--p, 0%) 1px;
+  padding-bottom: 3px;
+  transition:
+    0.4s,
+    background-position 0s,
+    opacity 0.4s ease-in-out;
+  z-index: 1;
+}
+
+.hover_line:hover {
+  --p: 100%;
+  background-size: 100% 1px;
+  transition:
+    0.4s,
+    background-position 0s;
+}

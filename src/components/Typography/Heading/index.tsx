@@ -1,35 +1,37 @@
+import type { TextProps } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import cn from 'classnames';
 import type { PropsWithChildren, ReactElement, RefObject } from 'react';
 
-import type { TypographyColor } from '..';
+import { Color } from '@/enum/typo';
+
 import styles from './Heading.module.scss';
 
-export interface TypographyHeadingProps extends PropsWithChildren {
-  color?: TypographyColor;
-  size?: 48 | 80 | 140 | 200;
-  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-  className?: string;
-  id?: string;
+interface HeadingProps extends TextProps, PropsWithChildren {
+  size?: 48 | 64 | 80 | 140 | 112 | 200 | 230 | 276 | 284 | 354 | 138;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
 }
 
-const TypographyHeading = ({
+const Heading = ({
   ref,
+  size = 80,
+  as = 'h4',
+  color = Color.periwinkle_100,
+  children,
   ...props
-}: TypographyHeadingProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
-  const { color = 'white', size = 80, tag: Tag = 'h1', className, children, ...restProps } = props;
+}: HeadingProps & { ref?: RefObject<HTMLHeadingElement | null> }): ReactElement => {
   const headingClassNames = cn(
     styles.heading,
-    styles[`heading__${color}`],
     styles[`heading__${size.toString()}`],
-    className
+    props.className
   );
+
   return (
-    <Tag {...restProps} ref={ref} className={headingClassNames} id={restProps.id}>
+    <Text {...props} color={color} ref={ref} as={as} className={headingClassNames}>
       {children}
-    </Tag>
+    </Text>
   );
 };
 
-TypographyHeading.displayName = 'TypographyHeading';
-
-export default TypographyHeading;
+Heading.displayName = 'Heading';
+export default Heading;

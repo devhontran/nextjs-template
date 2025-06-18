@@ -3,12 +3,9 @@
   line-height: 0;
   height: 100%;
   width: 100%;
-
-  display: grid;
+  position: relative;
 
   img {
-    grid-row: 1;
-    grid-column: 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -18,6 +15,12 @@
     opacity: 0;
     will-change: opacity;
     transition: opacity 0.4s var(--easeInOutCubic);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
     &.isLoaded {
       opacity: 1;
     }

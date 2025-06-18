@@ -1,0 +1,40 @@
+.fix-mask-clip-mask {
+  clip-path: inset(0 0 -0.07em 0) !important;
+  overflow: unset !important;
+}
+
+.will-change-opacity {
+  .line {
+    will-change: opacity;
+  }
+  .char {
+    will-change: opacity;
+  }
+  .word {
+    will-change: opacity;
+  }
+}
+
+.will-change-transform-opacity {
+  .line {
+    will-change: transform, opacity;
+  }
+  .char {
+    will-change: transform, opacity;
+  }
+  .word {
+    will-change: transform, opacity;
+  }
+}
+
+.will-change-transform {
+  .line {
+    will-change: transform;
+  }
+  .char {
+    will-change: transform;
+  }
+  .word {
+    will-change: transform;
+  }
+}

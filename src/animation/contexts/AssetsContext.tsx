@@ -2,7 +2,7 @@
 import type { Signal } from '@preact/signals-react';
 import { useComputed, useSignal, useSignalEffect } from '@preact/signals-react';
 import type { ReactElement, ReactNode } from 'react';
-import { createContext, use } from 'react';
+import { createContext, use, useMemo } from 'react';
 
 interface AssetsContextValue {
   assetsProgress: Signal<number>;
@@ -53,18 +53,21 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
   });
 
   const resetAssets = (): void => {
-    assetsRequests.value = 0;
-    assetsLoadTo.value = 0;
     isAssetsLoaded.value = false;
+    assetsLoadTo.value = 0;
+    assetsRequests.value = 0;
   };
 
-  const contextValue = {
-    registerAssets,
-    unRegisterAssets,
-    isAssetsLoaded,
-    assetsProgress,
-    resetAssets,
-  };
+  const contextValue = useMemo(
+    () => ({
+      registerAssets,
+      unRegisterAssets,
+      isAssetsLoaded,
+      assetsProgress,
+      resetAssets,
+    }),
+    [registerAssets, unRegisterAssets, isAssetsLoaded, assetsProgress, resetAssets]
+  );
 
   return <AssetsContext value={contextValue}>{children}</AssetsContext>;
 }

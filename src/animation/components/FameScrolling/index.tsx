@@ -95,9 +95,7 @@ export default function FameScrolling({
       };
 
       const loadFrame = (frame: number, onLoaded?: () => void): void => {
-        if (!refDom.current.currentUrlFrame) {
-          refDom.current.currentUrlFrame = urlFrame;
-        }
+        refDom.current.currentUrlFrame ??= urlFrame;
 
         if (frame > totalFrames || !refDom.current.images[frame]) return;
         registerImgDom(frame, true);

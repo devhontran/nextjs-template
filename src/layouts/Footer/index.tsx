@@ -1,58 +1,47 @@
-'use client';
-
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
-import { TypographyHeading, TypographyLabel, TypographyParagraph } from '@/components/Typography';
+import DrawLine from '@/animation/components/DrawLine';
+import { Container } from '@/components/Container';
+import CopyRight from '@/layouts/Footer/CopyRight';
+import { DATA_SOCIAL, MENU_FOOTER } from '@/layouts/Footer/data';
+import MenuItem from '@/layouts/Footer/MenuItem';
+import CtaSection from '@/modules/components/ctaSection';
 
 import s from './Footer.module.scss';
 
 export default function Footer(): React.ReactElement {
   return (
-    <footer className={s.footer}>
-      <div className={s.bg}>
-        <div className="container">
-          <Image src="/images/bg-covert.jpg" alt="hero" width={1920} height={770} />
-        </div>
-      </div>
-      <div className={`${s.content} `}>
-        <div className="container">
-          <TypographyHeading className={s.title} size={140}>
-            Contact.
-          </TypographyHeading>
-          <div className="grid grid-cols-10 gap-24">
-            <div className="col-span-3">
-              <TypographyParagraph className={s.heading} size={18}>
-                Now that you already know me, it is time to start to build something amazing
-                together.
-              </TypographyParagraph>
+    <>
+      <CtaSection />
+      <footer className={s.footer}>
+        <Container>
+          <DrawLine>
+            <div className={s.line} />
+          </DrawLine>
+          <div className={s.footer_menu}>
+            {MENU_FOOTER.map((item) => (
+              <MenuItem key={item.label} {...item} />
+            ))}
+
+            <div className={s.footer_menu_social}>
+              {DATA_SOCIAL.map((item) => (
+                <a
+                  href={item.href}
+                  key={item.icon}
+                  target="_blank"
+                  className={s.footer_menu_social_item}
+                >
+                  <div className={s.footer_menu_social_item_icon}>
+                    <Image unoptimized src={item.icon} alt={'icons'} width={24} height={24} />
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
-          <div className="bottom">
-            <ul className="social">
-              <li>
-                <Link href="/">
-                  <Image src="/images/social/facebook.svg" alt="facebook" width={24} height={24} />
-                </Link>
-              </li>
-              <li>
-                <Link href="/">
-                  <Image
-                    src="/images/social/instagram.svg"
-                    alt="instagram"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
-              </li>
-            </ul>
-            <div className="copyright">
-              <TypographyLabel size={12}>© 2025. All rights reserved.</TypographyLabel>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+          <CopyRight />
+        </Container>
+      </footer>
+    </>
   );
 }

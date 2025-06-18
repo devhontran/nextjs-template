@@ -1,0 +1,43 @@
+.wrapper {
+  // padding-top: rem(96px);
+  position: relative;
+  @include tablet {
+    padding-top: rem(144px);
+  }
+
+  &_content {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+
+    justify-content: space-between;
+    padding-bottom: rem(30px);
+    @include tablet {
+      align-items: center;
+      flex-direction: row;
+      padding: var(--space-24) 0;
+    }
+    &_link {
+      transition: color 0.3s ease-in-out;
+      font-weight: 300 !important;
+      &:hover {
+        color: var(--white);
+      }
+    }
+  }
+  &_mask {
+    font-size: 0;
+    line-height: 0;
+    contain: content;
+    img {
+      width: 100%;
+      height: auto;
+      margin-bottom: -0.2rem;
+    }
+  }
+}

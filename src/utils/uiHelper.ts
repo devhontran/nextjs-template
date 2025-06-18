@@ -1,5 +1,6 @@
 'use client';
 
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { getImageProps } from 'next/image';
 
@@ -37,6 +38,7 @@ export function bodyReady(): void {
 }
 
 export const gRefresh = (timeout = 1000): void => {
+  gsap.registerPlugin(ScrollTrigger);
   setTimeout(() => {
     ScrollTrigger.refresh();
   }, timeout);
@@ -91,7 +93,7 @@ export const getDelay = ({
 }): number => {
   if (!element) return 0;
   const rect = element.getBoundingClientRect();
-  if (rect.top <= window.innerHeight && rect.top >= 0) {
+  if (rect.top <= window.innerHeight && rect.top >= 0 && Math.abs(pageScrollTop()) < 10) {
     return (delayEnter ?? 0) + TIME_WAIT_LOADED_TRIGGER / 1000;
   }
   return delayTrigger ?? 0;
@@ -132,4 +134,29 @@ export function shuffle(array: (string | number | HTMLElement)[]): void {
 
 export const splitAnimate = (refContent: HTMLElement, callback: () => void): void => {
   requestAnimationFrame(callback);
+};
+
+export const getWindowWidth = (): number => {
+  return typeof window !== 'undefined' ? document.body.clientWidth || window.innerWidth : 0;
+};
+
+export const getWindowHeight = (): number => {
+  return typeof window !== 'undefined' ? document.body.clientHeight || window.innerHeight : 0;
+};
+
+export const convertPxToRem = (px: number): number => {
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return px / rootFontSize;
+};
+
+export const isFontReady = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    document.fonts.ready
+      .then(() => {
+        resolve(true);
+      })
+      .catch(() => {
+        resolve(false);
+      });
+  });
 };

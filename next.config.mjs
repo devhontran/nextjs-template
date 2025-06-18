@@ -6,21 +6,40 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-     turbo: {
-      resolveAlias: {
-        underscore: 'lodash',
-      },
-      resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
-    },
+    
   },
-   images: {
+  // turbopack: {
+  //   resolveAlias: {
+  //     underscore: 'lodash',
+  //   },
+  //   resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
+  // },
+  images: {
     minimumCacheTTL: 3600,
-    domains: ['images.unsplash.com', 'picsum.photos'],
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+      {
         protocol: 'http',
-        hostname: '127.0.0.1',
-        port: '1337',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'player.vimeo.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
       },
     ],
   },
@@ -28,15 +47,21 @@ const nextConfig = {
   sassOptions: {
     additionalData: `@use "@/styles/tool.scss" as *;`,
   },
-  
+
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-    }
-    return config
+    };
+
+    // config.cache = {
+    //   type: 'filesystem',
+    //   compression: 'gzip',
+    //   allowCollectingMemory: true,
+    // };
+    return config;
   },
-}
-export default (phase) => {
+};
+export default () => {
   if (isProd) {
     const withPWA = require('@ducanh2912/next-pwa').default({
       dest: 'public',

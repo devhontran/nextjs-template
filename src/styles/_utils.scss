@@ -7,7 +7,10 @@
 .container {
   max-width: 100% !important;
   margin: 0 auto;
-  padding: 0 rem(48px);
+  padding: 0 rem(16px);
+  @include tablet {
+    padding: 0 rem(24px);
+  }
 }
 
 .yellow {

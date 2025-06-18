@@ -1,52 +1,67 @@
 'use client';
 
-import { useCallback, useLayoutEffect } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useCallback } from 'react';
 
 import type { IAnimationProps } from '@/types/animation';
-import { calcThreshold, getDelay, splitAnimate } from '@/utils/uiHelper';
+import { calcThreshold, getDelay } from '@/utils/uiHelper';
 
 interface IMotionProps {
   refContent: React.RefObject<IAnimationElement>;
   motion?: IAnimationProps;
-  animate: (gsapWars: gsap.TweenVars) => void;
+  animate: (gsapWars: gsap.TweenVars) => Promise<void> | void;
+  kill?: () => void;
+  isOnShow?: boolean;
 }
 
-export default function useAnimate({ refContent, motion, animate }: IMotionProps): void {
+export default function useAnimate({
+  refContent,
+  motion,
+  animate,
+  kill,
+  isOnShow,
+}: IMotionProps): void {
   const getGsapWars = useCallback((): gsap.TweenVars => {
-    refContent.current?.classList.add('is-before-animate');
     const delay = getDelay({
       element: refContent.current as HTMLElement,
       delayEnter: motion?.delayEnter,
       delayTrigger: motion?.delayTrigger,
     });
 
-    const topStart = calcThreshold({
-      element: refContent.current as HTMLElement,
-      threshold: motion?.threshold,
-    });
-
     return {
-      scrollTrigger: {
-        trigger: refContent.current,
-        start: motion?.start ?? `top+=${topStart.toString()}% bottom`,
-        once: true,
-        markers: motion?.markers,
-        onEnter: (): void => {
-          refContent.current?.classList.remove('is-before-animate');
-        },
+      onStart: (): void => {
+        if (!isOnShow) {
+          gsap.set(refContent.current, { visibility: 'visible' });
+        }
       },
       delay,
     };
   }, [motion]);
 
-  const initAnimation = useCallback(() => {
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     if (!refContent.current) return;
 
-    splitAnimate(refContent.current as HTMLElement, (): void => {
-      const gsapWars = getGsapWars();
-      animate(gsapWars);
+    const topStart = calcThreshold({
+      element: refContent.current as HTMLElement,
+      threshold: motion?.threshold,
+    });
+
+    if (!isOnShow) {
+      gsap.set(refContent.current, { visibility: 'hidden' });
+    }
+    ScrollTrigger.create({
+      trigger: refContent.current,
+      start: motion?.start ?? `top+=${topStart.toString()}% bottom`,
+      once: true,
+      markers: motion?.markers,
+      onEnter: async () => {
+        const gsapWars = getGsapWars();
+        await animate(gsapWars);
+      },
+      onLeave: kill,
     });
   }, [getGsapWars, animate]);
-
-  useLayoutEffect(initAnimation, [initAnimation]);
 }

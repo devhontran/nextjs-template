@@ -16,7 +16,7 @@
   @return math.div($px, $base) * 100dvh;
 }
 
-@function vw($px, $base: 1920px) {
+@function vw($px, $base: 1440px) {
   @return math.div($px, $base) * 100vw;
 }
 
@@ -32,44 +32,32 @@
   font-size: clamp(#{rem($min)}, #{vw($mid)}, #{rem($max)});
 }
 
-@mixin onlyMobile {
-  @media (min-width: theme('screens.sm')) {
+@mixin mobile {
+  @media (max-width: 768px) {
     @content;
   }
 }
 
-@mixin fromTablet {
-  @media (max-width: theme('screens.lg')) {
+@mixin is-tablet() {
+  @media (max-width: 1200px) and (min-width: 768px) {
     @content;
   }
 }
 
-@mixin min-tablet {
-  @media (min-width: theme('screens.sm')) {
+@mixin tablet {
+  @media (min-width: 768px) {
     @content;
   }
 }
 
-@mixin isTablet() {
-  @media (max-width: theme('screens.lg')) and (min-width: theme('screens.sm')) {
+@mixin laptop {
+  @media (min-width: 1200px) {
     @content;
   }
 }
 
-@mixin min-tabletWide {
-  @media (min-width: theme('screens.md')) {
-    @content;
-  }
-}
-
-@mixin pcSmall {
-  @media (min-width: theme('screens.lg')) {
-    @content;
-  }
-}
-
-@mixin pcMid {
-  @media (min-width: theme('screens.xl')) {
+@mixin desktop {
+  @media (min-width: 1440px) {
     @content;
   }
 }
@@ -215,7 +203,7 @@
 
 @mixin masking() {
   vertical-align: bottom;
-  overflow: hidden;
+  clip-path: inset(0 0 -0.1em 0);
 }
 
 @mixin with-will-change() {
@@ -226,4 +214,8 @@
 @mixin starting-style() {
   opacity: 0;
   will-change: opacity;
+}
+
+@mixin line-height-trim() {
+  vertical-align: text-bottom;
 }

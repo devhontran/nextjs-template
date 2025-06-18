@@ -18,26 +18,22 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src/",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/animation/*": ["./src/animation/*"],
-      "@/modules/*": ["./src/modules/*"],
-      "@/services/*": ["./src/services/*"],
-      "@/contexts/*": ["./src/contexts/*"],
-      "@/layouts/*": ["./src/layouts/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/constants/*": ["./src/constants/*"],
-      "@/images/*": ["./public/images/*"],
-      "@/public/*": ["./public/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/motions/*": ["./src/animation/motions/*"],
-      "@/store/*": ["./src/store/*"],
-      "@/interactive/*": ["./src/animation/interactive/*"]
+      "@/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/animation/*": ["animation/*"],
+      "@/modules/*": ["modules/*"],
+      "@/services/*": ["services/*"],
+      "@/contexts/*": ["contexts/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/utils/*": ["utils/*"],
+      "@/enum/*": ["enum/*"],
+      "@/constants/*": ["constants/*"],
+      "@/types/*": ["types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "files": ["node_modules/gsap/types/index.d.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,16 @@
+.parallaxBox {
+  &.isBackground {
+    overflow: hidden;
+    height: 100%;
+    @include min-pc {
+      height: 100svh;
+    }
+  }
+  &_inner {
+    will-change: transform;
+
+    &.isFade {
+      will-change: opacity, transform;
+    }
+  }
+}

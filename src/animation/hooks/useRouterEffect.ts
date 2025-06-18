@@ -15,7 +15,7 @@ export default function useRouterEffect(): {
   routerPush: () => void;
 } {
   const router = useRouter();
-  const { pageLeave, routerState } = useEffectContext();
+  const { pageLeave, routerState, setRouterState } = useEffectContext();
   const routerPrefetch = useCallback(
     ({
       pathName,
@@ -29,12 +29,11 @@ export default function useRouterEffect(): {
       }
       if (isPrefetch) router.prefetch(pathName);
       pageLeave();
-      // eslint-disable-next-line react-compiler/react-compiler
-      routerState.value = {
+      setRouterState({
         pathName,
         pageName,
         typeEffect,
-      };
+      });
     },
     [router]
   );

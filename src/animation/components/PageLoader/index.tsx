@@ -4,11 +4,13 @@ import { useGSAP } from '@gsap/react';
 import { useSignal, useSignalEffect } from '@preact/signals-react';
 import cn from 'classnames';
 import gsap from 'gsap';
-import { usePathname } from 'next/navigation';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { useAssetsContext } from '@/animation/contexts/AssetsContext';
 import { useEffectContext } from '@/animation/contexts/EffectContext';
+import { useDetectPageLoader } from '@/animation/hooks/useDetectPageLoader';
+import { usePageEnter } from '@/animation/hooks/useEffectHooks';
+import { gRefresh } from '@/utils/uiHelper';
 
 import s from './PageLoader.module.scss';
 
@@ -19,9 +21,8 @@ export default function PageLoader(): React.ReactElement {
   const refQT = useRef<gsap.QuickToFunc>(null);
   const isLoaded = useSignal<boolean>(false);
 
-  const pathName = usePathname();
   const { pagePlay, pageEnter } = useEffectContext();
-  const { assetsProgress, registerAssets, unRegisterAssets, resetAssets } = useAssetsContext();
+  const { assetsProgress } = useAssetsContext();
 
   useGSAP(() => {
     refQT.current = gsap.quickTo(refAnimate.current, 'value', {
@@ -50,21 +51,10 @@ export default function PageLoader(): React.ReactElement {
     }
   });
 
-  useLayoutEffect(() => {
-    registerAssets();
-
-    Promise.all([document.fonts.ready])
-      .then(() => {
-        unRegisterAssets();
-      })
-      .catch(() => {
-        unRegisterAssets();
-      });
-
-    return (): void => {
-      resetAssets();
-    };
-  }, [pathName]);
+  useDetectPageLoader();
+  usePageEnter(() => {
+    gRefresh(100);
+  });
 
   return (
     <div className={cn(s.pageLoader)} ref={refWrap}>

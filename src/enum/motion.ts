@@ -1,24 +1,27 @@
 export enum MotionCharsType {
-  MASK = 'mask',
-  MASK_TOP = 'mask_top',
-  MASK_RANDOM = 'mask_random',
-  SOLID_BOX = 'solid_box',
-  SCALE = 'scale',
-  TYPING = 'typing',
+  CHARS_MASK = 'chars_mask',
+  CHARS_MASK_TOP = 'chars_mask_top',
+  CHARS_MASK_RANDOM = 'chars_mask_random',
+  CHARS_SOLID_BOX = 'chars_solid_box',
+  CHARS_SCALE = 'chars_scale',
+  CHARS_TYPING = 'chars_typing',
+  CHARS_LEFT_MASK = 'chars_left_mask',
 }
 
 export enum MotionLinesType {
-  FADE = 'fade',
-  MASK = 'mask',
+  LINES_FADE = 'lines_fade',
+  LINES_MASK = 'lines_mask',
+  LINES_THREE_D = 'lines_3d',
 }
 
 export enum MotionWordsType {
-  MASK = 'mask',
-  FADE_SLIDE_LEFT = 'fade_slide_left',
-  FADE_SLIDE_RIGHT = 'fade_slide_right',
-  FADE_SLIDE_UP = 'fade_slide_up',
-  FADE_SLIDE_DOWN = 'fade_slide_down',
-  SCALE_FADE = 'scale_fade',
+  WORDS_3D = 'words_3d',
+  WORDS_MASK = 'words_mask',
+  WORDS_FADE_SLIDE_LEFT = 'words_fade_slide_left',
+  WORDS_FADE_SLIDE_RIGHT = 'words_fade_slide_right',
+  WORDS_FADE_SLIDE_UP = 'words_fade_slide_up',
+  WORDS_FADE_SLIDE_DOWN = 'words_fade_slide_down',
+  WORDS_SCALE_FADE = 'words_scale_fade',
 }
 
 export enum MotionMaskBoxType {

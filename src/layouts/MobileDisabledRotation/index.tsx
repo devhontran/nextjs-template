@@ -19,7 +19,7 @@ export default function MobileDisabledRotation(): ReactElement {
       const isVertical = angle === 90 || angle === 270 || angle === -90;
 
       if (!isVertical || window.innerWidth >= 1024) {
-        window.lenis?.lenis?.start();
+        window.lenis?.start();
         gsap.to(wrapperRef.current, {
           opacity: 0,
           duration: 0.6,
@@ -29,7 +29,7 @@ export default function MobileDisabledRotation(): ReactElement {
           pointerEvents: 'none',
         });
       } else {
-        window.lenis?.lenis?.stop();
+        window.lenis?.stop();
         gsap.to(wrapperRef.current, {
           opacity: 1,
           duration: 0.6,

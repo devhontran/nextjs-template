@@ -1,28 +1,82 @@
 .label {
   font-style: normal;
-  font-weight: 700;
   line-height: 110%;
   font-size: 1.4rem;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
 
   &__12 {
     font-size: 1.2rem;
   }
 
+  &__14 {
+    font-size: 1.2rem;
+    line-height: 120%; /* 14px */
+    letter-spacing: rem(0.12px);
+    @include tablet {
+      font-size: 1.4rem;
+      line-height: 120%; /* 14px */
+      letter-spacing: rem(0.14px);
+    }
+  }
+
   &__16 {
-    font-size: 1.6rem;
+    line-height: 120%; /* 20.8px */
+    letter-spacing: rem(-0.14px);
+    font-size: 1.4rem;
+    @include tablet {
+      line-height: 130%; /* 20.8px */
+      letter-spacing: rem(-0.16px);
+      font-size: 1.6rem;
+    }
   }
 
   &__18 {
     font-size: 1.8rem;
+    line-height: 110%;
   }
 
   &__20 {
+    line-height: 103%;
     font-size: 2rem;
   }
 
-  &__yellow {
-    color: var(--yellow, #f5c518);
+  &__24 {
+    font-size: 1.8rem;
+    line-height: 130%; /* 23.4px */
+    letter-spacing: rem(0.18px);
+    @include tablet {
+      font-size: 2.4rem;
+      line-height: 110%; /* 26.4px */
+      letter-spacing: rem(-0.24px);
+    }
+  }
+
+  &__32 {
+    font-size: 1.8rem;
+    line-height: 130%; /* 21.6px */
+    letter-spacing: rem(0.18px);
+    @include laptop {
+      font-size: 3.2rem;
+      line-height: 110%; /* 35.2px */
+      letter-spacing: rem(0.32px);
+    }
+  }
+
+  &__34 {
+    font-size: 3.4rem;
+    line-height: 90%; /* 37.4px */
+    letter-spacing: rem(0.34px);
+  }
+
+  &__48 {
+    font-size: 4.8rem;
+    line-height: 90%; /* 70.4px */
+    letter-spacing: rem(0.48px);
+  }
+
+  &__64 {
+    font-size: 6.4rem;
+    line-height: 100%; /* 70.4px */
+    letter-spacing: rem(0.64px);
   }
 }

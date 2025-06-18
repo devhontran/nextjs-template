@@ -58,3 +58,30 @@ export function usePageEffectOut(callback: () => void): void {
     }
   });
 }
+
+export function useAfterPageEnter(callback: (isReady: boolean) => void): void {
+  const { pageStatus } = useEffectContext();
+  useSignalEffect(() => {
+    callback(pageStatus.peek() === PageState.ENTER);
+  });
+}
+
+export function useIsPageEnter(): boolean {
+  const { pageStatus } = useEffectContext();
+  return pageStatus.peek() === PageState.ENTER;
+}
+
+export function useIsPageLeave(): boolean {
+  const { pageStatus } = useEffectContext();
+  return pageStatus.peek() === PageState.LEAVE;
+}
+
+export function useIsPagePlay(): boolean {
+  const { pageStatus } = useEffectContext();
+  return pageStatus.peek() === PageState.PLAY;
+}
+
+export function useIsPageIdle(): boolean {
+  const { pageStatus } = useEffectContext();
+  return pageStatus.peek() === PageState.IDLE;
+}

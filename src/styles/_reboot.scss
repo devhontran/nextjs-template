@@ -99,11 +99,11 @@ html {
   font-size: 10px;
   background-color: var(--dark-grey, #090909);
 
-  @include min-tablet {
+  @include tablet {
     font-size: vw(10px, 1024px);
   }
 
-  @include pcSmall {
+  @include laptop {
     font-size: vw(10px);
   }
 }
@@ -125,8 +125,8 @@ body {
   scroll-behavior: unset !important;
   overscroll-behavior-y: none !important;
   min-height: -webkit-fill-available;
-  font-family: var(--font-default);
-  background-color: var(--dark);
+  font-family: var(--font-PPNeueMontreal);
+  background-color: var(--main-background);
   color: var(--white);
 
   ::-webkit-scrollbar {

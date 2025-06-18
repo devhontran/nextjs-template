@@ -1,64 +1,58 @@
 'use client';
+import { Box } from '@chakra-ui/react';
 import cn from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { GridContainer } from '../Container';
 import s from './DebugGrid.module.scss';
 
 // Custom hook to manage grid state
 const useGridToggle = (): { isGrid: boolean } => {
   const [isGrid, setIsGrid] = useState(false);
+  const handleKeyDown = useCallback(
+    (ev: KeyboardEvent) => {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
+      const key = ev.which || ev.keyCode;
+      const isShift = !!ev.shiftKey;
+      if (isShift && key === 71) {
+        localStorage.setItem('isGrid', String(!isGrid));
+        setIsGrid(!isGrid);
+      }
+    },
+    [isGrid]
+  );
 
-  const toggleGrid = useCallback(() => {
-    const newState = !isGrid;
-    localStorage.setItem('isGrid', String(newState));
-    setIsGrid(newState);
-  }, [isGrid]);
-
-  // Initialize from localStorage
   useEffect(() => {
     const localIsGrid = localStorage.getItem('isGrid');
-    if (localIsGrid === 'true' && !isGrid) {
+    if (localIsGrid === 'true') {
       setIsGrid(true);
     }
-  }, []);
-
-  // Handle keyboard shortcut (Shift+G)
-  useEffect(() => {
-    const handleKeyDown = (ev: KeyboardEvent): void => {
-      // Use ev.key instead of deprecated which/keyCode
-      if (ev.shiftKey && ev.key === 'g') {
-        toggleGrid();
-      }
-    };
-
     window.addEventListener('keydown', handleKeyDown);
     return (): void => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [toggleGrid]);
+  }, [handleKeyDown, isGrid]);
 
   return { isGrid };
 };
 
 // Grid column component for DRY code
 const GridColumn = (): React.ReactElement => (
-  <div className="col-span-1">
+  <Box gridColumn="span 1">
     <div className={s.grid_col} />
-  </div>
+  </Box>
 );
 
 export default function DebugGrid(): React.ReactElement {
   const { isGrid } = useGridToggle();
 
   return (
-    <div className={cn(s.gridDebug, !isGrid && 'hidden')}>
-      <div className={cn('container')}>
-        <div className="grid grid-cols-10 gap-24">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <GridColumn key={`grid-column-${index.toString()}`} />
-          ))}
-        </div>
-      </div>
+    <div className={cn(s.gridDebug, !isGrid && s.hidden)}>
+      <GridContainer>
+        {Array.from({ length: 12 }).map((_, index) => (
+          <GridColumn key={`grid-column-${index.toString()}`} />
+        ))}
+      </GridContainer>
     </div>
   );
 }

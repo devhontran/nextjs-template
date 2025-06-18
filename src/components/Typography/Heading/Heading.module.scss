@@ -1,14 +1,41 @@
 .heading {
   font-style: normal;
-  font-weight: 600;
   line-height: 100%;
 
   &__48 {
-    font-size: 4.8rem;
+    line-height: 110%;
+    letter-spacing: 0.32px;
+    font-size: 3.2rem;
+    @include tablet {
+      line-height: 90%;
+      letter-spacing: 0.48px;
+      font-size: 4.8rem;
+    }
+  }
+
+  &__64 {
+    font-size: 3.2rem;
+    line-height: 110%; /* 35.2px */
+    letter-spacing: rem(0.32px);
+
+    @include laptop {
+      font-size: 6.4rem;
+      line-height: 100%; /* 64px */
+      letter-spacing: 0.64px;
+    }
   }
 
   &__80 {
     font-size: 8rem;
+  }
+
+  &__112 {
+    font-size: rem(112px);
+  }
+
+  &__138 {
+    font-size: rem(138px);
+    line-height: 90%;
   }
 
   &__140 {
@@ -19,7 +46,37 @@
     font-size: rem(200px);
   }
 
-  &__yellow {
-    color: var(--yellow, #f5c518);
+  &__230 {
+    font-size: rem(230px);
+    line-height: 90%;
+  }
+
+  &__276 {
+    font-size: rem(114px);
+    line-height: 80%;
+    @include tablet {
+      font-size: rem(286px);
+      line-height: 60%;
+      :global(.char) {
+        line-height: 60%;
+        padding-top: 0.18em;
+      }
+    }
+  }
+
+  &__284 {
+    font-size: rem(284px);
+    line-height: 90%;
+  }
+
+  &__354 {
+    font-size: rem(158px);
+    line-height: 80%;
+    letter-spacing: rem(-1.58px);
+    @include tablet {
+      font-size: rem(354px);
+      line-height: 80%;
+      letter-spacing: rem(-3.54px);
+    }
   }
 }

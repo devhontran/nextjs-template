@@ -1,0 +1,19 @@
+.drawLine {
+  display: block;
+  overflow: hidden;
+  &:not(:global(.animated)) {
+    will-change: transform;
+  }
+}
+
+.left {
+  transform-origin: left;
+}
+
+.right {
+  transform-origin: right;
+}
+
+.center {
+  transform-origin: center;
+}

@@ -14,8 +14,6 @@ import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
-import tailwind from 'eslint-plugin-tailwindcss'
-
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 })
@@ -47,9 +45,6 @@ const config = tseslint.config(
   ...compat.plugins('react-compiler'),
   react.configs['recommended-type-checked'],
 
-  // Tailwind
-  ...tailwind.configs['flat/recommended'],
-
   {
     linterOptions: {
       reportUnusedDisableDirectives: true,
@@ -67,11 +62,6 @@ const config = tseslint.config(
       globals: {
         ...globals.browser,
         ...globals.node,
-      },
-    },
-    settings: {
-      tailwindcss: {
-        callees: ['classnames', 'clsx', 'ctl', 'cn', 'cva'],
       },
     },
     rules: {
@@ -123,10 +113,10 @@ const config = tseslint.config(
       'no-console': 'error',
       'no-param-reassign': 'error',
       'security/detect-object-injection': 'off',
-      'tailwindcss/no-custom-classname': 'off',
       '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
       '@eslint-react/no-array-index-key': 'error',
       '@typescript-eslint/no-unused-expressions': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
 

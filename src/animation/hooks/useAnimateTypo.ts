@@ -1,88 +1,53 @@
 'use client';
 
-import type { RefObject } from 'react';
-import { useCallback, useLayoutEffect } from 'react';
-import SplitType from 'split-type';
+import { useRef } from 'react';
 
-import type { MotionCharsTarget } from '@/enum/motion';
+import type { MotionCharsType, MotionLinesType, MotionWordsType } from '@/enum/motion';
 import type { IAnimationProps } from '@/types/animation';
-import { calcThreshold, getDelay, splitAnimate } from '@/utils/uiHelper';
 
-interface IAnimationTypo {
-  refContent: RefObject<IAnimationElement | null>;
-  types: ('lines' | 'words' | 'chars')[];
+import useAnimate from './useAnimate';
+
+type ITypeInput = MotionCharsType | MotionLinesType | MotionWordsType;
+
+interface IMotionProps {
+  refContent: React.RefObject<IAnimationElement>;
   motion?: IAnimationProps;
-  target?: MotionCharsTarget;
-  animate: (gsapWars: gsap.TweenVars, splitType: SplitType | null) => void;
+  type: Partial<ITypeInput>;
+  animates: Partial<Record<ITypeInput, IMotionTypoFunctions>>;
+  reverts: Partial<Record<ITypeInput, (() => void) | undefined>>;
 }
 
 export default function useAnimateTypo({
-  types,
   refContent,
   motion,
-  animate,
-  target,
-}: IAnimationTypo): void {
-  const getSplitType = useCallback(() => {
-    return new Promise<SplitType>((resolve) => {
-      requestAnimationFrame(() => {
-        if (refContent.current) {
-          let findP: IAnimationElement = refContent.current;
-          if (target) {
-            const targetElement = refContent.current.querySelector(target) as IAnimationElement;
-            if (targetElement) {
-              findP = targetElement as IAnimationElement;
-            }
-          } else {
-            const children = refContent.current.children[0];
-            if (children instanceof HTMLElement) {
-              findP = children as IAnimationElement;
-            }
-          }
-          resolve(new SplitType(findP as HTMLElement, { types }));
-        }
-      });
-    });
-  }, [types]);
+  type,
+  animates,
+  reverts,
+}: IMotionProps): void {
+  const refTween = useRef<{ init: gsap.core.Tween | null; in: gsap.core.Tween | null }>({
+    init: null,
+    in: null,
+  });
 
-  const getGsapWars = useCallback((): gsap.TweenVars => {
-    const delay = getDelay({
-      element: refContent.current as HTMLElement,
-      delayEnter: motion?.delayEnter,
-      delayTrigger: motion?.delayTrigger,
-    });
+  const animate = async (twVars?: gsap.TweenVars): Promise<void> => {
+    refTween.current.init = (await animates[type]?.motionInit()) ?? null;
+    refTween.current.in = animates[type]?.motionIn(twVars) ?? null;
+  };
 
-    const topStart = calcThreshold({
-      element: refContent.current as HTMLElement,
-      threshold: motion?.threshold,
-    });
+  const revert = (): void => {
+    reverts[type]?.();
+  };
 
-    return {
-      scrollTrigger: {
-        trigger: refContent.current,
-        start: motion?.start ?? `top+=${topStart.toString()}% bottom`,
-        once: true,
-        markers: motion?.markers,
-      },
-      delay,
-    };
-  }, [motion, types]);
+  const kill = (): void => {
+    refTween.current.in?.kill();
+    refTween.current.in?.revert();
+    revert();
+  };
 
-  const initAnimation = useCallback(() => {
-    if (!refContent.current) return;
-
-    splitAnimate(refContent.current as HTMLElement, (): void => {
-      const gsapWars = getGsapWars();
-      getSplitType()
-        .then((splitType): void => {
-          animate(gsapWars, splitType);
-        })
-        .catch((error: unknown): void => {
-          // eslint-disable-next-line no-console
-          console.error('Error in split type animation:', error);
-        });
-    });
-  }, [getGsapWars, getSplitType, animate]);
-
-  useLayoutEffect(initAnimation, [initAnimation]);
+  useAnimate({
+    refContent,
+    animate,
+    motion,
+    kill,
+  });
 }

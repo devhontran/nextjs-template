@@ -1,0 +1,64 @@
+.button {
+  height: rem(52px);
+  padding: 0 rem(24px);
+  border-radius: 4px;
+  position: relative;
+  border: 1px solid var(--border-dark);
+  transition: border-color 1s var(--easeOutQuart);
+  padding-bottom: 0.01em;
+  cursor: pointer;
+
+  @include tablet {
+    height: rem(46px);
+    padding: 0 rem(16px);
+  }
+  &:hover {
+    border-color: var(--white);
+  }
+  &_container {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    justify-content: center;
+    height: 100%;
+  }
+  &_wrapper {
+    &_icon {
+      width: rem(16px);
+      height: rem(16px);
+      @include tablet {
+        width: rem(20px);
+        height: rem(20px);
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+
+        path {
+          stroke-dasharray: 22;
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+  }
+
+  &_content {
+    &_container {
+      transform: translateY(0.1em);
+      contain: content;
+      position: relative;
+      @include tablet {
+        transform: translateY(-0.025em);
+      }
+    }
+  }
+
+  &_txt {
+    &__secondary {
+      position: absolute;
+      left: 0;
+      top: 100%;
+    }
+  }
+}

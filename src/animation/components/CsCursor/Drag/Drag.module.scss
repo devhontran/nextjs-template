@@ -1,0 +1,48 @@
+.cursor {
+  --size: 8rem;
+  --svg-size: 2rem;
+  background-color: var(--yellow);
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  clip-path: circle(0% at 50% 50%);
+  display: block;
+
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+
+  overflow: hidden;
+  align-content: center;
+  justify-content: center;
+
+  > * {
+    grid-column: 1;
+    grid-row: 1;
+    line-height: 1;
+    font-size: 0;
+    opacity: 0;
+  }
+
+  svg {
+    width: var(--svg-size);
+    height: var(--svg-size);
+  }
+}
+
+.cursor_drag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(16px);
+}
+
+.cursor_view {
+  justify-self: center;
+}

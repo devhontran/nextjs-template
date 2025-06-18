@@ -5,9 +5,9 @@ import { useComputed, useSignal } from '@preact/signals-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { ReactElement, ReactNode } from 'react';
-import { createContext, use } from 'react';
+import { createContext, use, useMemo } from 'react';
 
-import { debounce } from '@/utils/uiHelper';
+import { debounce, getWindowHeight, getWindowWidth } from '@/utils/uiHelper';
 
 interface UiContextValue {
   isMobile: Signal<boolean>;
@@ -24,8 +24,8 @@ const DESKTOP_BREAKPOINT = 1200;
 const UiContext = createContext<UiContextValue | null>(null);
 
 export function UiProvider({ children }: { children: ReactNode }): ReactElement {
-  const width = useSignal(typeof window !== 'undefined' ? window.innerWidth : 0);
-  const height = useSignal(typeof window !== 'undefined' ? window.innerHeight : 0);
+  const width = useSignal(getWindowWidth());
+  const height = useSignal(getWindowHeight());
   const scrollHeight = useSignal(typeof document !== 'undefined' ? document.body.scrollHeight : 0);
   const isMobile = useComputed(() => width.value < MOBILE_BREAKPOINT);
   const isTablet = useComputed(
@@ -38,8 +38,8 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
 
     const listener = debounce((): void => {
       // eslint-disable-next-line react-compiler/react-compiler
-      width.value = window.innerWidth || document.body.clientWidth || 0;
-      height.value = window.innerHeight || document.body.clientHeight || 0;
+      width.value = getWindowWidth();
+      height.value = getWindowHeight();
       scrollHeight.value = document.body.scrollHeight;
     }, 150);
 
@@ -56,11 +56,12 @@ export function UiProvider({ children }: { children: ReactNode }): ReactElement 
     };
   });
 
-  return (
-    <UiContext value={{ isMobile, isTablet, isDesktop, height, width, scrollHeight }}>
-      {children}
-    </UiContext>
+  const contextValue = useMemo(
+    () => ({ isMobile, isTablet, isDesktop, height, width, scrollHeight }),
+    [isMobile, isTablet, isDesktop, height, width, scrollHeight]
   );
+
+  return <UiContext value={contextValue}>{children}</UiContext>;
 }
 
 export const useUiContext = (): UiContextValue => {

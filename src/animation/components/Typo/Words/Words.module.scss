@@ -1,14 +1,6 @@
-.words {
-  &:not(:global(.animated)) {
-    :global {
-      .line {
-        @include masking;
-      }
-
-      .word {
-        will-change: transform;
-        @include with-will-change;
-      }
-    }
+.chars_3d__words {
+  perspective: 1000px;
+  :global(.line) {
+    perspective: 1000px;
   }
 }

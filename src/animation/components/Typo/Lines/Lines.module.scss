@@ -1,12 +1,6 @@
-.lineMask,
-.lineFade {
-  &:not(:global(.animated)) {
-    .line__mask {
-      @include masking;
-    }
-
-    .line {
-      will-change: transform, opacity;
-    }
+.lines__3d {
+  perspective: 1000px;
+  :global(.line) {
+    perspective: 1000px;
   }
 }
