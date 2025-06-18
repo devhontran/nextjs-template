@@ -6,7 +6,7 @@ import '@/utils/gsap-custom-ease';
 import type { Viewport } from 'next';
 import React from 'react';
 
-import { f37Judge, PPNeueMontreal } from '@/constants/font';
+import { manrope } from '@/constants/font';
 import MainLayout from '@/layouts/MainLayout';
 import { ChakraProvider } from '@/providers/ChakraProvider';
 import { isDevelopment } from '@/utils/utils';
@@ -28,7 +28,7 @@ export default function RootLayout({
           <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
         )}
       </head>
-      <body className={`${f37Judge.variable} ${PPNeueMontreal.variable}`}>
+      <body className={manrope.variable}>
         <ChakraProvider>
           <MainLayout>{children}</MainLayout>
         </ChakraProvider>

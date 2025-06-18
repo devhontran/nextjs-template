@@ -6,14 +6,13 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-    
   },
-  // turbopack: {
-  //   resolveAlias: {
-  //     underscore: 'lodash',
-  //   },
-  //   resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
-  // },
+  turbopack: {
+    resolveAlias: {
+      underscore: 'lodash',
+    },
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
+  },
   images: {
     minimumCacheTTL: 3600,
     remotePatterns: [
