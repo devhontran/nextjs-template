@@ -1,3 +1,4 @@
+import { Flex } from '@chakra-ui/react';
 import React, { type PropsWithChildren } from 'react';
 
 import Animation from '@/animation';
@@ -11,8 +12,10 @@ export default function MainLayout({ children }: PropsWithChildren): React.React
     <>
       <Animation>
         <MenuControllerProvider>
-          <Header />
-          <LenisScroller>{children}</LenisScroller>
+          <Flex>
+            <Header />
+            <LenisScroller>{children}</LenisScroller>
+          </Flex>
         </MenuControllerProvider>
         <DebugGrid />
       </Animation>

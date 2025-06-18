@@ -1,19 +1,23 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import s from './Header.module.scss';
+import MenuItem from './MenuItem';
 export default function Header(): React.ReactElement {
   return (
-    <header className={s.header}>
-      <Flex>
-        <Box>HON</Box>
-        <Flex>
-          <Text>About</Text>
-          <Text>Services</Text>
-          <Text>Projects</Text>
-          <Text>Contact</Text>
+    <Box as="header" w="320px" height="100vh" position={'sticky'} top="0" left="0">
+      <Flex h="100%" w="100%" direction="column" alignItems="center" justifyContent="center">
+        <Box w="100%" flex="0 0 auto">
+          HON
+        </Box>
+        <Flex w="100%" direction="column" gap="16px" flex="1" justifyContent="center">
+          <MenuItem isActive={true} index={1}>
+            About
+          </MenuItem>
+          <MenuItem index={2}>Services</MenuItem>
+          <MenuItem index={3}>Projects</MenuItem>
+          <MenuItem index={4}>Contact</MenuItem>
         </Flex>
       </Flex>
-    </header>
+    </Box>
   );
 }

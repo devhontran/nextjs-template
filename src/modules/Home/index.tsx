@@ -1,7 +1,18 @@
-export default function Home() {
+'use client';
+
+import About from './About';
+import Hero from './Hero';
+import Services from './Services';
+import s from './styles.module.scss';
+import Works from './Works';
+
+export default function HomePageV2(): React.ReactElement {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <section className={s.landingPage}>
+      <Hero />
+      <About />
+      <Services />
+      <Works />
+    </section>
   );
 }

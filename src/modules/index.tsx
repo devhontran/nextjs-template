@@ -1,9 +1,9 @@
-import Fame from './Fame';
+import HomePageV2 from './Home';
 
 export default function Modules(): React.ReactElement {
   return (
     <div>
-      <Fame title="Fame" />
+      <HomePageV2 />
     </div>
   );
 }

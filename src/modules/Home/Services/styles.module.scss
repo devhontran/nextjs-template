@@ -1,0 +1,14 @@
+.title {
+  margin-bottom: var(--space-80);
+
+  strong {
+    color: var(--yellow);
+  }
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-120);
+  margin-bottom: var(--space-240);
+}
