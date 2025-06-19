@@ -8,7 +8,12 @@ import Lens from '@/modules/Home/Components/Lens';
 export default function Webgl(): React.ReactElement {
   return (
     <>
-      <GlobalCanvas style={{ zIndex: -1 }} globalRender={false}>
+      <GlobalCanvas
+        eventSource={window}
+        eventPrefix="client"
+        style={{ zIndex: -1 }}
+        globalRender={false}
+      >
         {(globalChildren) => (
           <>
             <Suspense fallback={null}>

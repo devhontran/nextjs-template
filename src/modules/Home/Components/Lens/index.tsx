@@ -2,6 +2,7 @@
 
 import { MeshTransmissionMaterial, useFBO, useGLTF } from '@react-three/drei';
 import { createPortal, useFrame, useThree } from '@react-three/fiber';
+import { easing } from 'maath';
 import type { ReactElement } from 'react';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -22,13 +23,13 @@ export default function Lens({ children, damping = 0.2, ...props }: LensProps): 
   const viewport = useThree((state) => state.viewport);
   const [scene] = useState(() => new THREE.Scene());
   useFrame((state, delta) => {
-    const viewport = state.viewport.getCurrentViewport(state.camera, [0, 0, 15]);
-    // easing.damp3(
-    //   ref.current.position,
-    //   [(state.pointer.x * viewport.width) / 2, (state.pointer.y * viewport.height) / 2, 15],
-    //   damping,
-    //   delta
-    // );
+    const viewport = state.viewport.getCurrentViewport(state.camera, [0, 0, camera.fov]);
+    easing.damp3(
+      ref.current.position,
+      [(state.pointer.x * viewport.width) / 2, (state.pointer.y * viewport.height) / 2, camera.fov],
+      damping,
+      delta
+    );
 
     state.gl.setRenderTarget(buffer);
     state.gl.setClearColor(0x000000, 0);
@@ -48,10 +49,10 @@ export default function Lens({ children, damping = 0.2, ...props }: LensProps): 
   const CylinderMesh = () => {
     return (
       <mesh
-        scale={Math.min(viewport.width, viewport.height) / 10}
-        // ref={ref}
+        scale={Math.min(viewport.width, viewport.height) / 5}
+        ref={ref}
         rotation-x={Math.PI / 2}
-        geometry={nodes.Cylinder.geometry as THREE.BufferGeometry}
+        geometry={new THREE.SphereGeometry(1, 32, 32)}
         {...props}
       >
         <MeshTransmissionMaterial
@@ -61,13 +62,9 @@ export default function Lens({ children, damping = 0.2, ...props }: LensProps): 
           anisotropy={0.1}
           chromaticAberration={0.04}
         />
-        {/* <meshBasicMaterial color="red" /> */}
       </mesh>
     );
   };
-
-  // useCanvas(() => <PlanMesxxx />);
-  // useCanvas(() => <CylinderMesh />);
 
   return (
     <>
