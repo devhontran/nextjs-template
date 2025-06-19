@@ -11,6 +11,7 @@ export default function SectionBlock({ title, children }: SectionBlockProps): Re
     <Flex direction={'column'} gap="2rem">
       <Box height={'24rem'}>
         <Label
+          fontSize={'1.4rem'}
           position={'sticky'}
           top={'calc(var(--header-height) + 2.4rem)'}
           textTransform={'uppercase'}

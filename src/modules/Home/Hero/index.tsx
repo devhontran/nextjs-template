@@ -15,7 +15,7 @@ export default function Hero(): React.ReactElement {
   return (
     <div>
       <Flex direction={'column'} gap="3rem" py="12rem">
-        <Heading fontSize={'3rem'} textTransform={'uppercase'} textAlign={'center'}>
+        <Heading fontSize={'2rem'} textTransform={'uppercase'} textAlign={'center'}>
           Hon Q. Tran
         </Heading>
         <Heading
@@ -26,7 +26,7 @@ export default function Hero(): React.ReactElement {
         >
           Founder <br /> Creative Developer <br /> at hontran.dev
         </Heading>
-        <Heading fontSize={'3rem'} textTransform={'uppercase'} textAlign={'center'}>
+        <Heading fontSize={'2rem'} textTransform={'uppercase'} textAlign={'center'}>
           From HCM, Vietnam
         </Heading>
       </Flex>

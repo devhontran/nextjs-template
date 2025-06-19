@@ -37,8 +37,8 @@ export default function ServiceItem({
     <Flex direction={'column'} gap="4rem" position={'relative'} py="2.4rem">
       <Box height={'40rem'} position={'relative'} zIndex={1}>
         <GridContent position={'sticky'} top={'calc(var(--header-height) + 2.4rem)'}>
-          <GridItem colSpan={3}>
-            <Text fontSize={'48px'} lineHeight={1.2} textTransform={'uppercase'}>
+          <GridItem colSpan={4}>
+            <Text fontSize={'3rem'} lineHeight={1.2} textTransform={'uppercase'}>
               {title}
             </Text>
           </GridItem>
@@ -49,11 +49,11 @@ export default function ServiceItem({
       </Box>
       <GridContent position={'relative'} zIndex={1} alignItems={'flex-end'} pr="var(--space-16) ">
         <GridItem colSpan={3} colStart={6}>
-          <Text fontSize={'1.4rem'}>{description}</Text>
+          <Text fontSize={'1.5rem'}>{description}</Text>
         </GridItem>
         <GridItem colSpan={2} colStart={10} pb=".25em">
           <Text
-            fontSize={'1.2rem'}
+            fontSize={'1.4rem'}
             mb="1.2rem"
             css={{ '& strong': { color: 'yellow', fontWeight: 700 } }}
           >
@@ -62,12 +62,12 @@ export default function ServiceItem({
           <chakra.a
             width={'100%'}
             px="1.2rem"
-            py=".8rem"
+            py="1rem"
             display={'block'}
             border="1px solid yellow"
             borderRadius={'2.4rem'}
             color="yellow"
-            fontSize={'1.2rem'}
+            fontSize={'1.4rem'}
             textAlign={'center'}
             textTransform={'uppercase'}
             href={`mailto:hello@hontran.dev?subject=Start the project ${title}`}

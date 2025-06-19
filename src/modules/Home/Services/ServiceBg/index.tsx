@@ -38,7 +38,6 @@ export default function ServiceBg(): React.ReactElement {
       left={'calc(var(--space-16) * -1)'}
       w="calc(100% + var(--space-16) * 2)"
       h="100%"
-      zIndex={-1}
       opacity={0.25}
     >
       <Box
