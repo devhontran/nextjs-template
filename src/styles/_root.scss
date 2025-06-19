@@ -3,44 +3,11 @@
   --easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
   --easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
 
-  --height-mobile-screen: 852px;
-  --height-laptop-screen: 1024px;
+  --header-height: 69px;
 
   --dark: #000;
   --white: #fff;
-  --blue: #007bff;
 
-  --midnight-100: #5d7492;
-  --midnight-200: #021f45;
-  --midnight-300: #212935;
-  --midnight-400: #1a1a1e;
-  --midnight-500: #040c15;
-
-  --periwinkle-100: #e8eafa;
-  --periwinkle-200: #c6c9e1;
-  --periwinkle-300: #8a8ca2;
-  --periwinkle-400: #606277;
-  --periwinkle-500: #4e5064;
-
-  --charcoal-100: #e2e2e2;
-  --charcoal-200: #a7a7a7;
-  --charcoal-300: #9c9c9c;
-  --charcoal-400: #939393;
-  --charcoal-500: #232323;
-  --charcoal-600: #1d1d1e;
-
-  --alpha-dark: var(--charcoal-600);
-
-  --white-100: var(--periwinkle-100);
-  --border-lable: var(--midnight-300);
-
-  --main-background: var(--midnight-500);
-  --border-dark: var(--midnight-300);
-
-  --fg-quaternary-dark: var(--midnight-300);
-
-  --radius-full: 999px;
-  --radius-8: 8px;
   --space-240: 24rem;
   --space-160: 16rem;
   --space-144: 14.4rem;

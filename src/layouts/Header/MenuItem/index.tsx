@@ -13,10 +13,10 @@ export default function MenuItem({
   return (
     <Flex direction="column" gap="16px">
       <Text fontSize="12px">{`0${index}`}</Text>
-      <Box position={'relative'} borderLeft={'2px solid #ddd'} height={isActive ? '320px' : '0'}>
+      <Box position={'relative'} borderLeft={'2px solid #ddd'} height={isActive ? '10vh' : '0'}>
         <Box borderLeft={'2px solid yellow'} position={'absolute'} top="0" left="0" height="50%" />
       </Box>
-      <Text fontSize="18px" fontWeight="bold">
+      <Text fontSize="14px" textTransform={'uppercase'}>
         {children}
       </Text>
     </Flex>

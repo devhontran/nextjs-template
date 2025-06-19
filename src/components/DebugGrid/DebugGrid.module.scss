@@ -9,6 +9,7 @@ $color-debug: #ff6b4c;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 99999999999;
+  // opacity: 0.5;
 
   &_inner {
     gap: var(--space-8);

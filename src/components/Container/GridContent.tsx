@@ -7,13 +7,13 @@ import s from './Container.module.scss';
 
 type Props = PropsWithChildren & BoxProps;
 
-export const GridContainer = ({ children, className, ...props }: Props): React.JSX.Element => {
+export const GridContent = ({ children, className, ...props }: Props): React.JSX.Element => {
   return (
     <Grid
       gridTemplateColumns={{
         base: 'repeat(6, 1fr)',
         sm: 'repeat(8, 1fr)',
-        md: 'repeat(12, 1fr)',
+        md: 'repeat(11, 1fr)',
       }}
       width={'100%'}
       className={cn(s.container_grid, className)}

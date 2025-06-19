@@ -1,42 +1,86 @@
-import ImagePlaceHolder from '@/components/ImagePlaceHolder';
-import { Heading, Label, Paragraph } from '@/components/Typography';
+'use client';
+
+import { Box, chakra, Flex, GridItem, Text } from '@chakra-ui/react';
+import { useGSAP } from '@gsap/react';
+import type { Signal } from '@preact/signals-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
+
+import { GridContent } from '@/components/Container';
 
 import Tags from '../../Tags';
-import s from './styles.module.scss';
 
 interface ServiceItemProps {
   title: string;
   description: string;
   image: string;
   tags: string[];
+  index: number;
+  progressItem: Signal<number[]>;
 }
 
 export default function ServiceItem({
   title,
   description,
-  image,
   tags,
+  index,
+  progressItem,
 }: ServiceItemProps): React.ReactElement {
+  const refContent = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  });
+
   return (
-    <div className={s.serviceItem}>
-      <div className="grid grid-cols-10 gap-24">
-        <div className={`${s.thumbnail} col-span-6`}>
-          <div className="metadata flex justify-between">
-            <Label size={12}>Projects</Label>
-            <Label size={12}>10</Label>
-          </div>
-          <ImagePlaceHolder src={image} alt={title} width={1600} height={900} />
-        </div>
-        <div className={`${s.content} col-span-3 col-start-8`}>
-          <Heading className={s.title} size={48}>
-            {title}
-          </Heading>
-          <Tags tags={tags} />
-          <div className={s.description}>
-            <Paragraph size={18}>{description}</Paragraph>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Flex direction={'column'} gap="4rem" position={'relative'} py="2.4rem">
+      <Box height={'40rem'} position={'relative'} zIndex={1}>
+        <GridContent position={'sticky'} top={'calc(var(--header-height) + 2.4rem)'}>
+          <GridItem colSpan={3}>
+            <Text fontSize={'48px'} lineHeight={1.2} textTransform={'uppercase'}>
+              {title}
+            </Text>
+          </GridItem>
+          <GridItem colSpan={3} colStart={6} pt=".45em">
+            <Tags tags={tags} />
+          </GridItem>
+        </GridContent>
+      </Box>
+      <GridContent position={'relative'} zIndex={1} alignItems={'flex-end'} pr="var(--space-16) ">
+        <GridItem colSpan={3} colStart={6}>
+          <Text fontSize={'1.4rem'}>{description}</Text>
+        </GridItem>
+        <GridItem colSpan={2} colStart={10} pb=".25em">
+          <Text
+            fontSize={'1.2rem'}
+            mb="1.2rem"
+            css={{ '& strong': { color: 'yellow', fontWeight: 700 } }}
+          >
+            Sprint <br /> from <strong>$1,500</strong>
+          </Text>
+          <chakra.a
+            width={'100%'}
+            px="1.2rem"
+            py=".8rem"
+            display={'block'}
+            border="1px solid yellow"
+            borderRadius={'2.4rem'}
+            color="yellow"
+            fontSize={'1.2rem'}
+            textAlign={'center'}
+            textTransform={'uppercase'}
+            href={`mailto:hello@hontran.dev?subject=Start the project ${title}`}
+            transition={'all 0.3s var(--ease-outQuart)'}
+            _hover={{
+              bg: 'yellow',
+              color: 'black',
+            }}
+          >
+            Start the project
+          </chakra.a>
+        </GridItem>
+      </GridContent>
+    </Flex>
   );
 }

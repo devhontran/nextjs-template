@@ -1,20 +1,28 @@
-import { Heading } from '@/components/Typography';
+import { Box, Flex } from '@chakra-ui/react';
+import { useSignal } from '@preact/signals-react';
 
+import SectionBlock from '../Components/SectionBlock';
 import { SERVICES } from '../mockup.data';
+import ServiceBg from './ServiceBg';
 import ServiceItem from './ServiceItem';
-import s from './styles.module.scss';
 
 export default function Services(): React.ReactElement {
+  const progressItem = useSignal(new Array(SERVICES.length).fill(0));
   return (
-    <div className="container">
-      <Heading className={s.title} size={140}>
-        Creating <strong>amazing things</strong> in digital development.
-      </Heading>
-      <div className={s.services}>
-        {SERVICES.map((service) => (
-          <ServiceItem key={service.title} {...service} />
-        ))}
-      </div>
-    </div>
+    <SectionBlock title="Services">
+      <Box position={'relative'}>
+        <ServiceBg />
+        <Flex direction={'column'} gap={'24rem'}>
+          {SERVICES.map((service, index) => (
+            <ServiceItem
+              progressItem={progressItem}
+              index={index}
+              key={service.title}
+              {...service}
+            />
+          ))}
+        </Flex>
+      </Box>
+    </SectionBlock>
   );
 }

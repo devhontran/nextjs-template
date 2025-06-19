@@ -1,5 +1,6 @@
 'use client';
 
+import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import type { ImageProps } from 'next/image';
 import Image from 'next/image';
@@ -12,16 +13,17 @@ const ImagePlaceHolder = ({
   isFull,
   borderRadius,
   ...props
-}: ImageProps & {
-  ref?: React.RefObject<HTMLDivElement | null>;
-  isFull?: boolean;
-  borderRadius?: string;
-}): ReactElement => {
+}: ImageProps &
+  BoxProps & {
+    ref?: React.RefObject<HTMLDivElement | null>;
+    isFull?: boolean;
+    borderRadius?: string;
+  }): ReactElement => {
   const { className, width, height, alt, src } = props;
 
   return (
     <Box
-      borderRadius={borderRadius ?? '.4rem'}
+      borderRadius={borderRadius ?? '0rem'}
       contain={'content'}
       className={`${s.imagePlaceholder} image-placeholder`}
       ref={ref}

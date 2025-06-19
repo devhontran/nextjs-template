@@ -1,26 +1,7 @@
 .container {
-  //max-width: 1660px;
-  //padding-left: rem(20px) !important;
-  //padding-right: rem(20px) !important;
-  //--gap-x: #{rem(16px)} !important;
-  //margin: 0 auto;
-  //@include min-tablet {
-  //  padding-left: rem(32px) !important;
-  //  padding-right: rem(32px) !important;
-  //  --gap-x: #{rem(20px)} !important;
-  //}
-  //@include pcSmall {
-  //  padding-left: rem(80px) !important;
-  //  padding-right: rem(80px) !important;
-  //}
-
   &_grid {
     width: 100%;
     column-gap: var(--space-8);
-    //@include min-tablet {
-    //  column-gap: var(--gap-x);
-    //}
-
     @include laptop {
       column-gap: var(--space-16);
     }
