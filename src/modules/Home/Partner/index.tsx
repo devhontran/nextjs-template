@@ -23,7 +23,7 @@ export default function Partner(): React.ReactElement {
       </GridContent>
       <GridContent>
         <GridItem colSpan={5}>
-          <Box bg="red" aspectRatio={1} height="100%" width="100%">
+          <Box bg="red" height="100%" width="100%">
             <Image
               src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="partner-1"
@@ -33,54 +33,15 @@ export default function Partner(): React.ReactElement {
           </Box>
         </GridItem>
         <GridItem colSpan={6}>
-          <Grid templateColumns="repeat(3, 1fr)" gap="var(--grid-gap)">
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
+          <Grid templateColumns="repeat(6, 1fr)" gap={'var(--space-16)'}>
+            <GridItem colSpan={2}>
+              <Text>Kin</Text>
             </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
+            <GridItem colSpan={2}>
+              <Text>Kin</Text>
             </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.unsplash.com/photo-1745933115134-9cd90e3efcc7?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="partner-1"
-                width={1000}
-                height={1000}
-              />
+            <GridItem colSpan={2}>
+              <Text>Kin</Text>
             </GridItem>
           </Grid>
         </GridItem>
