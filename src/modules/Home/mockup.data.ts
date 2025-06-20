@@ -2,7 +2,8 @@ export const WORKS = [
   {
     title: 'MinhPham',
     description: `Our project is a testament to the power of creativity and innovation in digital design. With a focus on user experience and interactive storytelling, we've created a truly immersive experience that engages and inspires.`,
-    image: 'https://picsum.photos/1920/1080?random',
+    image:
+      'https://images.unsplash.com/photo-1750126833705-ba98013f16f3?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     tags: ['Frontend Engineer', 'Typescript', 'Three.js', 'WebGL', 'Web Development'],
     link: 'https://minhpham.design',
     awards: ['FWA', 'CSS Design Awards', 'Site of the Day', 'Dev Awards'],
@@ -10,7 +11,8 @@ export const WORKS = [
   {
     title: 'Work 2',
     description: 'Description 2',
-    image: 'https://picsum.photos/1920/1080?random',
+    image:
+      'https://images.unsplash.com/photo-1743630738181-b0e26c76c74c?q=80&w=760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     tags: ['Tag 4', 'Tag 5', 'Tag 6'],
     link: '/work-2',
     awards: ['FWA', 'CSS Design Awards', 'Site of the Day', 'Dev Awards'],

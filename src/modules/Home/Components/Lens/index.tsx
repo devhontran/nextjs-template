@@ -2,7 +2,6 @@
 
 import { MeshTransmissionMaterial, useFBO, useGLTF } from '@react-three/drei';
 import { createPortal, useFrame, useThree } from '@react-three/fiber';
-import { easing } from 'maath';
 import type { ReactElement } from 'react';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -23,13 +22,13 @@ export default function Lens({ children, damping = 0.2, ...props }: LensProps): 
   const viewport = useThree((state) => state.viewport);
   const [scene] = useState(() => new THREE.Scene());
   useFrame((state, delta) => {
-    const viewport = state.viewport.getCurrentViewport(state.camera, [0, 0, camera.fov]);
-    easing.damp3(
-      ref.current.position,
-      [(state.pointer.x * viewport.width) / 2, (state.pointer.y * viewport.height) / 2, camera.fov],
-      damping,
-      delta
-    );
+    //   const viewport = state.viewport.getCurrentViewport(state.camera, [0, 0, camera.fov]);
+    //   easing.damp3(
+    //     ref.current.position,
+    //     [(state.pointer.x * viewport.width) / 2, (state.pointer.y * viewport.height) / 2, camera.fov],
+    //     damping,
+    //     delta
+    //   );
 
     state.gl.setRenderTarget(buffer);
     state.gl.setClearColor(0x000000, 0);
@@ -70,7 +69,7 @@ export default function Lens({ children, damping = 0.2, ...props }: LensProps): 
     <>
       {createPortal(children, scene)}
       <PlanMesxxx />
-      <CylinderMesh />
+      {/* <CylinderMesh /> */}
     </>
   );
 }

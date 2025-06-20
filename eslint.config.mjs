@@ -102,7 +102,7 @@ const config = tseslint.config(
     
       'react-hooks/exhaustive-deps': 'off',
       'react-compiler/react-compiler': 'error',
-      'import-x/no-unresolved': ['error', { ignore: ['geist'] }],
+      'import-x/no-unresolved': ['error', { ignore: ['geist', 'scrolly-video'] }],
       '@typescript-eslint/restrict-template-expressions': ['off', {
         allowNumber: true,
       }],
