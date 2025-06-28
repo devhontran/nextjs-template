@@ -1,11 +1,7 @@
 'use client';
 
 import { Box, chakra, Flex, GridItem, Text } from '@chakra-ui/react';
-import { useGSAP } from '@gsap/react';
 import type { Signal } from '@preact/signals-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useRef } from 'react';
 
 import { GridContent } from '@/components/Container';
 
@@ -24,14 +20,12 @@ export default function ServiceItem({
   title,
   description,
   tags,
-  index,
-  progressItem,
 }: ServiceItemProps): React.ReactElement {
-  const refContent = useRef<HTMLDivElement>(null);
+  // const refContent = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-  });
+  // useGSAP(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+  // });
 
   return (
     <Flex direction={'column'} gap="4rem" position={'relative'} py="2.4rem">

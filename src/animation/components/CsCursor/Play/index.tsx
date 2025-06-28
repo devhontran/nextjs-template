@@ -5,7 +5,6 @@ import { useRef } from 'react';
 
 import { useCursorContext } from '@/animation/contexts/CursorContext';
 import { CursorType } from '@/enum/animation';
-import VideoButton from '@/modules/components/VideoButton';
 
 import Cursor from '../Cursor';
 import styles from './Play.module.scss';
@@ -44,7 +43,7 @@ export default function CursorPlay(): React.ReactElement {
   return (
     <Cursor className={styles.cursor_play}>
       <div ref={refCursor}>
-        <VideoButton>Watch my views</VideoButton>
+        <p>Watch my views</p>
       </div>
     </Cursor>
   );

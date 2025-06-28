@@ -1,7 +1,8 @@
 import { ScrollScene, UseCanvas } from '@14islands/r3f-scroll-rig';
-import { Box, GridItem } from '@chakra-ui/react';
+import { Box, GridItem, Link, Text } from '@chakra-ui/react';
 import { type RefObject, useRef } from 'react';
 
+import Tags from '../../Tags';
 import ImageWorkWebgl from './ImageWorkWebgl';
 
 export default function WorkItem({
@@ -19,7 +20,7 @@ export default function WorkItem({
   awards: string[];
   link: string;
 }): React.ReactElement {
-  const refImg = useRef();
+  const refImg = useRef<HTMLDivElement>(null);
   return (
     // <Link href={link} className={s.workItem}>
     //   <div className="grid grid-cols-10 gap-24">
@@ -59,9 +60,16 @@ export default function WorkItem({
     // </Link>
     <GridItem>
       <Box ref={refImg} w="100%" aspectRatio={'4/3'} />
+      <Box>
+        <Text>{title}</Text>
+        <Text>{description}</Text>
+        <Tags tags={tags} />
+        <Text>{awards.join(', ')}</Text>
+        <Link href={link}>{link}</Link>
+      </Box>
       <UseCanvas>
         <ScrollScene track={refImg as RefObject<HTMLElement>}>
-          {(props) => <ImageWorkWebgl props={props} />}
+          {(props) => <ImageWorkWebgl url={image} props={props} />}
         </ScrollScene>
       </UseCanvas>
     </GridItem>
