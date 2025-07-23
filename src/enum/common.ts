@@ -6,8 +6,10 @@ export enum MotionDirection {
 }
 
 export enum PageState {
-  ENTER = 'enter',
-  LEAVE = 'leave',
-  IDLE = 'idle',
-  PLAY = 'play',
+  PREFETCH = -3,
+  REPLACE = -2,
+  LEAVE = -1,
+  IDLE = 0,
+  PLAY = 1,
+  ENTER = 2,
 }

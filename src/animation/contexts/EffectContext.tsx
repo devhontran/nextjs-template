@@ -24,6 +24,7 @@ interface EffectContextValue {
   isPageIdle: Signal<boolean>;
   routerState: Signal<RouterState>;
   setRouterState: (value: RouterState) => void;
+  pagePrefetch: () => void;
 }
 const EffectContext = createContext<EffectContextValue | null>(null);
 
@@ -36,6 +37,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
   });
 
   const pageLeave = (): void => {
+    document.body.classList.remove('is-ready');
     pageStatus.value = PageState.LEAVE;
   };
 
@@ -44,6 +46,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
   };
 
   const pagePlay = (): void => {
+    document.body.classList.add('is-ready');
     pageStatus.value = PageState.PLAY;
   };
 
@@ -51,13 +54,14 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
     pageStatus.value = PageState.IDLE;
   };
 
-  const isPageEnter = useComputed(() => pageStatus.value === PageState.ENTER);
+  const pagePrefetch = (): void => {
+    pageStatus.value = PageState.PREFETCH;
+  };
 
-  const isPageLeave = useComputed(() => pageStatus.value === PageState.LEAVE);
-
-  const isPagePlay = useComputed(() => pageStatus.value === PageState.PLAY);
-
-  const isPageIdle = useComputed(() => pageStatus.value === PageState.IDLE);
+  const isPageEnter = useComputed(() => pageStatus.value > PageState.PLAY);
+  const isPagePlay = useComputed(() => pageStatus.value > PageState.IDLE);
+  const isPageLeave = useComputed(() => pageStatus.value > PageState.REPLACE);
+  const isPageIdle = useComputed(() => pageStatus.value > PageState.LEAVE);
 
   useLayoutEffect(() => {
     // eslint-disable-next-line react-compiler/react-compiler
@@ -87,6 +91,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
       isPageIdle,
       routerState,
       setRouterState,
+      pagePrefetch,
     }),
     [
       pageStatus,
@@ -100,6 +105,7 @@ export function EffectProvider({ children }: { children: ReactNode }): ReactElem
       isPageIdle,
       routerState,
       setRouterState,
+      pagePrefetch,
     ]
   );
 

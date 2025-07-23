@@ -5,39 +5,31 @@ import { PageState } from '@/enum/common';
 import { useEffectContext } from '../contexts/EffectContext';
 import { useIsAssetsLoaded } from './useIsAssetsLoaded';
 
-export function usePageEnter(onEnter: () => void): void {
-  const { pageStatus } = useEffectContext();
+export function usePageEnter(callback: () => void): void {
+  const { isPageEnter } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.ENTER) {
-      onEnter();
-    }
+    if (isPageEnter.value) callback();
   });
 }
 
-export function usePageLeave(onLeave: () => void): void {
-  const { pageStatus } = useEffectContext();
+export function usePageLeave(callback: () => void): void {
+  const { isPageLeave } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.LEAVE) {
-      onLeave();
-    }
+    if (isPageLeave.value) callback();
   });
 }
 
-export function usePagePlay(onPlay: () => void): void {
-  const { pageStatus } = useEffectContext();
+export function usePagePlay(callback: () => void): void {
+  const { isPagePlay } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.PLAY) {
-      requestAnimationFrame(onPlay);
-    }
+    if (isPagePlay.value) callback();
   });
 }
 
-export function usePageIdle(onIdle: () => void): void {
-  const { pageStatus } = useEffectContext();
+export function usePageIdle(callback: () => void): void {
+  const { isPageIdle } = useEffectContext();
   useSignalEffect(() => {
-    if (pageStatus.value === PageState.IDLE) {
-      onIdle();
-    }
+    if (isPageIdle.value) callback();
   });
 }
 

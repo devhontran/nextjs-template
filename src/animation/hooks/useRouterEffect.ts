@@ -1,3 +1,4 @@
+import { useSignal } from '@preact/signals-react';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
@@ -13,9 +14,11 @@ interface ILinkEffect {
 export default function useRouterEffect(): {
   routerPrefetch: ({ pathName, pageName, typeEffect, isPrefetch }: ILinkEffect) => void;
   routerPush: () => void;
+  isEffectHistory: () => boolean;
 } {
   const router = useRouter();
-  const { pageLeave, routerState, setRouterState } = useEffectContext();
+  const beforeTypeEffect = useSignal('fade');
+  const { pageLeave, pagePrefetch, routerState, setRouterState } = useEffectContext();
   const routerPrefetch = useCallback(
     ({
       pathName,
@@ -27,6 +30,9 @@ export default function useRouterEffect(): {
         window.location.reload();
         return;
       }
+      //eslint-disable-next-line react-compiler/react-compiler
+      beforeTypeEffect.value = typeEffect;
+      pagePrefetch();
       if (isPrefetch) router.prefetch(pathName);
       pageLeave();
       setRouterState({
@@ -42,5 +48,9 @@ export default function useRouterEffect(): {
     router.push(routerState.peek().pathName);
   }, [router]);
 
-  return { routerPrefetch, routerPush };
+  const isEffectHistory = (): boolean => {
+    return beforeTypeEffect.value === 'history';
+  };
+
+  return { routerPrefetch, routerPush, isEffectHistory };
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import type { RefObject } from 'react';
 import { useRef } from 'react';
@@ -27,8 +28,11 @@ export default function useWordsMask({
   const fromTweenVars = { yPercent: 100 };
   const toTweenVars = { yPercent: 0 };
 
-  const motionInit = async (): Promise<void> => {
+  const { contextSafe } = useGSAP(() => {
     gsap.registerPlugin(SplitText);
+  });
+
+  const motionInit = contextSafe(async (): Promise<void> => {
     if (!refContent.current || !(await isFontReady())) return;
     refContent.current.classList.add('will-change-transform');
     const el = isBlock ? refContent.current.children : refContent.current;
@@ -57,22 +61,22 @@ export default function useWordsMask({
         rotationY: -30,
       });
     }
-  };
+  });
 
-  const motionIn = (twVars?: gsap.TweenVars): gsap.core.Tween | null => {
+  const motionIn = contextSafe((twVars?: gsap.TweenVars): gsap.core.Tween | null => {
     if (!refContent.current || !refSplitText.current) return null;
 
     return gsap.fromTo(refSplitText.current.words, fromTweenVars, {
       ...toTweenVars,
       ...twVars,
     });
-  };
+  });
 
-  const motionOut = (twVars?: gsap.TweenVars): void => {
+  const motionOut = contextSafe((twVars?: gsap.TweenVars): void => {
     if (!refContent.current || !refSplitText.current) return;
 
     gsap.to(refSplitText.current.words, { yPercent: 100, ...twConfig, ...twVars });
-  };
+  });
 
   const textRevert = (): void => {
     refSplitText.current?.revert();

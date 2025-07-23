@@ -1,0 +1,57 @@
+.card {
+  --ratio-x: 0;
+  --ratio-y: 0;
+  --tilt-x: 0.5;
+  --tilt-y: 0.5;
+  --opacity: 0;
+  --size: 50%;
+  --filter: brightness(0.45) contrast(1);
+
+  @include laptop {
+    transform: rotateX(calc((var(--tilt-y) - 0.5) * 15deg))
+      rotateY(calc((var(--tilt-x) - 0.5) * -15deg)) translateX(calc((var(--tilt-x) - 0.5) * 1.5rem))
+      translateY(calc((var(--tilt-y) - 0.5) * 1.5rem));
+    will-change: transform;
+  }
+
+  &:not([is-expand]) {
+    @include laptop {
+      transform-style: preserve-3d;
+      touch-action: none;
+    }
+    &:after {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at calc(var(--ratio-x) * 100%) calc(var(--ratio-y) * 100%),
+        hsl(0 0% 100% / 0.5),
+        transparent var(--size)
+      );
+      background-repeat: no-repeat;
+      background-blend-mode: soft-light;
+      z-index: 2;
+      pointer-events: none;
+      filter: var(--filter);
+      background-blend-mode: overlay;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      transition: opacity 0.4s var(--easeOutQuart);
+      opacity: 0;
+      transform: translateZ(1px);
+    }
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+.card:after {
+  content: '';
+  display: none;
+  @include laptop {
+    display: block;
+  }
+}

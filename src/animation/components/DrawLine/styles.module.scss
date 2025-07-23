@@ -1,6 +1,5 @@
 .drawLine {
   display: block;
-  overflow: hidden;
   &:not(:global(.animated)) {
     will-change: transform;
   }

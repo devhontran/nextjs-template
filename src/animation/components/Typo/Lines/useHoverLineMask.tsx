@@ -1,8 +1,9 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import type { RefObject } from 'react';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import s from './Lines.module.scss';
 
@@ -15,21 +16,23 @@ export const useHoverLineMask = ({
 }): { onHover: (twVars?: gsap.TweenVars) => void; motionIn: () => void } => {
   const refLines = useRef<HTMLSpanElement[]>([]);
 
-  useLayoutEffect(() => {
-    if (!refContent.current) return;
+  const { contextSafe } = useGSAP(
+    () => {
+      if (!refContent.current) return;
 
-    refContent.current.classList.add(s.lineMask__hover);
+      refContent.current.classList.add(s.lineMask__hover);
+      const text = refContent.current.textContent ?? '';
 
-    const text = refContent.current.textContent ?? '';
+      const newContent = document.createElement('div');
+      newContent.innerHTML = `<span class="block">${text}</span><span class="block">${text}</span>`;
+      refContent.current.replaceChildren(newContent);
 
-    const newContent = document.createElement('div');
-    newContent.innerHTML = `<span class="block">${text}</span><span class="block">${text}</span>`;
-    refContent.current.replaceChildren(newContent);
+      if (isMotionTrigger) gsap.set(refLines.current, { yPercent: 100 });
+    },
+    { dependencies: [isMotionTrigger] }
+  );
 
-    if (isMotionTrigger) gsap.set(refLines.current, { yPercent: 100 });
-  }, [isMotionTrigger]);
-
-  const motionIn = (): void => {
+  const motionIn = contextSafe((): void => {
     if (!refContent.current) return;
 
     gsap.to(refContent.current.querySelectorAll('span'), {
@@ -37,9 +40,9 @@ export const useHoverLineMask = ({
       ease: 'power3.out',
       duration: 1.4,
     });
-  };
+  });
 
-  const onHover = (twVars?: gsap.TweenVars): void => {
+  const onHover = contextSafe((twVars?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.fromTo(
@@ -47,7 +50,7 @@ export const useHoverLineMask = ({
       { yPercent: 0 },
       { yPercent: -100, ease: 'power3.out', duration: 1.4, ...twVars }
     );
-  };
+  });
 
   return { onHover, motionIn };
 };

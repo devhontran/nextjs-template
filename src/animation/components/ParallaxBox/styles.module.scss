@@ -2,7 +2,7 @@
   &.isBackground {
     overflow: hidden;
     height: 100%;
-    @include min-pc {
+    @include desktop {
       height: 100svh;
     }
   }

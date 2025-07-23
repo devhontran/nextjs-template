@@ -7,6 +7,7 @@ import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
 
 import { useCursorContext } from '@/animation/contexts/CursorContext';
+import useWinResize from '@/hooks/useWinResize';
 
 export default function BoxMouseSnap({
   children,
@@ -14,10 +15,11 @@ export default function BoxMouseSnap({
 }: PropsWithChildren<{ offset?: number }>): ReactElement {
   const refBtn = useRef<HTMLDivElement>(null);
   const refInner = useRef<HTMLDivElement>(null);
-
+  const { isDesktop } = useWinResize();
   const { clientX, clientY } = useCursorContext();
 
   useGSAP(() => {
+    if (!isDesktop) return;
     const rfx = gsap.quickTo(refInner.current, 'x', {
       duration: 0.5,
       ease: 'power3.out',

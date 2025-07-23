@@ -1,13 +1,12 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import type { RefObject } from 'react';
 import { useRef } from 'react';
 
 import { isFontReady } from '@/utils/uiHelper';
-
-import s from './Lines.module.scss';
 
 export const useLinesFade = ({
   refContent,
@@ -24,11 +23,12 @@ export const useLinesFade = ({
     ease: 'power3.out',
   };
 
-  const motionInit = async (): Promise<void> => {
+  const { contextSafe } = useGSAP(() => {
     gsap.registerPlugin(SplitText);
+  });
 
+  const motionInit = contextSafe(async (): Promise<void> => {
     if (!refContent.current || !(await isFontReady())) return;
-    refContent.current.classList.add(s.lines__3d);
     const el = isBlock ? refContent.current.children : refContent.current;
 
     refContent.current.classList.add('will-change-transform-opacity');
@@ -53,9 +53,9 @@ export const useLinesFade = ({
         opacity: 0,
       });
     }
-  };
+  });
 
-  const motionIn = (twVarsCustom?: gsap.TweenVars): gsap.core.Tween | null => {
+  const motionIn = contextSafe((twVarsCustom?: gsap.TweenVars): gsap.core.Tween | null => {
     if (!refContent.current || !refSplitText.current) return null;
 
     return gsap.to(refSplitText.current.lines, {
@@ -64,9 +64,9 @@ export const useLinesFade = ({
       ...twVars,
       ...twVarsCustom,
     });
-  };
+  });
 
-  const motionOut = (twVarsCustom?: gsap.TweenVars): void => {
+  const motionOut = contextSafe((twVarsCustom?: gsap.TweenVars): void => {
     if (!refContent.current || !refSplitText.current) return;
 
     gsap.to(refSplitText.current.lines, {
@@ -74,11 +74,12 @@ export const useLinesFade = ({
       ...twVars,
       ...twVarsCustom,
     });
-  };
+  });
 
   const textRevert = (): void => {
     refSplitText.current?.revert();
     refSplitText.current = null;
   };
+
   return { motionIn, motionOut, motionInit, textRevert };
 };

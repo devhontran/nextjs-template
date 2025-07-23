@@ -10,6 +10,11 @@ interface AssetsContextValue {
   registerAssets: () => void;
   unRegisterAssets: () => void;
   resetAssets: () => void;
+  r3fRequests: Signal<number>;
+  r3fLoadTo: Signal<number>;
+  setR3fRequests: (value: number) => void;
+  setR3fLoadTo: (value: number) => void;
+  isR3fLoaded: Signal<boolean>;
 }
 
 const AssetsContext = createContext<AssetsContextValue | null>(null);
@@ -25,7 +30,21 @@ export function useAssetsContext(): AssetsContextValue {
 export function AssetsProvider({ children }: { children: ReactNode }): ReactElement {
   const assetsRequests = useSignal(0);
   const assetsLoadTo = useSignal(0);
+  const r3fRequests = useSignal(0);
+  const r3fLoadTo = useSignal(0);
   const isAssetsLoaded = useSignal(false);
+
+  const setR3fRequests = (value: number): void => {
+    r3fRequests.value = value;
+  };
+
+  const setR3fLoadTo = (value: number): void => {
+    r3fLoadTo.value = value;
+  };
+
+  const isR3fLoaded = useComputed(() => {
+    return r3fRequests.value === r3fLoadTo.value;
+  });
 
   const registerAssets = (): void => {
     assetsRequests.value += 1;
@@ -46,7 +65,7 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
   });
 
   useSignalEffect(() => {
-    if (assetsProgress.value >= 100 && !isAssetsLoaded.value) {
+    if (assetsProgress.value >= 100 && !isAssetsLoaded.peek()) {
       // eslint-disable-next-line react-compiler/react-compiler
       isAssetsLoaded.value = true;
     }
@@ -65,8 +84,24 @@ export function AssetsProvider({ children }: { children: ReactNode }): ReactElem
       isAssetsLoaded,
       assetsProgress,
       resetAssets,
+      r3fRequests,
+      r3fLoadTo,
+      setR3fRequests,
+      setR3fLoadTo,
+      isR3fLoaded,
     }),
-    [registerAssets, unRegisterAssets, isAssetsLoaded, assetsProgress, resetAssets]
+    [
+      registerAssets,
+      unRegisterAssets,
+      isAssetsLoaded,
+      assetsProgress,
+      resetAssets,
+      r3fRequests,
+      r3fLoadTo,
+      setR3fRequests,
+      setR3fLoadTo,
+      isR3fLoaded,
+    ]
   );
 
   return <AssetsContext value={contextValue}>{children}</AssetsContext>;

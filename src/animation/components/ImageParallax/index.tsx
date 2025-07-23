@@ -7,6 +7,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { memo, useMemo, useRef } from 'react';
 
+import { useUiContext } from '@/animation/contexts/UiContext';
+
 import s from './styles.module.scss';
 
 type Props = PropsWithChildren & {
@@ -23,9 +25,11 @@ const MotionImageParallax = memo(function MotionImageParallax({
 }: Props): ReactElement {
   const refWrap = useRef<HTMLDivElement>(null);
   const refEl = useRef<HTMLDivElement>(null);
+  const { isDesktop } = useUiContext();
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
+    if (!isDesktop.peek()) return;
 
     const scale = Math.max(1, scaleInput);
     const offset = Number(speed) || 1;

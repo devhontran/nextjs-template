@@ -6,7 +6,6 @@ import { useRef } from 'react';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
 import { MotionWordsType } from '@/enum/motion';
-import type { IAnimationProps } from '@/types/animation';
 
 import { useWords3D } from './useWords3D';
 import s from './Words.module.scss';

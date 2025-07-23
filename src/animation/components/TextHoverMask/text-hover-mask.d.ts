@@ -8,4 +8,5 @@ interface TextHoverMaskProps {
   ref: React.RefObject<TextHoverMaskRef | null>;
   children: React.ReactNode;
   isMotionTrigger?: boolean;
+  fixClip?: boolean;
 }

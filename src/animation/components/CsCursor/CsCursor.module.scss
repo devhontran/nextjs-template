@@ -3,8 +3,12 @@
   left: 0;
   top: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99;
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+  opacity: 0;
+  @include laptop {
+    opacity: 1;
+  }
 }

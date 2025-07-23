@@ -24,7 +24,10 @@ export default function useAnimateTypo({
   animates,
   reverts,
 }: IMotionProps): void {
-  const refTween = useRef<{ init: gsap.core.Tween | null; in: gsap.core.Tween | null }>({
+  const refTween = useRef<{
+    init: gsap.core.Tween | null;
+    in: gsap.core.Tween | null;
+  }>({
     init: null,
     in: null,
   });
@@ -39,6 +42,10 @@ export default function useAnimateTypo({
   };
 
   const kill = (): void => {
+    if (!reverts[type]) {
+      return;
+    }
+
     refTween.current.in?.kill();
     refTween.current.in?.revert();
     revert();

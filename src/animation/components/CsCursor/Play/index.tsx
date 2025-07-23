@@ -5,6 +5,7 @@ import { useRef } from 'react';
 
 import { useCursorContext } from '@/animation/contexts/CursorContext';
 import { CursorType } from '@/enum/animation';
+import VideoButton from '@/modules/components/VideoButton';
 
 import Cursor from '../Cursor';
 import styles from './Play.module.scss';
@@ -12,30 +13,31 @@ import styles from './Play.module.scss';
 export default function CursorPlay(): React.ReactElement {
   const refCursor = useRef<HTMLDivElement>(null);
   const { cursorType } = useCursorContext();
-  useGSAP(() => {
+  const { contextSafe } = useGSAP(() => {
+    if (!refCursor.current) return;
     gsap.set(refCursor.current, {
-      clipPath: 'inset(0 50% 0 50%)',
+      xPercent: -105,
     });
   });
 
-  const motion = (vars: gsap.TweenVars): void => {
+  const motion = contextSafe((vars: gsap.TweenVars): void => {
     if (!refCursor.current) return;
     gsap.to(refCursor.current, {
-      duration: 0.5,
+      duration: 0.8,
       ease: 'power3.out',
       overwrite: 'auto',
       ...vars,
     });
-  };
+  });
 
   useSignalEffect(() => {
     if (cursorType.value === CursorType.PLAY) {
       motion({
-        clipPath: 'polygon(0% 0, 100% 0, 100% 100%, 0% 100%)',
+        xPercent: 0,
       });
     } else {
       motion({
-        clipPath: ' polygon(50% 0, 50% 0, 50% 100%, 50% 100%)',
+        xPercent: -105,
       });
     }
   });
@@ -43,7 +45,7 @@ export default function CursorPlay(): React.ReactElement {
   return (
     <Cursor className={styles.cursor_play}>
       <div ref={refCursor}>
-        <p>Watch my views</p>
+        <VideoButton>Watch my take</VideoButton>
       </div>
     </Cursor>
   );

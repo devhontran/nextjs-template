@@ -1,12 +1,12 @@
 'use client';
 
+import { Box } from '@chakra-ui/react';
 import cn from 'classnames';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { useRef } from 'react';
 
 import useAnimateTypo from '@/animation/hooks/useAnimateTypo';
 import { MotionLinesType } from '@/enum/motion';
-import type { IAnimationProps } from '@/types/animation';
 
 import { useLines3D } from './useLines3D';
 import { useLinesFade } from './useLinesFade';
@@ -18,6 +18,7 @@ interface ParagraphLineMaskProps extends PropsWithChildren {
   className?: string;
   fixClip?: boolean;
   isBlock?: boolean;
+  isSkipRevert?: boolean;
 }
 
 export default function MotionLines({
@@ -27,6 +28,7 @@ export default function MotionLines({
   className,
   fixClip,
   isBlock,
+  isSkipRevert,
 }: ParagraphLineMaskProps): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
@@ -80,16 +82,18 @@ export default function MotionLines({
         motionIn: motionIn,
       },
     },
-    reverts: {
-      [MotionLinesType.LINES_THREE_D]: textRevert3D,
-      [MotionLinesType.LINES_MASK]: textRevertMask,
-      [MotionLinesType.LINES_FADE]: textRevertFade,
-    },
+    reverts: isSkipRevert
+      ? {}
+      : {
+          [MotionLinesType.LINES_THREE_D]: textRevert3D,
+          [MotionLinesType.LINES_MASK]: textRevertMask,
+          [MotionLinesType.LINES_FADE]: textRevertFade,
+        },
   });
 
   return (
-    <div ref={refContent} className={cn(className)}>
+    <Box as="span" display="block" ref={refContent} className={cn(className)}>
       {children}
-    </div>
+    </Box>
   );
 }

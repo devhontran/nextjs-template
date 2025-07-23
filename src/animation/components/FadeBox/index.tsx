@@ -1,16 +1,19 @@
 'use client';
 
+import { Box } from '@chakra-ui/react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { useImperativeHandle, useRef } from 'react';
 
 import useAnimate from '@/animation/hooks/useAnimate';
-import type { IAnimationProps } from '@/types/animation';
 
 interface IMaskBox extends PropsWithChildren {
   motion?: IAnimationProps;
   className?: string;
   ref?: React.RefObject<IRefMotion | null>;
+  isOnce?: boolean;
+  isIgnoreTrigger?: boolean;
 }
 
 export default function MotionFadeBox({
@@ -18,6 +21,8 @@ export default function MotionFadeBox({
   motion,
   className,
   ref,
+  isOnce = false,
+  isIgnoreTrigger = false,
 }: IMaskBox): ReactElement {
   const refContent = useRef<HTMLDivElement>(null);
 
@@ -26,7 +31,9 @@ export default function MotionFadeBox({
     y: 34,
   };
 
-  const animate = (gsapWars: gsap.TweenVars): void => {
+  const { contextSafe } = useGSAP();
+
+  const animate = contextSafe((gsapWars: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.fromTo(
@@ -45,9 +52,9 @@ export default function MotionFadeBox({
         },
       }
     );
-  };
+  });
 
-  const motionIn = (twVars?: gsap.TweenVars): void => {
+  const motionIn = contextSafe((twVars?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.killTweensOf(refContent.current);
@@ -56,15 +63,18 @@ export default function MotionFadeBox({
       { ...formVars },
       {
         opacity: 1,
+        onStart: () => {
+          gsap.set(refContent.current, { visibility: 'visible' });
+        },
         y: 0,
         ease: 'power3.out',
         duration: 1.6,
         ...twVars,
       }
     );
-  };
+  });
 
-  const motionOut = (twVars?: gsap.TweenVars): void => {
+  const motionOut = contextSafe((twVars?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.killTweensOf(refContent.current);
@@ -75,14 +85,14 @@ export default function MotionFadeBox({
       duration: 1.6,
       ...twVars,
     });
-  };
+  });
 
-  const motionReset = (twVars?: gsap.TweenVars): void => {
+  const motionReset = contextSafe((twVars?: gsap.TweenVars): void => {
     if (!refContent.current) return;
 
     gsap.killTweensOf(refContent.current);
     gsap.set(refContent.current, { opacity: 0, y: 34, ...twVars });
-  };
+  });
 
   useImperativeHandle(ref, () => ({
     motionIn,
@@ -90,10 +100,10 @@ export default function MotionFadeBox({
     motionReset,
   }));
 
-  useAnimate({ refContent, motion, animate });
+  useAnimate({ refContent, motion, animate, isOnce, isIgnoreTrigger });
   return (
-    <div ref={refContent} className={className}>
+    <Box willChange={'transform, opacity'} ref={refContent} className={className}>
       {children}
-    </div>
+    </Box>
   );
 }

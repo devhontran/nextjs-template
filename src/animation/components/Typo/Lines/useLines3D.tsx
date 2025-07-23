@@ -16,14 +16,12 @@ export const useLines3D = ({
   isInitEffect,
   isBlock = false,
   fixClip,
-  debug,
 }: {
   refContent: RefObject<HTMLDivElement | null>;
   isTriggerMotion?: boolean;
   isInitEffect?: boolean;
   isBlock?: boolean;
   fixClip?: boolean;
-  debug?: boolean;
 }): IMotionTypoFunctions => {
   const refSplitText = useRef<SplitText | null>(null);
   const twVars = {
@@ -33,7 +31,7 @@ export const useLines3D = ({
   };
 
   const formVars = {
-    yPercent: 100,
+    yPercent: 105,
     rotationX: -90,
     rotationY: -30,
   };
@@ -71,7 +69,7 @@ export const useLines3D = ({
     if (!refContent.current || !refSplitText.current) return;
 
     gsap.to(refSplitText.current.lines, {
-      yPercent: 100,
+      yPercent: 105,
       ...twVars,
       ...twVarsCustom,
       duration: 0.8,
@@ -109,7 +107,7 @@ export const useLines3D = ({
         textRevert();
       };
     },
-    { dependencies: [isInitEffect, refContent, motionInit, debug] }
+    { dependencies: [isInitEffect] }
   );
 
   return { motionIn, motionOut, motionInit, textRevert };

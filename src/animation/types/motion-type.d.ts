@@ -8,7 +8,7 @@ interface IPropMotionPlay {
 
 interface IMotionR {
   motionIn: (twVarsCustom?: gsap.TweenVars) => gsap.core.Tween | null;
-  motionOut?: (twVarsCustom?: gsap.TweenVars) => void;
+  motionOut?: (twVarsCustom?: gsap.TweenVars) => gsap.core.Tween | null;
 }
 
 interface IMotionTypoFunctions extends IMotionR {

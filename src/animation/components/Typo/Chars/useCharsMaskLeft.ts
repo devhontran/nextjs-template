@@ -11,10 +11,12 @@ export const useCharsMaskLeft = ({
   refContent,
   isTriggerMotion,
   isInitEffect,
+  onSplited,
 }: {
   refContent: RefObject<HTMLSpanElement | null>;
   isTriggerMotion?: boolean;
   isInitEffect?: boolean;
+  onSplited?: () => void;
 }): IMotionTypoFunctions & {
   motionOutRight: (twVarsCustom?: gsap.TweenVars) => void;
   motionToTop: (twVarsCustom?: gsap.TweenVars) => void;
@@ -30,7 +32,11 @@ export const useCharsMaskLeft = ({
     gsap.registerPlugin(SplitText);
     if (!refContent.current || !isInitEffect) return;
 
-    motionInit().catch(() => null);
+    motionInit()
+      .then(() => {
+        onSplited?.();
+      })
+      .catch(() => null);
     return (): void => {
       textRevert();
     };
@@ -39,7 +45,7 @@ export const useCharsMaskLeft = ({
   const motionInit = async (): Promise<void> => {
     if (!refContent.current || !(await isFontReady())) return;
 
-    refContent.current.classList.add(s.chars, 'will-change-transform');
+    refContent.current.classList.add(s.chars, 'will-change-transform', 'mask-char__left');
 
     refSplitText.current?.revert();
     refSplitText.current = new SplitText(refContent.current, {
@@ -48,6 +54,11 @@ export const useCharsMaskLeft = ({
       smartWrap: true,
       mask: 'chars',
       aria: 'none',
+      onSplit(splitText): void {
+        splitText.chars.forEach((char) => {
+          char.parentElement?.classList.add(char.textContent ?? 'space');
+        });
+      },
     });
     if (isTriggerMotion && refSplitText.current.chars.length) {
       gsap.set(refSplitText.current.chars, {

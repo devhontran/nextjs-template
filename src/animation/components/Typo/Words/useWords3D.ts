@@ -1,3 +1,4 @@
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { type RefObject, useRef } from 'react';
@@ -24,8 +25,11 @@ export const useWords3D = ({
     ease: 'power3.out',
   };
 
-  const motionInit = async (): Promise<void> => {
+  const { contextSafe } = useGSAP(() => {
     gsap.registerPlugin(SplitText);
+  });
+
+  const motionInit = contextSafe(async (): Promise<void> => {
     if (!refContent.current || !(await isFontReady())) return;
 
     refContent.current.classList.add(s.chars_3d__words, 'will-change-transform');
@@ -50,14 +54,14 @@ export const useWords3D = ({
 
     if (isTriggerMotion && refSplitText.current.words.length) {
       gsap.set(refSplitText.current.words, {
-        yPercent: 100,
+        yPercent: 105,
         rotationX: -90,
         rotationY: -30,
       });
     }
-  };
+  });
 
-  const motionIn = (twVarsCustom?: gsap.TweenVars): gsap.core.Tween | null => {
+  const motionIn = contextSafe((twVarsCustom?: gsap.TweenVars): gsap.core.Tween | null => {
     if (!refContent.current || !refSplitText.current) return null;
 
     return gsap.to(refSplitText.current.words, {
@@ -67,17 +71,17 @@ export const useWords3D = ({
       ...twVars,
       ...twVarsCustom,
     });
-  };
+  });
 
-  const motionOut = (twVarsCustom?: gsap.TweenVars): void => {
+  const motionOut = contextSafe((twVarsCustom?: gsap.TweenVars): void => {
     if (!refContent.current || !refSplitText.current) return;
 
     gsap.to(refSplitText.current.words, {
-      yPercent: 100,
+      yPercent: 105,
       ...twVars,
       ...twVarsCustom,
     });
-  };
+  });
 
   const textRevert = (): void => {
     refSplitText.current?.revert();
