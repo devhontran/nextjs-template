@@ -1,8 +1,7 @@
 'use client';
 
-import { ScrollScene, UseCanvas } from '@14islands/r3f-scroll-rig';
 import { Box, Flex } from '@chakra-ui/react';
-import type { RefObject } from 'react';
+import { View } from '@react-three/drei';
 import { useRef } from 'react';
 
 import { Heading } from '@/components/Typography';
@@ -31,12 +30,16 @@ export default function Hero(): React.ReactElement {
         </Heading>
       </Flex>
       <Box position={'relative'} overflow={'clip'} pr="var(--space-16)">
-        <Box ref={ref} w="100%" aspectRatio={'4/3'} />
-        <UseCanvas>
+        <Box ref={ref} w="100%" aspectRatio={'4/3'}>
+          <View>
+            <HeroImageWebgl props={props} />
+          </View>
+        </Box>
+        {/* <UseCanvas>
           <ScrollScene track={ref as RefObject<HTMLElement>}>
             {(props) => <HeroImageWebgl props={props} />}
           </ScrollScene>
-        </UseCanvas>
+        </UseCanvas> */}
       </Box>
     </div>
   );

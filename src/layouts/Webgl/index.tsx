@@ -1,33 +1,27 @@
 'use client';
 
-import { GlobalCanvas, SmoothScrollbar } from '@14islands/r3f-scroll-rig';
+import { Preload, View } from '@react-three/drei';
+import { Canvas as R3fCanvas } from '@react-three/fiber';
 import React, { Suspense } from 'react';
-
-import Lens from '@/modules/Home/Components/Lens';
 
 export default function Webgl(): React.ReactElement {
   return (
-    <>
-      <GlobalCanvas
-        eventSource={window}
-        eventPrefix="client"
-        style={{ zIndex: -1 }}
-        globalRender={false}
-      >
-        {(globalChildren) => (
-          <>
-            <Suspense fallback={null}>
-              <Lens>
-                <>
-                  <ambientLight />
-                  {globalChildren as React.ReactElement}
-                </>
-              </Lens>
-            </Suspense>
-          </>
-        )}
-      </GlobalCanvas>
-      <SmoothScrollbar />
-    </>
+    <R3fCanvas
+      style={{
+        position: 'fixed',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        overflow: 'hidden',
+        zIndex: 3,
+      }}
+      eventSource={document.body}
+    >
+      <Suspense fallback={null}>
+        <View.Port />
+        <Preload all />
+      </Suspense>
+    </R3fCanvas>
   );
 }
